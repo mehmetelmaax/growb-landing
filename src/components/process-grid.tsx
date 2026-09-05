@@ -24,7 +24,7 @@ export const PROCESS_STEPS = [
     title: "BUILD",
     subtitle: "Yüksek Hızlı Satış Altyapısı",
     description:
-      "1.1 saniye altında açılan modern kod altyapısı, Google Core Web Vitals 95+ uyumu ve web sitenizden gelen her müşteri talebini anında yetkilinin telefonuna düşüren bildirim motorlarıyla donatıyoruz.",
+      "1.1 saniye altında açılan modern kod altyapısı, Google Core Web Vitals yeşil skor optimizasyonu ve web sitenizden gelen her müşteri talebini anında yetkilinin telefonuna düşüren bildirim motorlarıyla donatıyoruz.",
   },
   {
     number: "04",

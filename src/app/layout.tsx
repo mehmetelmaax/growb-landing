@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/components/smooth-scroll";
-import { Preloader } from "@/components/preloader";
+import { CookieBanner } from "@/components/cookie-banner";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -50,6 +49,7 @@ export default function RootLayout({
     <html lang="tr" className="dark">
       <body className={`${inter.variable} font-sans bg-[#0A0A0A] text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A] antialiased overflow-x-hidden`}>
         {children}
+        <CookieBanner />
       </body>
     </html>
   );

@@ -23,7 +23,7 @@ export const ALL_13_SERVICES_DETAILED: ServiceDetail[] = [
     deliverables: [
       "Next.js 14 & React altyapısıyla 1.2s ultrasonik açılış hızı",
       "Mobil öncelikli, tek tıkla arama ve WhatsApp yönlendirmeli UX tasarımı",
-      "Google PageSpeed & Core Web Vitals 95+ yeşil skor garantisi",
+      "Google PageSpeed & Core Web Vitals yeşil skor optimizasyonu",
       "SSL, Cloudflare kurumsal CDN ve DDoS koruması",
       "Resmi sözleşmeyle 1 yıl kesintisiz teknik destek ve bakım"
     ],
@@ -183,7 +183,7 @@ export const ALL_13_SERVICES_DETAILED: ServiceDetail[] = [
     heroDesc: "Tasarım gözü çeker, kelimeler ise satış yaptırır. Ziyaretçilerinizin zihnindeki şüpheleri yok eden, güven inşa eden ve doğrudan harekete geçiren yüksek dönüşümlü satış metinleri yazıyoruz.",
     deliverables: [
       "Dönüşüm odaklı web sitesi ana sayfa ve hizmet metinleri",
-      "Reklam kampanyaları için tıklama garantili başlıklar",
+      "Reklam kampanyaları için yüksek dönüşümlü kreatif başlıklar",
       "WhatsApp satış kapama şablonları",
       "Google SEO uyumlu, bilgi verici sektörel rehberler",
       "Müşteri itirazlarını peşinen çürüten SSS metinleri"

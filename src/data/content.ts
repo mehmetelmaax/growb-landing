@@ -60,7 +60,7 @@ export const HERO_DATA = {
   titleLine1: "Dijitaldeki Tüm İşlerinizi Üstlenen",
   titleLine2: "Tam Kapsamlı Dijital Pazarlama Ajansı.",
   description:
-    "Google & Meta reklamlarından yerel harita dominasyonuna, 4K Reels prodüksiyonundan WhatsApp CRM satış otomasyonuna kadar tüm dijital işlerinizi sözleşmeli ciro garantisiyle yönetiyoruz.",
+    "Google & Meta reklamlarından yerel harita dominasyonuna, 4K Reels prodüksiyonundan WhatsApp CRM satış otomasyonuna kadar tüm dijital işlerinizi sözleşmeli büyüme ve operasyonel KPI taahhüdüyle yönetiyoruz.",
   ctaText: "15 Dk Görüşme Planla",
   ctaHref: "#iletisim",
   pricingHref: "#fiyatlar",
@@ -75,7 +75,7 @@ export const HERO_DATA = {
 };
 
 export const CLIENT_LOGOS = [
-  { name: "GrowB Güvencesi", label: "AR-GE TESCİLİ" },
+  { name: "GrowB Güvencesi", label: "TESCİLLİ METODOLOJİ" },
   { name: "Evim Güvende Nakliyat", label: "LOJİSTİK LİDERİ" },
   { name: "Dalaman Yiğit Kurtarma", label: "7/24 YOL YARDIM" },
   { name: "Nevşehir Çözüm Tesisat", label: "ACİL SERVİS" },
@@ -100,7 +100,7 @@ export const METRICS_DATA = [
     prefix: "< ",
     suffix: " sn",
     label: "Açılış Hızı (Mobil & Core Web Vitals)",
-    desc: "Google Pagespeed 95+ skoruyla müşteriyi bekletmeden doğrudan aksiyona geçiren satış motoru.",
+    desc: "GrowB saf Next.js mimarisinde 95+ Core Web Vitals hedefiyle müşteriyi bekletmeden doğrudan aksiyona geçiren satış motoru.",
   },
   {
     target: 10,
@@ -116,15 +116,15 @@ export const METRICS_DATA = [
     prefix: "%",
     suffix: "",
     label: "İlk Ay Çağrı ve Talep Artışı",
-    desc: "Önceki hazır şablon sitelere kıyasla doğrudan gelen gerçek müşteri telefonlarındaki artış oranı.",
+    desc: "Ölçülen vaka ortalamalarında önceki hazır şablon sitelere kıyasla gelen müşteri çağrılarındaki artış oranı.",
   },
   {
     target: 1,
     decimals: 0,
     prefix: "",
     suffix: " Yıl",
-    label: "Kesintisiz Kod & Çalışma Garantisi",
-    desc: "GrowB Güvencesi tescilli sözleşmemizle yazılım ve barındırma garantisi veriyoruz.",
+    label: "Kesintisiz Kod & Destek Güvencesi",
+    desc: "GrowB Güvencesi resmi sözleşmemizle yazılım ve barındırma desteği veriyoruz.",
   },
 ];
 
@@ -135,7 +135,7 @@ export const SERVICES_STACK: ServiceItem[] = [
     category: "WEB YAZILIM & ALTYAPI",
     title: "1.2 Saniyede Açılan Mobil Satış Siteleri",
     description:
-      "WordPress veya hantal hazır temalar kullanmıyoruz. Next.js ve modern teknolojilerle 1.2 saniyenin altında açılan, Core Web Vitals'tan 95+ alan ve doğrudan arama & WhatsApp butonlarına yönlendiren satış makineleri kodluyoruz.",
+      "WordPress veya hantal hazır temalar kullanmıyoruz. Next.js ve modern teknolojilerle 1.2 saniyenin altında açılan, Core Web Vitals optimizasyonlu ve doğrudan arama & WhatsApp butonlarına yönlendiren satış makineleri kodluyoruz.",
     tags: ["Next.js 14", "Tailwind CSS", "1.2s Açılış", "Mobil Öncelikli"],
     image: "https://picsum.photos/seed/webdesign/800/600",
   },
@@ -334,5 +334,5 @@ export const FINAL_CTA_DATA = {
     "15 dakikalık ücretsiz strateji görüşmesi planlayın; bölgenizdeki pazar potansiyelini, rakip açıklarını ve işletmenize özel büyüme yol haritasını birlikte netleştirelim.",
   ctaText: "15 Dk Görüşme Planla",
   ctaHref: "#iletisim",
-  guaranteeText: "🔒 %100 Resmi Sözleşmeli Hizmet • %50 Canlı Test Onayı Garantisi • 1 Yıl Yazılım Taahhüdü",
+  guaranteeText: "🔒 %100 Resmi Sözleşmeli Hizmet • %50 Canlı Test Onayı Güvencesi • 1 Yıl Yazılım Desteği",
 };

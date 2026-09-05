@@ -288,6 +288,13 @@ export const FeaturedWorks: React.FC = () => {
           })}
         </div>
 
+        {/* Hukuki Metrik Dipnotu */}
+        <div className="mt-8 text-center">
+          <p className="text-[11px] text-neutral-500 font-mono">
+            * Belirtilen çağrı ve performans verileri, portföyümüzdeki işletmelerin önceki web altyapıları ile GrowB yayını sonrasındaki ilk 90 günlük ölçüm karşılaştırmalarına dayanmaktadır.
+          </p>
+        </div>
+
       </div>
 
       {/* DETAIL MODAL (Opened ONLY upon clicking "İncele" or clicking the card) */}

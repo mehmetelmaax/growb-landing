@@ -75,8 +75,10 @@ const LeadPayloadSchema = z.object({
   notes: z.string().trim().max(1000).optional().nullable(),
   // Honeypot Alani (Bot yakalama)
   website: z.string().optional().nullable(),
-  // KVKK Acik Riza Onayi
-  kvkkConsent: z.boolean().optional(),
+  // KVKK Acik Riza Onayi (Zorunlu)
+  kvkkConsent: z.boolean().refine((val) => val === true, {
+    message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.",
+  }),
 });
 
 // =========================================================================
@@ -215,6 +217,7 @@ export async function POST(request: Request) {
     if (data.service) messageText += `🛠️ <b>Hizmet:</b> ${escapeHtml(data.service)}\n`;
     if (data.notes) messageText += `💬 <b>Not:</b> ${escapeHtml(data.notes)}\n`;
     messageText += `📍 <b>Kaynak:</b> ${escapeHtml(data.source)}\n`;
+    messageText += `📜 <b>KVKK Onayı:</b> Onaylandı (${nowStr})\n`;
     messageText += `🛡️ <b>IP:</b> <code>${escapeHtml(clientIp)}</code>\n`;
     messageText += `📅 <b>Tarih:</b> ${nowStr}`;
 
@@ -265,8 +268,11 @@ export async function POST(request: Request) {
             ${data.sector ? `<p><strong>Sektor:</strong> ${escapeHtml(data.sector)}</p>` : ""}
             ${data.service ? `<p><strong>Hizmet:</strong> ${escapeHtml(data.service)}</p>` : ""}
             ${data.notes ? `<p><strong>Not:</strong> ${escapeHtml(data.notes)}</p>` : ""}
-            <p><strong>Kaynak:</strong> ${escapeHtml(data.source)}</p>
-            <p><strong>IP:</strong> ${escapeHtml(clientIp)}</p>
+            <ul>
+                <li><b>Kaynak:</b> ${escapeHtml(data.source)}</li>
+                <li><b>KVKK Onayı:</b> Onaylandı (${nowStr})</li>
+                <li><b>IP:</b> ${escapeHtml(clientIp)}</li>
+            </ul>
             <p><strong>Tarih:</strong> ${nowStr}</p>
           `,
         });

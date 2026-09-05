@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { FINAL_CTA_DATA, SITE_CONFIG } from "@/data/content";
 import { Send, CheckCircle2, ShieldCheck, Sparkles, PhoneCall, Check } from "lucide-react";
@@ -41,6 +42,7 @@ export const FinalCta: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [sector, setSector] = useState("");
   const [notes, setNotes] = useState("");
+  const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toggleService = (title: string) => {
@@ -55,10 +57,10 @@ export const FinalCta: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone) return;
+    if (!phone || !kvkkConsent) return;
     setIsSubmitting(true);
     try {
-      await fetch("/api/lead", {
+      const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,13 +71,20 @@ export const FinalCta: React.FC = () => {
           service: selectedServices.join(" + "),
           notes: notes || "",
           source: "Ana Sayfa Proje Başlat (#iletisim)",
+          kvkkConsent: true,
         }),
       });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setFormSubmitted(true);
+      } else {
+        alert(data.error || "Form gönderilemedi. Lütfen bilgilerinizi kontrol ediniz.");
+      }
     } catch (err) {
       console.error("Lead submission error:", err);
+      alert("Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.");
     } finally {
       setIsSubmitting(false);
-      setFormSubmitted(true);
     }
   };
 
@@ -227,10 +236,27 @@ export const FinalCta: React.FC = () => {
                     />
                   </div>
 
+                  {/* KVKK Onay Kutusu */}
+                  <label className="flex items-start gap-2.5 text-xs text-neutral-400 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={kvkkConsent}
+                      onChange={(e) => setKvkkConsent(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 rounded bg-white/5 border border-white/20 text-[#FFC300] focus:ring-[#FFC300] accent-[#FFC300]"
+                    />
+                    <span>
+                      <Link href="/kvkk-aydinlatma-metni" target="_blank" className="text-white underline hover:text-[#FFC300]">
+                        KVKK Aydınlatma Metni
+                      </Link>
+                      &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza veriyorum. *
+                    </span>
+                  </label>
+
                   {/* Gönder Butonu */}
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !kvkkConsent}
                     className="w-full py-4 rounded-full bg-[#FFC300] hover:bg-[#FFA000] text-[#0A0A0A] font-extrabold text-sm sm:text-base tracking-tight transition-all shadow-[0_10px_25px_rgba(255,195,0,0.35)] hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (

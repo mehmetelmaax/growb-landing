@@ -192,6 +192,7 @@ export const ServicesHoverList: React.FC = () => {
   // Detay Al Modalı
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [detailForm, setDetailForm] = useState({ name: "", phone: "", note: "" });
+  const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isDetailSubmitting, setIsDetailSubmitting] = useState(false);
   const [isDetailSubmitted, setIsDetailSubmitted] = useState(false);
 
@@ -199,10 +200,10 @@ export const ServicesHoverList: React.FC = () => {
 
   const handleDetailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!detailForm.phone) return;
+    if (!detailForm.phone || !kvkkConsent) return;
     setIsDetailSubmitting(true);
     try {
-      await fetch("/api/lead", {
+      const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -212,13 +213,20 @@ export const ServicesHoverList: React.FC = () => {
           service: activeService.title,
           notes: detailForm.note || "",
           source: `Hizmetler Bölümü (#${activeService.num} ${activeService.title} Detay Al Modalı)`,
+          kvkkConsent: true,
         }),
       });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsDetailSubmitted(true);
+      } else {
+        alert(data.error || "Form iletilemedi. Lütfen bilgilerinizi kontrol ediniz.");
+      }
     } catch (err) {
       console.error("Detail lead submission error:", err);
+      alert("Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.");
     } finally {
       setIsDetailSubmitting(false);
-      setIsDetailSubmitted(true);
     }
   };
 
@@ -532,9 +540,26 @@ export const ServicesHoverList: React.FC = () => {
                       />
                     </div>
 
+                    {/* KVKK Onay Kutusu */}
+                    <label className="flex items-start gap-2 text-xs text-neutral-400 cursor-pointer select-none pt-1">
+                      <input
+                        type="checkbox"
+                        required
+                        checked={kvkkConsent}
+                        onChange={(e) => setKvkkConsent(e.target.checked)}
+                        className="mt-0.5 w-4 h-4 rounded bg-white/5 border border-white/20 text-[#FFC300] focus:ring-[#FFC300] accent-[#FFC300]"
+                      />
+                      <span>
+                        <Link href="/kvkk-aydinlatma-metni" target="_blank" className="text-white underline hover:text-[#FFC300]">
+                          KVKK Aydınlatma Metni
+                        </Link>
+                        &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza veriyorum. *
+                      </span>
+                    </label>
+
                     <button
                       type="submit"
-                      disabled={isDetailSubmitting}
+                      disabled={isDetailSubmitting || !kvkkConsent}
                       className="w-full py-3.5 rounded-xl bg-[#FFC300] hover:bg-[#FFA000] text-[#0A0A0A] font-black text-sm tracking-tight transition-all shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       {isDetailSubmitting ? (

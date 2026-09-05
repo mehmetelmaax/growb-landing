@@ -355,15 +355,16 @@ export const Hero: React.FC = () => {
 
   // Form State
   const [formData, setFormData] = useState({ siteUrl: "", sector: "", phone: "", contactName: "" });
+  const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.siteUrl || !formData.phone) return;
+    if (!formData.siteUrl || !formData.phone || !kvkkConsent) return;
     setIsSubmittingLead(true);
     try {
-      await fetch("/api/lead", {
+      const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -373,13 +374,20 @@ export const Hero: React.FC = () => {
           siteUrl: formData.siteUrl,
           sector: formData.sector || "Belirtilmedi",
           source: "Hero Ekranı (Ücretsiz Analiz & Detay Al Modalı)",
+          kvkkConsent: true,
         }),
       });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsSubmitted(true);
+      } else {
+        alert(data.error || "Form iletilemedi. Lütfen bilgilerinizi kontrol ediniz.");
+      }
     } catch (err) {
       console.error("Hero lead submission error:", err);
+      alert("Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.");
     } finally {
       setIsSubmittingLead(false);
-      setIsSubmitted(true);
     }
   };
 
@@ -778,9 +786,26 @@ export const Hero: React.FC = () => {
                       />
                     </div>
 
+                    {/* KVKK Onay Kutusu */}
+                    <label className="flex items-start gap-2 text-xs text-neutral-400 cursor-pointer select-none pt-1">
+                      <input
+                        type="checkbox"
+                        required
+                        checked={kvkkConsent}
+                        onChange={(e) => setKvkkConsent(e.target.checked)}
+                        className="mt-0.5 w-4 h-4 rounded bg-white/5 border border-white/20 text-[#FFC300] focus:ring-[#FFC300] accent-[#FFC300]"
+                      />
+                      <span>
+                        <Link href="/kvkk-aydinlatma-metni" target="_blank" className="text-white underline hover:text-[#FFC300]">
+                          KVKK Aydınlatma Metni
+                        </Link>
+                        &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza veriyorum. *
+                      </span>
+                    </label>
+
                     <button
                       type="submit"
-                      disabled={isSubmittingLead}
+                      disabled={isSubmittingLead || !kvkkConsent}
                       className="w-full py-3.5 rounded-xl bg-[#FFC300] hover:bg-[#FFA000] text-[#0A0A0A] font-black text-sm tracking-tight transition-all shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                       {isSubmittingLead ? (

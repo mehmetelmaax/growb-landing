@@ -308,14 +308,22 @@ export const Footer: React.FC = () => {
               <span className="text-neutral-400">Tüm Hakları Saklıdır</span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-neutral-400">
-              <a href="#manifesto" className="hover:text-white transition-colors">Manifesto</a>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-neutral-400 text-xs">
+              <Link href="/kvkk-aydinlatma-metni" className="hover:text-[#FFC300] transition-colors">
+                KVKK Aydınlatma Metni
+              </Link>
               <span className="text-neutral-700">|</span>
-              <Link href="/fiyatlar" className="hover:text-white transition-colors">Fiyat Tarifesi</Link>
+              <Link href="/gizlilik-politikasi" className="hover:text-[#FFC300] transition-colors">
+                Gizlilik Politikası
+              </Link>
               <span className="text-neutral-700">|</span>
-              <span className="hover:text-white transition-colors cursor-pointer" title="Gerçekten okuyor musunuz? 😉">
-                Gizlilik Politikası 😉
-              </span>
+              <Link href="/cerez-politikasi" className="hover:text-[#FFC300] transition-colors">
+                Çerez Politikası
+              </Link>
+              <span className="text-neutral-700">|</span>
+              <Link href="/mesafeli-hizmet-sozlesmesi" className="hover:text-[#FFC300] transition-colors">
+                Mesafeli Hizmet Sözleşmesi
+              </Link>
             </div>
           </div>
 
