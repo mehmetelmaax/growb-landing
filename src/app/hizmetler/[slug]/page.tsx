@@ -1,15 +1,54 @@
 import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ALL_13_SERVICES_DETAILED } from "@/data/services-detail-data";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Sparkles, Phone, MessageSquare, Zap, ShieldCheck } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export async function generateStaticParams() {
   return ALL_13_SERVICES_DETAILED.map((service) => ({
     slug: service.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const service = ALL_13_SERVICES_DETAILED.find((s) => s.slug === params.slug);
+  if (!service) {
+    return {
+      title: "Hizmet Bulunamadı | GrowB Dijital",
+    };
+  }
+
+  const title = `${service.title} | GrowB Dijital Pazarlama`;
+  const description = `${service.tagline} ${service.heroDesc.slice(0, 140)}...`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/hizmetler/${service.slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${siteUrl}/hizmetler/${service.slug}`,
+      type: "article",
+      locale: "tr_TR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
 }
 
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
@@ -19,8 +58,44 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
     notFound();
   }
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.tagline,
+    provider: {
+      "@type": "ProfessionalService",
+      name: "GrowB Dijital Pazarlama Ajansı",
+      url: siteUrl,
+      telephone: "+905414842426",
+    },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Nevşehir" },
+      { "@type": "AdministrativeArea", name: "Kırşehir" },
+      { "@type": "AdministrativeArea", name: "Konya" },
+      { "@type": "AdministrativeArea", name: "Aksaray" },
+      { "@type": "Country", name: "Türkiye" },
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `${service.title} Kapsamı ve Çıktıları`,
+      itemListElement: service.deliverables.map((item, index) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: item,
+        },
+        position: index + 1,
+      })),
+    },
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-cream overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       {/* Top Navbar */}
       <Navbar />
 

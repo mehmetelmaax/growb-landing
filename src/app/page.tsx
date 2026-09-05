@@ -14,9 +14,28 @@ import { Faq } from "@/components/faq";
 import { FinalCta } from "@/components/final-cta";
 import { Footer } from "@/components/footer";
 
+import { FAQ_DATA } from "@/data/content";
+
 export default function Home() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_DATA.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   return (
-    <main className="relative min-h-screen bg-[#0A0A0A] overflow-x-hidden">
+    <main className="relative min-h-screen bg-[#0A0A0A] overflow-x-hidden font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       {/* 0. Logo Splash Animation into Corner */}
       <Preloader />
 

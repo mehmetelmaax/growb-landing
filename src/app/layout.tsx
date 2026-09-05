@@ -9,8 +9,17 @@ const inter = Inter({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export const metadata: Metadata = {
-  title: "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
+  title: {
+    default: "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+    template: "%s | GrowB Dijital",
+  },
   description:
     "Dijitaldeki tüm işlerinizi yöneten büyüme ortağınız. Google & Meta reklamları, yerel harita SEO, dikey video prodüksiyon, WhatsApp CRM otomasyonu ve satış odaklı kurumsal altyapılar.",
   keywords: [
@@ -21,13 +30,23 @@ export const metadata: Metadata = {
     "yerel harita seo",
     "reels video prodüksiyon",
     "crm satış otomasyonu",
+    "kırşehir dijital pazarlama",
+    "nevşehir web tasarım",
+    "kapadokya dijital ajans",
   ],
-  authors: [{ name: "GrowB Dijital Pazarlama Ajansı" }],
+  authors: [{ name: "GrowB Dijital Pazarlama Ajansı", url: siteUrl }],
   openGraph: {
     title: "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
     description: "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+    url: siteUrl,
+    siteName: "GrowB Dijital",
     type: "website",
     locale: "tr_TR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+    description: "Dijitaldeki tüm süreçlerinizi üstlenen büyüme ortağınız.",
   },
   icons: {
     icon: [
@@ -45,8 +64,58 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const professionalServiceSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "GrowB Dijital Pazarlama Ajansı",
+    url: siteUrl,
+    logo: `${siteUrl}/growb-logo.jpg`,
+    image: `${siteUrl}/growb-logo.jpg`,
+    telephone: "+905414842426",
+    priceRange: "₺₺₺",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Nevşehir",
+      addressRegion: "Kapadokya",
+      addressCountry: "TR",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 38.6247,
+      longitude: 34.7142,
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      opens: "09:00",
+      closes: "19:00",
+    },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Nevşehir" },
+      { "@type": "AdministrativeArea", name: "Kırşehir" },
+      { "@type": "AdministrativeArea", name: "Konya" },
+      { "@type": "AdministrativeArea", name: "Aksaray" },
+      { "@type": "Country", name: "Türkiye" },
+    ],
+  };
+
   return (
     <html lang="tr" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(professionalServiceSchema),
+          }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans bg-[#0A0A0A] text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A] antialiased overflow-x-hidden`}>
         {children}
         <CookieBanner />

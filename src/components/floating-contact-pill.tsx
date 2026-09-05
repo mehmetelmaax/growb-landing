@@ -30,7 +30,7 @@ export const FloatingContactPill: React.FC = () => {
             <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0 bg-neutral-100 relative">
               <img
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
-                alt="Mehmet Demir"
+                alt="Mehmet Demir - GrowB Dijital Büyüme Danışmanı"
                 className="w-full h-full object-cover"
               />
             </div>

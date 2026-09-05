@@ -1,4 +1,4 @@
-﻿export interface PricingItem {
+export interface PricingItem {
   name: string;
   scope: string;
   price: string;
@@ -172,6 +172,7 @@ export const MONTHLY_GROWTH_PACKAGES = [
     name: "TEMEL",
     badge: "Düzenli Varlık",
     price: "₺14.900",
+    rawPrice: 14900,
     period: "/ ay",
     originalValue: "₺19.500",
     description: "Dijital varlığını düzenli ve profesyonel tutmak isteyen yerel işletmeler için.",
@@ -193,6 +194,7 @@ export const MONTHLY_GROWTH_PACKAGES = [
     name: "BÜYÜME",
     badge: "En Popüler 🚀",
     price: "₺32.900",
+    rawPrice: 32900,
     period: "/ ay",
     originalValue: "₺45.500",
     description: "Ciro akışını her gün büyütmek ve düzenli sıcak müşteri kazanmak isteyen işletmeler için.",
@@ -214,6 +216,7 @@ export const MONTHLY_GROWTH_PACKAGES = [
     name: "PRO",
     badge: "Agresif Pazar Liderliği",
     price: "₺59.900",
+    rawPrice: 59900,
     period: "/ ay",
     originalValue: "₺89.000",
     description: "Sektöründe mutlak hakimiyet kurmak isteyen ölçeklenmiş markalar için kapalı devre yönetim.",

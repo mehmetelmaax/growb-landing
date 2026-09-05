@@ -6,9 +6,22 @@ import { Footer } from "@/components/footer";
 import { HoneycombHive } from "@/components/honeycomb-hive";
 import { Phone, ArrowLeft, Sparkles, ShieldCheck, CheckCircle2 } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export const metadata: Metadata = {
-  title: "Tüm Hizmetlerimiz (13 Uzmanlık) | GrowB Dijital — 6-1-6 Büyüme Kovanı",
-  description: "Web yazılımından Google & Meta satış reklamlarına, harita SEO liderliğinden video prodüksiyona ve WhatsApp otomasyonuna kadar GrowB Dijital'in 13 uzmanlık alanını 6-1-6 formatında keşfedin.",
+  title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı) | GrowB Dijital Büyüme Kovanı",
+  description:
+    "Web yazılımından Google & Meta satış reklamlarına, harita SEO liderliğinden video prodüksiyona ve WhatsApp CRM otomasyonuna kadar GrowB Dijital'in 13 uzmanlık alanını keşfedin.",
+  alternates: {
+    canonical: "/hizmetler",
+  },
+  openGraph: {
+    title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı) | GrowB Dijital",
+    description: "Web yazılımından reklam yönetimine ve otomasyona 13 modüler büyüme hizmeti.",
+    url: `${siteUrl}/hizmetler`,
+    type: "website",
+    locale: "tr_TR",
+  },
 };
 
 export default function ServicesIndexPage() {
