@@ -1,85 +1,270 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { Resend } from "resend";
 
-const DEFAULT_BOT_TOKEN = "8829340417:AAEh0D0MIZFpASzWxY3Sb81q59Lwlozirg8";
-const DEFAULT_CHAT_ID = "8782197742";
+// =========================================================================
+// 1. IN-MEMORY RATE LIMIT FALLBACK (Local Dev / Upstash Yoksa)
+// =========================================================================
+interface RateLimitEntry {
+  count: number;
+  resetAt: number;
+}
+const inMemoryRateLimit = new Map<string, RateLimitEntry>();
 
+function checkInMemoryRateLimit(ip: string): { allowed: boolean; remaining: number } {
+  const now = Date.now();
+  const windowMs = 10 * 60 * 1000; // 10 dakika
+  const maxRequests = 5;
+
+  const entry = inMemoryRateLimit.get(ip);
+  if (!entry || now > entry.resetAt) {
+    inMemoryRateLimit.set(ip, { count: 1, resetAt: now + windowMs });
+    return { allowed: true, remaining: maxRequests - 1 };
+  }
+
+  if (entry.count >= maxRequests) {
+    return { allowed: false, remaining: 0 };
+  }
+
+  entry.count += 1;
+  return { allowed: true, remaining: maxRequests - entry.count };
+}
+
+// =========================================================================
+// 2. UPSTASH REDIS SERVERLESS RATE LIMITER (Vercel Multi-Instance)
+// =========================================================================
+let upstashRatelimit: Ratelimit | null = null;
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  try {
+    const redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+    upstashRatelimit = new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(5, "10 m"), // IP basina 10 dakikada 5 istek
+      analytics: true,
+      prefix: "growb:lead:ratelimit",
+    });
+  } catch (err) {
+    console.error("[SECURITY] Upstash Redis baslatilamadi, in-memory fallback devrede:", err);
+  }
+}
+
+// =========================================================================
+// 3. TURKIYE TELEFON NORMALIZASYONU & KATI REGEX KONTROLU
+// =========================================================================
+export function normalizeTurkishPhone(input: string): string | null {
+  if (!input) return null;
+
+  // Bosluk, tire, parantez, nokta ve kontrol karakterlerini temizle
+  let cleaned = String(input).replace(/[\s\-\(\)\.]/g, "");
+
+  // Uluslararasi onekleri 0 ile standardize et
+  if (cleaned.startsWith("+90")) {
+    cleaned = "0" + cleaned.slice(3);
+  } else if (cleaned.startsWith("0090")) {
+    cleaned = "0" + cleaned.slice(4);
+  } else if (cleaned.startsWith("90") && cleaned.length === 12) {
+    cleaned = "0" + cleaned.slice(2);
+  } else if (!cleaned.startsWith("0") && cleaned.startsWith("5") && cleaned.length === 10) {
+    cleaned = "0" + cleaned;
+  }
+
+  // Kesin kural: Tam 11 hane ve 05 ile baslamali (^05\d{9}$)
+  const trGsmRegex = /^05\d{9}$/;
+  if (trGsmRegex.test(cleaned)) {
+    return cleaned;
+  }
+
+  return null;
+}
+
+// =========================================================================
+// 4. HTML XSS ESCAPE FONKSIYONU
+// =========================================================================
 function escapeHtml(text: string): string {
   if (!text) return "";
   return String(text)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
+// =========================================================================
+// 5. ZOD GIRIS DOGRULAMA SEMASI
+// =========================================================================
+const LeadPayloadSchema = z.object({
+  type: z
+    .enum(["PROJE_BASLAT", "DETAY_AL", "ANALIZ", "HIZ_SKORU", "HIZMET_TEKLIF"])
+    .default("PROJE_BASLAT"),
+  name: z
+    .string()
+    .trim()
+    .max(80, "Isim en fazla 80 karakter olabilir.")
+    .optional()
+    .nullable(),
+  phone: z.string({ required_error: "Telefon numarasi zorunludur." }).min(1),
+  service: z.string().trim().max(100).optional().nullable(),
+  siteUrl: z.string().trim().max(250).optional().nullable(),
+  sector: z.string().trim().max(80).optional().nullable(),
+  source: z.string().trim().max(120).default("Web Sitesi"),
+  notes: z.string().trim().max(1000).optional().nullable(),
+  // Honeypot Alani (Bot yakalama)
+  website: z.string().optional().nullable(),
+  // KVKK Acik Riza Onayi
+  kvkkConsent: z.boolean().optional(),
+});
+
+// =========================================================================
+// 6. ANA POST HANDLER
+// =========================================================================
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const {
-      type = "PROJE_BASLAT",
-      name,
-      phone,
-      service,
-      siteUrl,
-      sector,
-      source = "Web Sitesi",
-      notes,
-    } = body;
+    // Client IP Tespiti
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    const realIp = request.headers.get("x-real-ip");
+    const clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : realIp || "127.0.0.1";
 
-    if (!phone && !siteUrl) {
+    // -----------------------------------------------------------------------
+    // A. RATE LIMITING KONTROLU (5 istek / 10 dakika)
+    // -----------------------------------------------------------------------
+    if (upstashRatelimit) {
+      const { success, remaining, reset } = await upstashRatelimit.limit(clientIp);
+      if (!success) {
+        console.warn(`[SECURITY 429] Upstash Rate limit asildi! IP: ${clientIp}`);
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Cok fazla istek gonderdiniz. Lutfen 10 dakika sonra tekrar deneyin.",
+          },
+          {
+            status: 429,
+            headers: {
+              "Retry-After": Math.ceil((reset - Date.now()) / 1000).toString(),
+            },
+          }
+        );
+      }
+    } else {
+      const { allowed } = checkInMemoryRateLimit(clientIp);
+      if (!allowed) {
+        console.warn(`[SECURITY 429] In-Memory Rate limit asildi! IP: ${clientIp}`);
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Cok fazla istek gonderdiniz. Lutfen 10 dakika sonra tekrar deneyin.",
+          },
+          {
+            status: 429,
+            headers: { "Retry-After": "600" },
+          }
+        );
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // B. JSON PAYLOAD AYRISTIRMA & ZOD DOGRULAMA
+    // -----------------------------------------------------------------------
+    let rawBody: unknown;
+    try {
+      rawBody = await request.json();
+    } catch {
       return NextResponse.json(
-        { error: "Telefon numarası veya web sitesi zorunludur." },
+        { success: false, error: "Gecersiz JSON verisi." },
         { status: 400 }
       );
     }
 
-    const botToken = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID || DEFAULT_CHAT_ID;
+    const parseResult = LeadPayloadSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      const firstError = parseResult.error.errors[0]?.message || "Gecersiz form verisi.";
+      return NextResponse.json(
+        { success: false, error: firstError, details: parseResult.error.flatten() },
+        { status: 400 }
+      );
+    }
 
-    // Başlık ve Emoji Seçimi
-    let headerTitle = "🚨 <b>YENİ GROWB LEAD TALEBİ!</b>";
-    if (type === "PROJE_BASLAT") {
-      headerTitle = "🚀 <b>YENİ PROJE BAŞLAT TALEBİ!</b>";
-    } else if (type === "DETAY_AL" || type === "ANALIZ") {
-      headerTitle = "📊 <b>YENİ DETAY VE ANALİZ TALEBİ!</b>";
-    } else if (type === "HIZ_SKORU") {
-      headerTitle = "⚡ <b>YENİ HIZ & SEO SKORU TESTİ!</b>";
-    } else if (type === "HIZMET_TEKLIF") {
-      headerTitle = "🐝 <b>YENİ HİZMET DETAY TALEBİ!</b>";
+    const data = parseResult.data;
+
+    // -----------------------------------------------------------------------
+    // C. HONEYPOT BOT KONTROLU (Gizli Website input'u doluysa sessizce 200 don)
+    // -----------------------------------------------------------------------
+    if (data.website && data.website.trim().length > 0) {
+      console.warn(`[HONEYPOT BLOCKED] Bot tespit edildi! IP: ${clientIp}, Payload: ${data.website}`);
+      return NextResponse.json(
+        { success: true, message: "Talebiniz basariyla alindi." },
+        { status: 200 }
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // D. TELEFON NUMARASI NORMALIZASYONU & KATI FORMAT DENETIMI
+    // -----------------------------------------------------------------------
+    const normalizedPhone = normalizeTurkishPhone(data.phone);
+    if (!normalizedPhone) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Lutfen gecerli bir Turkiye cep telefonu numarasi giriniz (Orn: 0541 484 24 26).",
+        },
+        { status: 400 }
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // E. ENV KONTROLU — ASLA HARDCODED FALLBACK YOK!
+    // -----------------------------------------------------------------------
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+
+    if (!botToken || !chatId) {
+      console.error("[CRITICAL SECURITY] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID cevre degiskeni eksik!");
+      return NextResponse.json(
+        { success: false, error: "Sunucu yapilandirma hatasi. Lutfen dogrudan iletisime geciniz." },
+        { status: 500 }
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // F. TELEGRAM MESAJ METNI OLUSTURMA
+    // -----------------------------------------------------------------------
+    let headerTitle = "🚨 <b>YENI GROWB LEAD TALEBI!</b>";
+    if (data.type === "PROJE_BASLAT") {
+      headerTitle = "🚀 <b>YENI PROJE BASLAT TALEBI!</b>";
+    } else if (data.type === "DETAY_AL" || data.type === "ANALIZ") {
+      headerTitle = "📊 <b>YENI DETAY VE ANALIZ TALEBI!</b>";
+    } else if (data.type === "HIZ_SKORU") {
+      headerTitle = "⚡ <b>YENI HIZ & SEO SKORU TESTI!</b>";
+    } else if (data.type === "HIZMET_TEKLIF") {
+      headerTitle = "🐝 <b>YENI HIZMET DETAY TALEBI!</b>";
     }
 
     const nowStr = new Date().toLocaleString("tr-TR", {
       timeZone: "Europe/Istanbul",
     });
 
-    // Telegram HTML Formatında Mesaj Metni
     let messageText = `${headerTitle}\n━━━━━━━━━━━━━━━━━━━━\n`;
-
-    if (name) {
-      messageText += `👤 <b>İsim / Yetkili:</b> ${escapeHtml(name)}\n`;
-    }
-    if (phone) {
-      messageText += `📱 <b>Telefon:</b> <code>${escapeHtml(phone)}</code>\n`;
-    }
-    if (siteUrl) {
-      messageText += `🌐 <b>Web Sitesi / İşletme:</b> ${escapeHtml(siteUrl)}\n`;
-    }
-    if (sector) {
-      messageText += `🏢 <b>Sektör:</b> ${escapeHtml(sector)}\n`;
-    }
-    if (service) {
-      messageText += `🛠️ <b>İlgilenilen Hizmet:</b> ${escapeHtml(service)}\n`;
-    }
-    if (notes) {
-      messageText += `💬 <b>Not / Mesaj:</b> ${escapeHtml(notes)}\n`;
-    }
-
-    messageText += `📍 <b>Form Kaynağı:</b> ${escapeHtml(source)}\n`;
+    if (data.name) messageText += `👤 <b>Isim / Yetkili:</b> ${escapeHtml(data.name)}\n`;
+    messageText += `📱 <b>Telefon:</b> <code>${escapeHtml(normalizedPhone)}</code>\n`;
+    if (data.siteUrl) messageText += `🌐 <b>Web Sitesi:</b> ${escapeHtml(data.siteUrl)}\n`;
+    if (data.sector) messageText += `🏢 <b>Sektor:</b> ${escapeHtml(data.sector)}\n`;
+    if (data.service) messageText += `🛠️ <b>Hizmet:</b> ${escapeHtml(data.service)}\n`;
+    if (data.notes) messageText += `💬 <b>Not:</b> ${escapeHtml(data.notes)}\n`;
+    messageText += `📍 <b>Kaynak:</b> ${escapeHtml(data.source)}\n`;
+    messageText += `🛡️ <b>IP:</b> <code>${escapeHtml(clientIp)}</code>\n`;
     messageText += `📅 <b>Tarih:</b> ${nowStr}`;
 
-    // Telegram sendMessage API Çağrısı
-    const tgRes = await fetch(
-      `https://api.telegram.org/bot${botToken}/sendMessage`,
-      {
+    // -----------------------------------------------------------------------
+    // G. TELEGRAM CAGRISI (8 saniye timeout ile)
+    // -----------------------------------------------------------------------
+    let tgSuccess = false;
+    try {
+      const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -87,24 +272,73 @@ export async function POST(request: Request) {
           text: messageText,
           parse_mode: "HTML",
         }),
+        signal: AbortSignal.timeout(8000), // 8 saniye zaman asimi korumasi
+      });
+
+      const tgData = await tgRes.json();
+      if (tgRes.ok && tgData.ok) {
+        tgSuccess = true;
+      } else {
+        console.error("[TELEGRAM API ERROR]", tgData);
       }
-    );
+    } catch (err: unknown) {
+      console.error("[TELEGRAM FETCH TIMEOUT/NETWORK ERROR]", err);
+    }
 
-    const tgData = await tgRes.json();
+    // -----------------------------------------------------------------------
+    // H. RESEND YEDEK E-POSTA BILDIRIMI (Fail-Safe)
+    // -----------------------------------------------------------------------
+    let emailSent = false;
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const recipientEmail = process.env.LEAD_NOTIFICATION_EMAIL || "info@growbdijital.com";
+        await resend.emails.send({
+          from: "GrowB Dijital <onboarding@resend.dev>",
+          to: [recipientEmail],
+          subject: `Yeni Lead Talebi: ${normalizedPhone} (${data.type})`,
+          html: `
+            <h2>Yeni GrowB Lead Bildirimi</h2>
+            <p><strong>Talep Turu:</strong> ${escapeHtml(data.type)}</p>
+            <p><strong>Telefon:</strong> ${escapeHtml(normalizedPhone)}</p>
+            ${data.name ? `<p><strong>Yetkili:</strong> ${escapeHtml(data.name)}</p>` : ""}
+            ${data.siteUrl ? `<p><strong>Web Sitesi:</strong> ${escapeHtml(data.siteUrl)}</p>` : ""}
+            ${data.sector ? `<p><strong>Sektor:</strong> ${escapeHtml(data.sector)}</p>` : ""}
+            ${data.service ? `<p><strong>Hizmet:</strong> ${escapeHtml(data.service)}</p>` : ""}
+            ${data.notes ? `<p><strong>Not:</strong> ${escapeHtml(data.notes)}</p>` : ""}
+            <p><strong>Kaynak:</strong> ${escapeHtml(data.source)}</p>
+            <p><strong>IP:</strong> ${escapeHtml(clientIp)}</p>
+            <p><strong>Tarih:</strong> ${nowStr}</p>
+          `,
+        });
+        emailSent = true;
+      } catch (emailErr) {
+        console.error("[RESEND EMAIL BACKUP ERROR]", emailErr);
+      }
+    }
 
-    if (!tgRes.ok || !tgData.ok) {
-      console.error("[TELEGRAM ERROR]", tgData);
+    // Bildirim sonuc kontrolu: En az biri basarili olmali
+    if (!tgSuccess && !emailSent) {
       return NextResponse.json(
-        { success: false, error: tgData.description || "Telegram API hatası" },
+        {
+          success: false,
+          error: "Bildirim iletiminde bir aksaklik olustu. Lutfen dogrudan WhatsApp uzerinden bize ulasin.",
+        },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, messageId: tgData.result?.message_id });
-  } catch (error: any) {
-    console.error("[LEAD API ERROR]", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Bilinmeyen sunucu hatası" },
+      {
+        success: true,
+        message: "Talebiniz ekibimize ulasti. En kisa surede sizinle iletisime gececegiz.",
+      },
+      { status: 200 }
+    );
+  } catch (globalErr: unknown) {
+    console.error("[LEAD API FATAL ERROR]", globalErr);
+    return NextResponse.json(
+      { success: false, error: "Beklenmeyen bir sunucu hatasi meydana geldi." },
       { status: 500 }
     );
   }
