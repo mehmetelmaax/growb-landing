@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
+import { normalizeTurkishPhone, escapeHtml } from "@/lib/validators";
 
 // =========================================================================
 // 1. IN-MEMORY RATE LIMIT FALLBACK (Local Dev / Upstash Yoksa)
@@ -54,49 +55,7 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 }
 
 // =========================================================================
-// 3. TURKIYE TELEFON NORMALIZASYONU & KATI REGEX KONTROLU
-// =========================================================================
-export function normalizeTurkishPhone(input: string): string | null {
-  if (!input) return null;
-
-  // Bosluk, tire, parantez, nokta ve kontrol karakterlerini temizle
-  let cleaned = String(input).replace(/[\s\-\(\)\.]/g, "");
-
-  // Uluslararasi onekleri 0 ile standardize et
-  if (cleaned.startsWith("+90")) {
-    cleaned = "0" + cleaned.slice(3);
-  } else if (cleaned.startsWith("0090")) {
-    cleaned = "0" + cleaned.slice(4);
-  } else if (cleaned.startsWith("90") && cleaned.length === 12) {
-    cleaned = "0" + cleaned.slice(2);
-  } else if (!cleaned.startsWith("0") && cleaned.startsWith("5") && cleaned.length === 10) {
-    cleaned = "0" + cleaned;
-  }
-
-  // Kesin kural: Tam 11 hane ve 05 ile baslamali (^05\d{9}$)
-  const trGsmRegex = /^05\d{9}$/;
-  if (trGsmRegex.test(cleaned)) {
-    return cleaned;
-  }
-
-  return null;
-}
-
-// =========================================================================
-// 4. HTML XSS ESCAPE FONKSIYONU
-// =========================================================================
-function escapeHtml(text: string): string {
-  if (!text) return "";
-  return String(text)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-// =========================================================================
-// 5. ZOD GIRIS DOGRULAMA SEMASI
+// 3. ZOD GIRIS DOGRULAMA SEMASI
 // =========================================================================
 const LeadPayloadSchema = z.object({
   type: z
@@ -121,7 +80,7 @@ const LeadPayloadSchema = z.object({
 });
 
 // =========================================================================
-// 6. ANA POST HANDLER
+// 4. ANA POST HANDLER (App Router sadece HTTP handler export etmeli)
 // =========================================================================
 export async function POST(request: Request) {
   try {
@@ -272,7 +231,7 @@ export async function POST(request: Request) {
           text: messageText,
           parse_mode: "HTML",
         }),
-        signal: AbortSignal.timeout(8000), // 8 saniye zaman asimi korumasi
+        signal: AbortSignal.timeout(8000),
       });
 
       const tgData = await tgRes.json();
