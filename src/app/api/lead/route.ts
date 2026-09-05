@@ -141,7 +141,7 @@ export async function POST(request: Request) {
 
     const parseResult = LeadPayloadSchema.safeParse(rawBody);
     if (!parseResult.success) {
-      const firstError = parseResult.error.errors[0]?.message || "Gecersiz form verisi.";
+      const firstError = parseResult.error.issues[0]?.message || "Gecersiz form verisi.";
       return NextResponse.json(
         { success: false, error: firstError, details: parseResult.error.flatten() },
         { status: 400 }
