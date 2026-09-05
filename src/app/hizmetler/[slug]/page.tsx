@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ALL_13_SERVICES_DETAILED } from "@/data/services-detail-data";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Sparkles, Phone, MessageSquare, Zap, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Sparkles, Phone, MessageSquare, Zap } from "lucide-react";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 

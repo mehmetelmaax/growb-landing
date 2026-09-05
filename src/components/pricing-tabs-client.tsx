@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { 
   ESTABLISHMENT_PACKAGES, 
   ESTABLISHMENT_COMPARISON_ROWS, 
@@ -11,16 +10,7 @@ import {
 } from "@/data/pricing-catalog-data";
 import { 
   Check, 
-  Sparkles, 
   ArrowUpRight, 
-  ShieldCheck, 
-  TrendingUp, 
-  Calendar, 
-  Layers, 
-  FileText, 
-  Phone, 
-  MessageSquare, 
-  Percent, 
   Clock,
   RefreshCw,
   Gift

@@ -89,13 +89,13 @@ export async function POST(request: Request) {
     // Client IP Tespiti
     const forwardedFor = request.headers.get("x-forwarded-for");
     const realIp = request.headers.get("x-real-ip");
-    const clientIp = forwardedFor ? forwardedFor.split(",")[0].trim() : realIp || "127.0.0.1";
+    const clientIp = forwardedFor ? (forwardedFor.split(",")[0]?.trim() || "127.0.0.1") : realIp || "127.0.0.1";
 
     // -----------------------------------------------------------------------
     // A. RATE LIMITING KONTROLU (5 istek / 10 dakika)
     // -----------------------------------------------------------------------
     if (upstashRatelimit) {
-      const { success, remaining, reset } = await upstashRatelimit.limit(clientIp);
+      const { success, reset } = await upstashRatelimit.limit(clientIp);
       if (!success) {
         console.warn(`[SECURITY 429] Upstash Rate limit asildi! IP: ${clientIp}`);
         return NextResponse.json(

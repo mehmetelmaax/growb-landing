@@ -6,13 +6,7 @@ import { Footer } from "@/components/footer";
 import { 
   MapPin, 
   ArrowLeft, 
-  Sparkles, 
   CheckCircle2, 
-  Phone, 
-  MessageSquare, 
-  TrendingUp, 
-  Zap, 
-  ShieldCheck, 
   ExternalLink,
   Award
 } from "lucide-react";

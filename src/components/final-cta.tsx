@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FINAL_CTA_DATA, SITE_CONFIG } from "@/data/content";
 import { Send, CheckCircle2, ShieldCheck, Sparkles, PhoneCall, Check } from "lucide-react";
 

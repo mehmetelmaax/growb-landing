@@ -1,13 +1,11 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
-import { Check, Sparkles, ArrowUpRight, Flame, Clock, ShieldCheck, AlertCircle } from "lucide-react";
+import { Check, Sparkles, ArrowUpRight, Flame, AlertCircle } from "lucide-react";
+import { SITE_CONFIG } from "@/data/content";
 
 export const CampaignPricing: React.FC = () => {
   const getWaLink = (campaignName: string, price: string) => {
     const msg = `Merhaba GrowB Dijital, "${campaignName}" kampanyanız (${price}) için başvurmak ve yerimi ayırtmak istiyorum.`;
-    return `https://wa.me/905414842426?text=${encodeURIComponent(msg)}`;
+    return SITE_CONFIG.getWhatsappUrl(msg);
   };
 
   return (

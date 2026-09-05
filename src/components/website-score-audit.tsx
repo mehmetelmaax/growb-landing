@@ -8,13 +8,10 @@ import {
   CheckCircle2,
   AlertTriangle,
   ArrowUpRight,
-  Sparkles,
   RefreshCw,
   ShieldCheck,
-  Zap,
   Globe,
   MessageSquare,
-  Server,
   Activity
 } from "lucide-react";
 

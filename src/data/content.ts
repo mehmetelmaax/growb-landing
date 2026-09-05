@@ -41,17 +41,38 @@ export const SITE_CONFIG = {
   location: "NEVŞEHİR",
   tagline: "Dijitaldeki tüm işlerinizi yöneten büyüme ortağınız.",
   phone: "0541 484 24 26",
+  phoneRaw: "05414842426",
+  phoneInternational: "+905414842426",
+  whatsappNumber: "905414842426",
   email: "info@growbdijital.com",
   address: "Online & Türkiye Geneli Kesintisiz Dijital Hizmet",
+  addressLocality: "Nevşehir",
+  addressRegion: "Kapadokya",
+  addressCountry: "TR",
   taxInfo: "Nevşehir V.D. 381 049 2910",
+  founder: "Mehmet Demir",
+  founderRole: "Ajans Kurucusu & Büyüme Danışmanı",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com",
+  socials: {
+    whatsapp: "https://wa.me/905414842426",
+  },
+  getWhatsappUrl: (message?: string) => {
+    return message
+      ? `https://wa.me/905414842426?text=${encodeURIComponent(message)}`
+      : "https://wa.me/905414842426";
+  },
+  getPhoneUrl: () => "tel:05414842426",
+  getMailtoUrl: () => "mailto:info@growbdijital.com",
 };
 
 export const NAV_LINKS = [
   { name: "Manifesto", href: "#manifesto" },
-  { name: "Metrikler", href: "#metrikler" },
   { name: "Hizmetler", href: "#hizmetler" },
-  { name: "Projeler", href: "#projeler" },
+  { name: "Süreç", href: "#surec" },
+  { name: "Metrikler", href: "#metrikler" },
   { name: "Fiyatlandırma", href: "#fiyatlar" },
+  { name: "Projeler", href: "#projeler" },
+  { name: "Hız & SEO", href: "#skor-ogren" },
   { name: "SSS", href: "#sss" },
 ];
 

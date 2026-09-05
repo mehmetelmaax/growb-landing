@@ -1,18 +1,22 @@
+import dynamic from "next/dynamic";
 import { Preloader } from "@/components/preloader";
 import { BackgroundEffects } from "@/components/background-effects";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
+import { Manifesto } from "@/components/manifesto";
 import { LogoMarquee } from "@/components/logo-marquee";
-import { FeaturedWorks } from "@/components/featured-works";
 import { WhoAreWe } from "@/components/who-are-we";
-import { ProcessGrid } from "@/components/process-grid";
-import { WebsiteScoreAudit } from "@/components/website-score-audit";
-import { ServicesHoverList } from "@/components/services-hover-list";
 import { WorkTogetherMarquee } from "@/components/work-together-marquee";
 import { Pricing } from "@/components/pricing";
-import { Faq } from "@/components/faq";
-import { FinalCta } from "@/components/final-cta";
 import { Footer } from "@/components/footer";
+
+const ServicesHoverList = dynamic(() => import("@/components/services-hover-list").then((mod) => mod.ServicesHoverList));
+const ProcessGrid = dynamic(() => import("@/components/process-grid").then((mod) => mod.ProcessGrid));
+const Metrics = dynamic(() => import("@/components/metrics").then((mod) => mod.Metrics));
+const FeaturedWorks = dynamic(() => import("@/components/featured-works").then((mod) => mod.FeaturedWorks));
+const WebsiteScoreAudit = dynamic(() => import("@/components/website-score-audit").then((mod) => mod.WebsiteScoreAudit));
+const Faq = dynamic(() => import("@/components/faq").then((mod) => mod.Faq));
+const FinalCta = dynamic(() => import("@/components/final-cta").then((mod) => mod.FinalCta));
 
 import { FAQ_DATA } from "@/data/content";
 
@@ -48,19 +52,25 @@ export default function Home() {
       {/* 3. Hero Screen (Can alıcı stüdyo kompozisyonu, cutout kart & video görüşme hapı) */}
       <Hero />
 
-      {/* 4. Altında Çalıştığımız Markalar Slayt Biçiminde Döner */}
+      {/* 4. Manifesto (Kinetik Tipografi Büyüme Manifestosu) */}
+      <Manifesto />
+
+      {/* 5. Altında Çalıştığımız Markalar Slayt Biçiminde Döner */}
       <LogoMarquee />
 
-      {/* 5. Biz Kimiz (Who Are We) */}
+      {/* 6. Biz Kimiz (Who Are We) */}
       <WhoAreWe />
 
-      {/* 6. Hizmetlerimiz (13 Hizmet Kartı) */}
+      {/* 7. Hizmetlerimiz (13 Hizmet Kartı) */}
       <ServicesHoverList />
 
-      {/* 7. 4 Aşamalı Planlama & Büyüme Süreci (01 PLAN, 02 DESIGN, 03 BUILD, 04 GROW) */}
+      {/* 8. 4 Aşamalı Planlama & Büyüme Süreci (01 PLAN, 02 DESIGN, 03 BUILD, 04 GROW) */}
       <ProcessGrid />
 
-      {/* 8. Birlikte Çalışalım / Birlikte Büyüyelim Marquee (Süreç Sonrası Dinamik Köprü) */}
+      {/* 9. Saha Verileri & Metrikler */}
+      <Metrics />
+
+      {/* 10. Birlikte Çalışalım / Birlikte Büyüyelim Marquee (Süreç Sonrası Dinamik Köprü) */}
       <WorkTogetherMarquee />
 
       {/* 9. Fiyatlandırma & Kampanya Paketleri */}

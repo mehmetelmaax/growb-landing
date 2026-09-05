@@ -3,9 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { MapPin, ArrowLeft, CheckCircle2, Phone, MessageSquare } from "lucide-react";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+import { MapPin, ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Nevşehir Dijital Pazarlama & Web Tasarım Ajansı | GrowB",

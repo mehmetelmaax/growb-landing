@@ -5,7 +5,6 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MapPin, ArrowLeft, ExternalLink } from "lucide-react";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
 export const metadata: Metadata = {
   title: "Aksaray Dijital Pazarlama, Web Tasarım & Harita SEO | GrowB",

@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CircularBadge } from "./ui/circular-badge";
-import { PhoneCall, Sparkles, TrendingUp, ShieldCheck } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 
 interface WordItem {
   text: string;

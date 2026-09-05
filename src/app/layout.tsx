@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CookieBanner } from "@/components/cookie-banner";
+import { FloatingContactPill } from "@/components/floating-contact-pill";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -119,6 +120,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans bg-[#0A0A0A] text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A] antialiased overflow-x-hidden`}>
         {children}
         <CookieBanner />
+        <FloatingContactPill />
       </body>
     </html>
   );
