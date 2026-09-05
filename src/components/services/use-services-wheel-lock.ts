@@ -45,8 +45,6 @@ export function useServicesWheelLock({
     const sectionEl = sectionRef.current;
     if (!sectionEl) return;
 
-    let resetTimer: NodeJS.Timeout | null = null;
-
     const handleScrollCheck = () => {
       if (isCompletedServicesRef.current) return;
       const rect = sectionEl.getBoundingClientRect();
@@ -115,7 +113,6 @@ export function useServicesWheelLock({
 
     return () => {
       unlockPage();
-      if (resetTimer) clearTimeout(resetTimer);
       window.removeEventListener("scroll", handleScrollCheck);
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);

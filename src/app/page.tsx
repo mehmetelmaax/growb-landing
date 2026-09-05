@@ -10,13 +10,21 @@ import { WorkTogetherMarquee } from "@/components/work-together-marquee";
 import { Pricing } from "@/components/pricing";
 import { Footer } from "@/components/footer";
 
-const ServicesHoverList = dynamic(() => import("@/components/services-hover-list").then((mod) => mod.ServicesHoverList));
-const ProcessGrid = dynamic(() => import("@/components/process-grid").then((mod) => mod.ProcessGrid));
+const ServicesHoverList = dynamic(() =>
+  import("@/components/services-hover-list").then((mod) => mod.ServicesHoverList)
+);
+const ProcessGrid = dynamic(() =>
+  import("@/components/process-grid").then((mod) => mod.ProcessGrid)
+);
 const Metrics = dynamic(() => import("@/components/metrics").then((mod) => mod.Metrics));
-const FeaturedWorks = dynamic(() => import("@/components/featured-works").then((mod) => mod.FeaturedWorks));
-const WebsiteScoreAudit = dynamic(() => import("@/components/website-score-audit").then((mod) => mod.WebsiteScoreAudit));
+const FeaturedWorks = dynamic(() =>
+  import("@/components/featured-works").then((mod) => mod.FeaturedWorks)
+);
+const WebsiteScoreAudit = dynamic(() =>
+  import("@/components/website-score-audit").then((mod) => mod.WebsiteScoreAudit)
+);
 const Faq = dynamic(() => import("@/components/faq").then((mod) => mod.Faq));
-const FinalCta = dynamic(() => import("@/components/final-cta").then((mod) => mod.FinalCta));
+import { FinalCta } from "@/components/final-cta";
 
 import { FAQ_DATA } from "@/data/content";
 
@@ -35,7 +43,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen bg-[#0A0A0A] overflow-x-hidden font-sans">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

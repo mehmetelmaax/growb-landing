@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 /**
  * Turkiye GSM Telefon Numarasi Normalizasyonu & Kati Regex Denetimi
  * Bosluk, parantez, tire, nokta ve kontrol karakterlerini temizler.
@@ -43,3 +45,48 @@ export function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
+
+/**
+ * Web Sitesi URL Normalizasyonu
+ * http/https ekler, gecerli hostname kontrol eder.
+ */
+export function normalizeUrl(input: string): string | null {
+  if (!input) return null;
+  let target = input.trim();
+  if (!/^https?:\/\//i.test(target)) {
+    target = "https://" + target;
+  }
+  try {
+    const parsed = new URL(target);
+    if (!parsed.hostname.includes(".")) {
+      return null;
+    }
+    return parsed.href;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Zod Lead Formu Giris Dogrulama Semasi
+ */
+export const LeadPayloadSchema = z.object({
+  type: z
+    .enum(["PROJE_BASLAT", "DETAY_AL", "ANALIZ", "HIZ_SKORU", "HIZMET_TEKLIF"])
+    .default("PROJE_BASLAT"),
+  name: z.string().trim().max(80, "Isim en fazla 80 karakter olabilir.").optional().nullable(),
+  phone: z.string().min(1, "Telefon numarasi zorunludur."),
+  service: z.string().trim().max(100).optional().nullable(),
+  siteUrl: z.string().trim().max(250).optional().nullable(),
+  sector: z.string().trim().max(80).optional().nullable(),
+  source: z.string().trim().max(120).default("Web Sitesi"),
+  notes: z.string().trim().max(1000).optional().nullable(),
+  // Honeypot Alani (Bot yakalama - Bos olmali)
+  website: z.string().optional().nullable(),
+  // KVKK Acik Riza Onayi (Zorunlu)
+  kvkkConsent: z.boolean().refine((val) => val === true, {
+    message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.",
+  }),
+});
+
+export type LeadPayload = z.infer<typeof LeadPayloadSchema>;

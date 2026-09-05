@@ -13,31 +13,40 @@ const MARQUEE_CLIENTS = [
 
 export const LogoMarquee: React.FC = () => {
   return (
-    <div className="w-full py-4 sm:py-5 bg-[#0D0D0D] border-y border-white/10 overflow-hidden select-none">
-      <div className="max-w-7xl mx-auto px-4 mb-2 text-center">
-        <span className="text-[11px] font-mono font-bold tracking-[0.2em] text-neutral-400 uppercase">
+    <div className="pointer-events-none w-full select-none overflow-hidden border-y border-white/10 bg-[#0D0D0D] py-4 sm:py-5">
+      <div className="mx-auto mb-2 max-w-7xl px-4 text-center">
+        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400">
           TÜRKİYE GENELİNDE SATIŞ SİSTEMİNİ KURDUĞUMUZ CANLI MARKALAR
         </span>
       </div>
 
-      <div className="flex whitespace-nowrap overflow-hidden">
-        <div className="flex items-center shrink-0 animate-marquee hover:[animation-play-state:paused] gap-12 sm:gap-16 pr-12">
+      <div className="flex overflow-hidden whitespace-nowrap">
+        <div className="animate-marquee flex shrink-0 items-center gap-12 pr-12 hover:[animation-play-state:paused] sm:gap-16">
           {MARQUEE_CLIENTS.map((client, idx) => (
-            <div key={idx} className="flex items-center gap-3 shrink-0 opacity-60 hover:opacity-100 transition-opacity">
-              <div className="relative w-28 h-10 grayscale hover:grayscale-0 transition-all">
+            <div
+              key={idx}
+              className="flex shrink-0 items-center gap-3 opacity-60 transition-opacity hover:opacity-100"
+            >
+              <div className="relative h-10 w-28 grayscale transition-all hover:grayscale-0">
                 <Image src={client.logo} alt={client.name} fill className="object-contain" />
               </div>
-              <span className="text-xs font-mono text-neutral-400">• {client.city}</span>
+              <span className="font-mono text-xs text-neutral-400">• {client.city}</span>
             </div>
           ))}
         </div>
-        <div className="flex items-center shrink-0 animate-marquee hover:[animation-play-state:paused] gap-12 sm:gap-16 pr-12" aria-hidden="true">
+        <div
+          className="animate-marquee flex shrink-0 items-center gap-12 pr-12 hover:[animation-play-state:paused] sm:gap-16"
+          aria-hidden="true"
+        >
           {MARQUEE_CLIENTS.map((client, idx) => (
-            <div key={idx} className="flex items-center gap-3 shrink-0 opacity-60 hover:opacity-100 transition-opacity">
-              <div className="relative w-28 h-10 grayscale hover:grayscale-0 transition-all">
+            <div
+              key={idx}
+              className="flex shrink-0 items-center gap-3 opacity-60 transition-opacity hover:opacity-100"
+            >
+              <div className="relative h-10 w-28 grayscale transition-all hover:grayscale-0">
                 <Image src={client.logo} alt={client.name} fill className="object-contain" />
               </div>
-              <span className="text-xs font-mono text-neutral-400">• {client.city}</span>
+              <span className="font-mono text-xs text-neutral-400">• {client.city}</span>
             </div>
           ))}
         </div>

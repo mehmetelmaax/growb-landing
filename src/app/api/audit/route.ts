@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { normalizeUrl } from "@/lib/validators";
 
 interface CacheEntry {
   timestamp: number;
@@ -22,33 +23,13 @@ interface AuditResult {
 const auditCache = new Map<string, CacheEntry>();
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 Saat
 
-function normalizeUrl(input: string): string | null {
-  if (!input) return null;
-  let target = input.trim();
-  if (!/^https?:\/\//i.test(target)) {
-    target = "https://" + target;
-  }
-  try {
-    const parsed = new URL(target);
-    if (!parsed.hostname.includes(".")) {
-      return null;
-    }
-    return parsed.href;
-  } catch {
-    return null;
-  }
-}
-
 export async function POST(request: Request) {
   try {
     let body: { url?: string };
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json(
-        { success: false, error: "Geçersiz JSON verisi." },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: "Geçersiz JSON verisi." }, { status: 400 });
     }
 
     const rawUrl = body.url;
@@ -117,7 +98,8 @@ export async function POST(request: Request) {
     if (!psiRes.ok) {
       const errorText = await psiRes.text();
       console.warn("[AUDIT API] Google PageSpeed API HTTP " + psiRes.status + ":", errorText);
-      const isQuota = psiRes.status === 429 || errorText.includes("quota") || errorText.includes("RATE_LIMIT");
+      const isQuota =
+        psiRes.status === 429 || errorText.includes("quota") || errorText.includes("RATE_LIMIT");
       return NextResponse.json(
         {
           success: false,

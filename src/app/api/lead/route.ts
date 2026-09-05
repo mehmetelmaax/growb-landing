@@ -1,40 +1,12 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { Resend } from "resend";
-import { normalizeTurkishPhone, escapeHtml } from "@/lib/validators";
+import { normalizeTurkishPhone, escapeHtml, LeadPayloadSchema } from "@/lib/validators";
+import { globalInMemoryRateLimiter } from "@/lib/rate-limiter";
 
 // =========================================================================
-// 1. IN-MEMORY RATE LIMIT FALLBACK (Local Dev / Upstash Yoksa)
-// =========================================================================
-interface RateLimitEntry {
-  count: number;
-  resetAt: number;
-}
-const inMemoryRateLimit = new Map<string, RateLimitEntry>();
-
-function checkInMemoryRateLimit(ip: string): { allowed: boolean; remaining: number } {
-  const now = Date.now();
-  const windowMs = 10 * 60 * 1000; // 10 dakika
-  const maxRequests = 5;
-
-  const entry = inMemoryRateLimit.get(ip);
-  if (!entry || now > entry.resetAt) {
-    inMemoryRateLimit.set(ip, { count: 1, resetAt: now + windowMs });
-    return { allowed: true, remaining: maxRequests - 1 };
-  }
-
-  if (entry.count >= maxRequests) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  entry.count += 1;
-  return { allowed: true, remaining: maxRequests - entry.count };
-}
-
-// =========================================================================
-// 2. UPSTASH REDIS SERVERLESS RATE LIMITER (Vercel Multi-Instance)
+// UPSTASH REDIS SERVERLESS RATE LIMITER (Vercel Multi-Instance)
 // =========================================================================
 let upstashRatelimit: Ratelimit | null = null;
 if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
@@ -55,41 +27,16 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 }
 
 // =========================================================================
-// 3. ZOD GIRIS DOGRULAMA SEMASI
-// =========================================================================
-const LeadPayloadSchema = z.object({
-  type: z
-    .enum(["PROJE_BASLAT", "DETAY_AL", "ANALIZ", "HIZ_SKORU", "HIZMET_TEKLIF"])
-    .default("PROJE_BASLAT"),
-  name: z
-    .string()
-    .trim()
-    .max(80, "Isim en fazla 80 karakter olabilir.")
-    .optional()
-    .nullable(),
-  phone: z.string().min(1, "Telefon numarasi zorunludur."),
-  service: z.string().trim().max(100).optional().nullable(),
-  siteUrl: z.string().trim().max(250).optional().nullable(),
-  sector: z.string().trim().max(80).optional().nullable(),
-  source: z.string().trim().max(120).default("Web Sitesi"),
-  notes: z.string().trim().max(1000).optional().nullable(),
-  // Honeypot Alani (Bot yakalama)
-  website: z.string().optional().nullable(),
-  // KVKK Acik Riza Onayi (Zorunlu)
-  kvkkConsent: z.boolean().refine((val) => val === true, {
-    message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.",
-  }),
-});
-
-// =========================================================================
-// 4. ANA POST HANDLER (App Router sadece HTTP handler export etmeli)
+// ANA POST HANDLER
 // =========================================================================
 export async function POST(request: Request) {
   try {
     // Client IP Tespiti
     const forwardedFor = request.headers.get("x-forwarded-for");
     const realIp = request.headers.get("x-real-ip");
-    const clientIp = forwardedFor ? (forwardedFor.split(",")[0]?.trim() || "127.0.0.1") : realIp || "127.0.0.1";
+    const clientIp = forwardedFor
+      ? forwardedFor.split(",")[0]?.trim() || "127.0.0.1"
+      : realIp || "127.0.0.1";
 
     // -----------------------------------------------------------------------
     // A. RATE LIMITING KONTROLU (5 istek / 10 dakika)
@@ -112,7 +59,7 @@ export async function POST(request: Request) {
         );
       }
     } else {
-      const { allowed } = checkInMemoryRateLimit(clientIp);
+      const { allowed } = globalInMemoryRateLimiter.check(clientIp);
       if (!allowed) {
         console.warn(`[SECURITY 429] In-Memory Rate limit asildi! IP: ${clientIp}`);
         return NextResponse.json(
@@ -135,10 +82,7 @@ export async function POST(request: Request) {
     try {
       rawBody = await request.json();
     } catch {
-      return NextResponse.json(
-        { success: false, error: "Gecersiz JSON verisi." },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: "Gecersiz JSON verisi." }, { status: 400 });
     }
 
     const parseResult = LeadPayloadSchema.safeParse(rawBody);
@@ -156,7 +100,9 @@ export async function POST(request: Request) {
     // C. HONEYPOT BOT KONTROLU (Gizli Website input'u doluysa sessizce 200 don)
     // -----------------------------------------------------------------------
     if (data.website && data.website.trim().length > 0) {
-      console.warn(`[HONEYPOT BLOCKED] Bot tespit edildi! IP: ${clientIp}, Payload: ${data.website}`);
+      console.warn(
+        `[HONEYPOT BLOCKED] Bot tespit edildi! IP: ${clientIp}, Payload: ${data.website}`
+      );
       return NextResponse.json(
         { success: true, message: "Talebiniz basariyla alindi." },
         { status: 200 }
@@ -184,7 +130,9 @@ export async function POST(request: Request) {
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
     if (!botToken || !chatId) {
-      console.error("[CRITICAL SECURITY] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID cevre degiskeni eksik!");
+      console.error(
+        "[CRITICAL SECURITY] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID cevre degiskeni eksik!"
+      );
       return NextResponse.json(
         { success: false, error: "Sunucu yapilandirma hatasi. Lutfen dogrudan iletisime geciniz." },
         { status: 500 }
@@ -287,7 +235,8 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: "Bildirim iletiminde bir aksaklik olustu. Lutfen dogrudan WhatsApp uzerinden bize ulasin.",
+          error:
+            "Bildirim iletiminde bir aksaklik olustu. Lutfen dogrudan WhatsApp uzerinden bize ulasin.",
         },
         { status: 500 }
       );
