@@ -67,7 +67,7 @@ const LeadPayloadSchema = z.object({
     .max(80, "Isim en fazla 80 karakter olabilir.")
     .optional()
     .nullable(),
-  phone: z.string({ required_error: "Telefon numarasi zorunludur." }).min(1),
+  phone: z.string().min(1, "Telefon numarasi zorunludur."),
   service: z.string().trim().max(100).optional().nullable(),
   siteUrl: z.string().trim().max(250).optional().nullable(),
   sector: z.string().trim().max(80).optional().nullable(),
