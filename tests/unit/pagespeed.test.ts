@@ -38,6 +38,18 @@ describe("PageSpeed API Uç Noktası (POST /api/pagespeed)", () => {
     expect(json.error).toContain("Geçersiz JSON verisi");
   });
 
+  it("Yerel adresler (localhost / 127.0.0.1) girildiğinde açıklayıcı 400 döner", async () => {
+    const req = new Request("http://localhost:3000/api/pagespeed", {
+      method: "POST",
+      body: JSON.stringify({ url: "http://localhost:3000" }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(400);
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json.error).toContain("yerel (localhost / 127.0.0.1) adresleri tarayamaz");
+  });
+
   it("Protokolsüz URL'ye otomatik https:// ekler ve PageSpeed skorlarını döndürür", async () => {
     let requestedUrl = "";
     global.fetch = vi.fn().mockImplementation(async (url: string) => {

@@ -148,7 +148,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                       placeholder="Adınız ve Soyadınız"
                       value={detailForm.name}
                       onChange={(e) => setDetailForm({ ...detailForm, name: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition-colors placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 
@@ -166,37 +166,35 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                       placeholder="05XX XXX XX XX"
                       value={detailForm.phone}
                       onChange={(e) => setDetailForm({ ...detailForm, phone: e.target.value })}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition-colors placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-[#FFC300] focus:outline-none"
                     />
-                  </div>
 
-                  <div>
                     <label
                       htmlFor="service-note"
-                      className="mb-1 block font-mono text-xs text-neutral-300"
+                      className="mb-1 mt-4 block font-mono text-xs text-neutral-300"
                     >
-                      Varsa Özel Notunuz
+                      Eklemek İstediğiniz Not (Opsiyonel)
                     </label>
                     <textarea
                       id="service-note"
                       rows={2}
-                      placeholder="İşletmeniz veya beklentiniz hakkında kısa not..."
+                      placeholder="Örn: Mevcut sitemiz var, bu hizmetle dönüşümleri artırmak istiyoruz..."
                       value={detailForm.note}
                       onChange={(e) => setDetailForm({ ...detailForm, note: e.target.value })}
-                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition-colors placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
+                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 
                   <div className="flex select-none items-start gap-2 pt-1 text-xs text-neutral-400">
                     <input
-                      id="service-detail-kvkk"
+                      id="kvkk-consent-service"
                       type="checkbox"
                       required
                       checked={kvkkConsent}
                       onChange={(e) => setKvkkConsent(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 cursor-pointer rounded border border-white/20 bg-white/5 text-[#FFC300] accent-[#FFC300] focus:ring-[#FFC300]"
+                      className="mt-0.5 h-4 w-4 cursor-pointer rounded border border-white/20 bg-white/5 text-[#FFC300] accent-[#FFC300]"
                     />
-                    <label htmlFor="service-detail-kvkk" className="cursor-pointer">
+                    <label htmlFor="kvkk-consent-service" className="cursor-pointer">
                       <Link
                         href="/kvkk-aydinlatma-metni"
                         target="_blank"
@@ -212,7 +210,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   <button
                     type="submit"
                     disabled={isDetailSubmitting || !kvkkConsent}
-                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#FFC300] py-3.5 text-sm font-black tracking-tight text-[#0A0A0A] shadow-lg transition-all hover:scale-[1.02] hover:bg-[#FFA000] active:scale-[0.98] disabled:opacity-50"
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#FFC300] py-3.5 text-sm font-black tracking-tight text-[#0A0A0A] shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                   >
                     {isDetailSubmitting ? (
                       <span>İletiliyor...</span>

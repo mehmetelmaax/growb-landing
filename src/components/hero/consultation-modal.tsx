@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { Sparkles, X, Send } from "lucide-react";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { useFormAbandonment } from "@/hooks/use-form-abandonment";
 import { trackLead } from "@/lib/analytics";
+import { ConsultationModalFields } from "./consultation-modal-fields";
 import { ConsultationModalSuccess } from "./consultation-modal-success";
 
 interface ConsultationModalProps {
@@ -127,121 +127,14 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
             )}
 
             <form onSubmit={handleFormSubmit} aria-busy={isSubmittingLead} className="space-y-4">
-              <input
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                value={formData.website}
-                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                className="pointer-events-none absolute -z-10 h-0 w-0 overflow-hidden opacity-0"
+              <ConsultationModalFields
+                formData={formData}
+                setFormData={setFormData}
+                kvkkConsent={kvkkConsent}
+                setKvkkConsent={setKvkkConsent}
+                onFieldFocus={onFieldFocus}
+                onFieldBlur={onFieldBlur}
               />
-              <div>
-                <label
-                  htmlFor="hero-site-url"
-                  className="mb-1 block font-mono text-xs text-neutral-300"
-                >
-                  Web Siteniz veya İşletme Adınız *
-                </label>
-                <input
-                  id="hero-site-url"
-                  type="text"
-                  required
-                  placeholder="örn: www.ornekisletme.com veya Güven Nakliyat"
-                  value={formData.siteUrl}
-                  onFocus={() => onFieldFocus("siteUrl")}
-                  onBlur={() => onFieldBlur("siteUrl")}
-                  onChange={(e) => setFormData({ ...formData, siteUrl: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="hero-sector"
-                    className="mb-1 block font-mono text-xs text-neutral-300"
-                  >
-                    Sektörünüz
-                  </label>
-                  <input
-                    id="hero-sector"
-                    type="text"
-                    placeholder="örn: Klinik, Nakliyat"
-                    value={formData.sector}
-                    onFocus={() => onFieldFocus("sector")}
-                    onBlur={() => onFieldBlur("sector")}
-                    onChange={(e) => setFormData({ ...formData, sector: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="hero-name"
-                    className="mb-1 block font-mono text-xs text-neutral-300"
-                  >
-                    Yetkili Adı
-                  </label>
-                  <input
-                    id="hero-name"
-                    type="text"
-                    placeholder="Adınız Soyadınız"
-                    value={formData.contactName}
-                    onFocus={() => onFieldFocus("contactName")}
-                    onBlur={() => onFieldBlur("contactName")}
-                    onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="hero-phone"
-                  className="mb-1 block font-mono text-xs text-neutral-300"
-                >
-                  WhatsApp Telefon Numaranız *
-                </label>
-                <input
-                  id="hero-phone"
-                  type="tel"
-                  required
-                  placeholder="05XX XXX XX XX"
-                  value={formData.phone}
-                  onFocus={() => onFieldFocus("phone")}
-                  onBlur={() => onFieldBlur("phone")}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                />
-              </div>
-
-              <div className="flex select-none items-start gap-2 pt-1 text-xs text-neutral-400">
-                <input
-                  id="kvkk-consent-modal"
-                  type="checkbox"
-                  required
-                  checked={kvkkConsent}
-                  onChange={(e) => setKvkkConsent(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 cursor-pointer rounded border border-white/20 bg-white/5 text-[#FFC300] accent-[#FFC300] focus:ring-[#FFC300]"
-                />
-                <label htmlFor="kvkk-consent-modal" className="cursor-pointer">
-                  <Link
-                    href="/kvkk-aydinlatma-metni"
-                    target="_blank"
-                    className="text-white underline hover:text-[#FFC300]"
-                  >
-                    KVKK Aydınlatma Metni
-                  </Link>
-                  &apos;ni okudum, iletişim kurulmasına rıza veriyorum. *
-                </label>
-              </div>
-
-              {formData.phone.trim().length > 3 && !kvkkConsent && (
-                <p className="rounded-lg border border-[#FFC300]/20 bg-[#FFC300]/5 px-3 py-2 text-center font-mono text-xs text-[#FFC300]">
-                  ⚡ Lütfen yukarıdaki KVKK onay kutusunu işaretleyiniz.
-                </p>
-              )}
 
               <button
                 type="submit"

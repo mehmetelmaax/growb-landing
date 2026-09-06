@@ -90,6 +90,18 @@ export async function POST(request: Request) {
       );
     }
 
+    if (/localhost|127\.0\.0\.1|0\.0\.0\.0|::1|\.local\b|\.test\b|\.internal\b/i.test(rawUrl)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Google PageSpeed bulut servisi yerel (localhost / 127.0.0.1) adresleri tarayamaz. Lütfen internete açık gerçek bir web sitesi adresi giriniz (Örn: growbdijital.com).",
+          canConsult: true,
+        },
+        { status: 400 }
+      );
+    }
+
     const targetUrl = normalizeUrl(rawUrl);
     if (!targetUrl) {
       return NextResponse.json(
@@ -192,7 +204,6 @@ export async function POST(request: Request) {
     const cls = audits["cumulative-layout-shift"]?.displayValue || "0";
     const fcp = audits["first-contentful-paint"]?.displayValue || "N/A";
 
-    const criticalIssues: string[] = [];
     const auditKeys = [
       "render-blocking-resources",
       "unused-javascript",
@@ -200,14 +211,10 @@ export async function POST(request: Request) {
       "offscreen-images",
       "unminified-css",
     ];
-    for (const k of auditKeys) {
-      const item = audits[k];
-      if (item && item.score !== null && item.score < 0.9) {
-        criticalIssues.push(
-          item.displayValue ? `${item.title} (${item.displayValue})` : item.title
-        );
-      }
-    }
+    const criticalIssues = auditKeys
+      .map((k) => audits[k])
+      .filter((item) => item && item.score !== null && item.score < 0.9)
+      .map((item) => (item.displayValue ? `${item.title} (${item.displayValue})` : item.title));
 
     const responseData: PageSpeedData = {
       url: targetUrl,
