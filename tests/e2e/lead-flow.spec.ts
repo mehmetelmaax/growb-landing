@@ -18,13 +18,13 @@ test.describe("GrowB Landing — E2E Test Suite", () => {
     page,
   }) => {
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
 
-    // Hero kovan kilidini force click ile açarak sayfa akışını serbest bırak
+    // Hero kovan kilidini açarak sayfa akışını serbest bırak
     const unlockBtn = page.locator("button", { hasText: "Kovanı Doldur" });
     if (await unlockBtn.isVisible()) {
-      await unlockBtn.click({ force: true });
-      await page.waitForTimeout(500);
+      await unlockBtn.dispatchEvent("click");
+      await page.waitForTimeout(300);
     }
 
     const section = page.locator("#iletisim");
@@ -32,16 +32,16 @@ test.describe("GrowB Landing — E2E Test Suite", () => {
 
     const form = section.locator("form");
     const submitBtn = form.locator('button[type="submit"]');
-    const kvkkLabel = form.locator("label").filter({ hasText: "KVKK Aydınlatma Metni" });
+    const kvkkLabel = form.locator('label[for="kvkk-consent-final"]');
 
     // Başlangıçta KVKK seçilmediği için disabled olmalı
     await expect(submitBtn).toBeDisabled();
 
-    // KVKK etiketine tıkla
+    // KVKK etiketine tıkla (kullanıcı aksiyonu)
     await kvkkLabel.click();
     await expect(submitBtn).toBeEnabled();
 
-    // Tekrar tıkla (uncheck)
+    // KVKK onayını geri al (uncheck)
     await kvkkLabel.click();
     await expect(submitBtn).toBeDisabled();
   });

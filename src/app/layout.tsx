@@ -8,6 +8,7 @@ const inter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
@@ -54,9 +55,7 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -87,14 +86,7 @@ export default function RootLayout({
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       opens: "09:00",
       closes: "19:00",
     },
@@ -117,7 +109,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} font-sans bg-[#0A0A0A] text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A] antialiased overflow-x-hidden`}>
+      <body
+        className={`${inter.variable} overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] antialiased selection:bg-[#FFC300] selection:text-[#0A0A0A]`}
+      >
         {children}
         <CookieBanner />
         <FloatingContactPill />

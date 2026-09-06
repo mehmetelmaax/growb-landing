@@ -82,16 +82,24 @@ export default function Home() {
       <WorkTogetherMarquee />
 
       {/* 9. Fiyatlandırma & Kampanya Paketleri */}
-      <Pricing />
+      <div className="content-visibility-auto">
+        <Pricing />
+      </div>
 
       {/* 10. Canlı Referanslarımız (Yayında Olan Canlı Projelerimiz) */}
-      <FeaturedWorks />
+      <div className="content-visibility-auto">
+        <FeaturedWorks />
+      </div>
 
       {/* 11. Site Checker / Website Skorunu Öğren (Hız & SEO Testi) */}
-      <WebsiteScoreAudit />
+      <div className="content-visibility-auto">
+        <WebsiteScoreAudit />
+      </div>
 
       {/* 12. Sıkça Sorulan Sorular (FAQ) */}
-      <Faq />
+      <div className="content-visibility-auto">
+        <Faq />
+      </div>
 
       {/* 13. Final İletişim Formu */}
       <FinalCta />

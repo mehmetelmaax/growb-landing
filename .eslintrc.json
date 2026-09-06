@@ -14,5 +14,13 @@
     "react/no-unescaped-entities": "off",
     "react/jsx-no-comment-textnodes": "off",
     "@next/next/no-img-element": "warn"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.mjs"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ]
 }
