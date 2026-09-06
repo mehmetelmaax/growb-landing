@@ -99,9 +99,103 @@ export default function CerezPolitikasiPage() {
           </div>
         </div>
 
+        {/* 3. GA4 ve Meta Pixel Detaylı Envanteri */}
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-white">
-            3. Çerez Tercihlerini Nasıl Değiştirebilirsiniz?
+            3. Kullanılan Üçüncü Taraf Analitik ve Pazarlama İzleyicileri
+          </h2>
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#141414]">
+            <table className="w-full text-left text-xs text-neutral-300">
+              <thead className="border-b border-white/10 bg-white/5 font-mono text-[11px] uppercase text-[#FFC300]">
+                <tr>
+                  <th className="p-3">Sağlayıcı & Hizmet</th>
+                  <th className="p-3">İşlenen Veri</th>
+                  <th className="p-3">Alıcı & Amaç</th>
+                  <th className="p-3">Çerez İsimleri</th>
+                  <th className="p-3">Saklama Süresi</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                <tr>
+                  <td className="p-3 font-semibold text-white">
+                    Google Analytics 4<br />
+                    <span className="font-mono text-[10px] text-neutral-400">
+                      Google Ireland Ltd.
+                    </span>
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Maskelenmiş IP adresi, cihaz/tarayıcı türü, ziyaret edilen URL&apos;ler, sayfa
+                    içi etkileşim zamanları.
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Google LLC.
+                    <br />
+                    Site performans ölçümü ve kullanıcı deneyimi optimizasyonu.
+                  </td>
+                  <td className="p-3 font-mono text-amber-300">
+                    _ga
+                    <br />
+                    _ga_*
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Çerez: 2 Yıl
+                    <br />
+                    Etkinlik: 14 Ay
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-white">
+                    Meta Pixel (Facebook)
+                    <br />
+                    <span className="font-mono text-[10px] text-neutral-400">
+                      Meta Platforms Ireland
+                    </span>
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Ziyaret edilen sayfa URL&apos;si, referrer, form dönüşüm etkinliği (Lead),
+                    anonim tarayıcı tanımlayıcıları.
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Meta Platforms Inc.
+                    <br />
+                    Reklam dönüşüm doğrulaması ve hedef kitle optimizasyonu.
+                  </td>
+                  <td className="p-3 font-mono text-amber-300">
+                    _fbp
+                    <br />
+                    _fbc
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    _fbp: 90 Gün
+                    <br />
+                    _fbc: 90 Gün
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-semibold text-white">
+                    Zorunlu Tercih Çerezi
+                    <br />
+                    <span className="font-mono text-[10px] text-neutral-400">GrowB Dijital</span>
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Kullanıcının verdiği çerez rıza durumu (all, necessary, denied).
+                  </td>
+                  <td className="p-3 text-neutral-400">
+                    Doğrudan ziyaretçi tarayıcısı.
+                    <br />
+                    Yasal KVKK rıza yönetimi.
+                  </td>
+                  <td className="p-3 font-mono text-emerald-400">growb_cookie_consent</td>
+                  <td className="p-3 text-neutral-400">1 Yıl</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            4. Çerez Tercihlerini Nasıl Değiştirebilirsiniz?
           </h2>
           <p>
             Web sitemizi ilk ziyaretinizde karşınıza çıkan çerez bildirim çubuğundan tercihlerinizi

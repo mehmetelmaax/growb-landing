@@ -13,10 +13,12 @@ import {
 
 export const AnalyticsProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
+  const [hasMetaConsent, setHasMetaConsent] = React.useState(false);
 
-  // 1. Consent Mode v2'yi en basta baslat
+  // 1. Consent Mode v2'yi en basta baslat ve mevcut riza durumunu oku
   useEffect(() => {
     initConsentMode();
+    setHasMetaConsent(hasAnalyticsConsent());
   }, []);
 
   // 2. Sayfa degisimlerinde otomatik page_view gonder
@@ -29,7 +31,9 @@ export const AnalyticsProvider: React.FC<{ children?: React.ReactNode }> = ({ ch
   // 3. Cerez onay tercihi degistiginde consent guncelle
   useEffect(() => {
     const handleConsentChange = () => {
-      if (hasAnalyticsConsent() && pathname) {
+      const consentGiven = hasAnalyticsConsent();
+      setHasMetaConsent(consentGiven);
+      if (consentGiven && pathname) {
         trackPageView(window.location.href);
       }
     };
@@ -66,8 +70,8 @@ export const AnalyticsProvider: React.FC<{ children?: React.ReactNode }> = ({ ch
         </>
       )}
 
-      {/* Meta Pixel Script Yüklemesi (Sadece ID tanimlanmissa) */}
-      {META_PIXEL_ID && (
+      {/* Meta Pixel Script Yüklemesi (Yalnızca açık rıza verildiyse yüklenir, aksi takdirde script hiç yüklenmez ve _fbp çerezi yazılmaz) */}
+      {META_PIXEL_ID && hasMetaConsent && (
         <Script
           id="meta-pixel"
           strategy="afterInteractive"

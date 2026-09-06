@@ -156,12 +156,32 @@ export default function KvkkAydinlatmaPage() {
 
         {/* 5. Aktarım */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-white">5. Kişisel Verilerin Aktarımı</h2>
+          <h2 className="text-xl font-bold text-white">
+            5. Kişisel Verilerin Aktarımı ve Üçüncü Taraf İşleyiciler
+          </h2>
           <p>
-            Toplanan kişisel verileriniz, yukarıda belirtilen amaçların gerçekleştirilmesi ve teknik
-            altyapının yürütülmesi amacıyla yalnızca operasyonel hizmet sağlayıcılarımıza (güvenli
-            sunucu barındırma altyapısı, anlık operasyon bildirim botları ve e-posta servisleri)
-            aktarılmakta olup üçüncü şahıslara ticari amaçla satılmamakta veya kiralanmamaktadır.
+            Toplanan kişisel verileriniz teknik altyapı, analitik ölçüm ve operasyonel süreçler
+            doğrultusunda aşağıdaki üçüncü taraf hizmet sağlayıcılara aktarılmaktadır:
+          </p>
+          <ul className="list-inside list-disc space-y-2 text-xs text-neutral-400">
+            <li>
+              <strong className="text-white">Google Ireland Ltd. (Google Analytics 4):</strong> Web
+              sitesi performans ve trafik analizi amacıyla maskelenmiş IP ve gezinme verileri
+              (Çerezler: _ga, _ga_*; Saklama: 2 yıl çerez / 14 ay analitik etkinlik verisi).
+            </li>
+            <li>
+              <strong className="text-white">Meta Platforms Ireland Ltd. (Meta Pixel):</strong>{" "}
+              Yalnızca açık rıza vermeniz halinde reklam dönüşüm ölçümü ve hedefleme amacıyla
+              gezinme ve Lead dönüşüm verileri (Çerezler: _fbp, _fbc; Saklama: 90 gün).
+            </li>
+            <li>
+              <strong className="text-white">Teknik Altyapı Sağlayıcıları:</strong> Güvenli bulut
+              sunucu barındırma, anlık operasyon bildirim botları ve kurumsal e-posta servisleri.
+            </li>
+          </ul>
+          <p className="text-xs text-neutral-400">
+            Kişisel verileriniz hiçbir surette üçüncü şahıslara ticari amaçla satılmaz veya
+            kiralanmaz.
           </p>
         </div>
 

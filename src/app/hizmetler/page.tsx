@@ -2,10 +2,18 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { HoneycombHive } from "@/components/honeycomb-hive";
 import { Phone, ArrowLeft, ShieldCheck, CheckCircle2 } from "lucide-react";
+
+const HoneycombHive = dynamic(
+  () => import("@/components/honeycomb-hive").then((mod) => mod.HoneycombHive),
+  { ssr: false }
+);
+
+const Footer = dynamic(() => import("@/components/footer").then((mod) => mod.Footer), {
+  ssr: false,
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 

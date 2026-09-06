@@ -39,14 +39,19 @@ describe("Analytics & Consent Mode v2", () => {
   });
 
   it("should update consent and persist to localStorage and cookie", () => {
+    const fbqSpy = vi.fn();
+    window.fbq = fbqSpy;
+
     updateConsent("all");
     expect(hasAnalyticsConsent()).toBe(true);
     expect(localStorage.getItem("growb_cookie_consent")).toBe("all");
     expect(document.cookie).toContain("growb_cookie_consent=all");
+    expect(fbqSpy).toHaveBeenCalledWith("consent", "grant");
 
     updateConsent("necessary");
     expect(hasAnalyticsConsent()).toBe(false);
     expect(localStorage.getItem("growb_cookie_consent")).toBe("necessary");
+    expect(fbqSpy).toHaveBeenCalledWith("consent", "revoke");
   });
 
   it("should dispatch events when consent is granted", () => {

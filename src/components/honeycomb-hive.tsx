@@ -1,10 +1,15 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Sparkles, Hexagon, Grid } from "lucide-react";
 import { ALL_13_SERVICES_DETAILED } from "@/data/services-detail-data";
 import { HiveFormationView } from "@/components/honeycomb/hive-formation-view";
-import { HiveDetailBox } from "@/components/honeycomb/hive-detail-box";
+
+const HiveDetailBox = dynamic(
+  () => import("@/components/honeycomb/hive-detail-box").then((mod) => mod.HiveDetailBox),
+  { ssr: false }
+);
 
 const SERVICE_ICONS: Record<string, { emoji: string }> = {
   "web-tasarim-yazilim": { emoji: "💻" },
@@ -24,7 +29,9 @@ const SERVICE_ICONS: Record<string, { emoji: string }> = {
 
 export const HoneycombHive: React.FC = () => {
   const wing1Services = ALL_13_SERVICES_DETAILED.slice(0, 6);
-  const centerService = ALL_13_SERVICES_DETAILED.find((s) => s.slug === "aylik-buyume-danismanligi") ?? ALL_13_SERVICES_DETAILED[12]!;
+  const centerService =
+    ALL_13_SERVICES_DETAILED.find((s) => s.slug === "aylik-buyume-danismanligi") ??
+    ALL_13_SERVICES_DETAILED[12]!;
   const wing2Services = ALL_13_SERVICES_DETAILED.slice(6, 12);
 
   const [selectedSlug, setSelectedSlug] = useState<string>(centerService.slug);
@@ -39,7 +46,8 @@ export const HoneycombHive: React.FC = () => {
     setTimeout(() => {
       if (detailSectionRef.current) {
         const yOffset = -90;
-        const y = detailSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        const y =
+          detailSectionRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: "smooth" });
       }
     }, 50);
@@ -53,46 +61,47 @@ export const HoneycombHive: React.FC = () => {
     }
   };
 
-  const activeService = ALL_13_SERVICES_DETAILED.find((s) => s.slug === selectedSlug) ?? centerService;
+  const activeService =
+    ALL_13_SERVICES_DETAILED.find((s) => s.slug === selectedSlug) ?? centerService;
   const activeIcon = SERVICE_ICONS[activeService.slug] ?? { emoji: "🐝" };
 
   return (
-    <div className="w-full relative" ref={formationTopRef}>
+    <div className="relative w-full" ref={formationTopRef}>
       {/* Üst Mod Seçimi: 6-1-6 Kovan Formasyonu vs Kart Listesi */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
+      <div className="mb-8 flex flex-col items-center justify-between gap-4 border-b border-white/10 pb-4 sm:flex-row">
         <div className="flex items-center gap-2">
-          <div className="px-3.5 py-1.5 rounded-full bg-[#FFC300]/10 border border-[#FFC300]/30 text-xs font-mono font-bold text-[#FFC300] flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#FFC300]" />
+          <div className="flex items-center gap-2 rounded-full border border-[#FFC300]/30 bg-[#FFC300]/10 px-3.5 py-1.5 font-mono text-xs font-bold text-[#FFC300]">
+            <Sparkles className="h-3.5 w-3.5 text-[#FFC300]" />
             <span>6 - 1 - 6 KOVAN DİZİLİMİ</span>
           </div>
-          <span className="text-xs font-mono text-neutral-400 hidden md:inline">
+          <span className="hidden font-mono text-xs text-neutral-400 md:inline">
             (6 Varlık Peteği + 1 Merkez Kovan + 6 Büyüme Peteği)
           </span>
         </div>
 
-        <div className="flex items-center gap-2 bg-white/5 border border-white/10 p-1 rounded-full">
+        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1">
           <button
             onClick={() => setViewMode("formation")}
             type="button"
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
+            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 font-mono text-xs font-bold transition-all ${
               viewMode === "formation"
-                ? "bg-[#FFC300] text-[#0A0A0A] shadow-md scale-105"
+                ? "scale-105 bg-[#FFC300] text-[#0A0A0A] shadow-md"
                 : "text-neutral-400 hover:text-white"
             }`}
           >
-            <Hexagon className="w-3.5 h-3.5" />
+            <Hexagon className="h-3.5 w-3.5" />
             <span>6 - 1 - 6 Formasyonu</span>
           </button>
           <button
             onClick={() => setViewMode("grid")}
             type="button"
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
+            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 font-mono text-xs font-bold transition-all ${
               viewMode === "grid"
-                ? "bg-[#FFC300] text-[#0A0A0A] shadow-md scale-105"
+                ? "scale-105 bg-[#FFC300] text-[#0A0A0A] shadow-md"
                 : "text-neutral-400 hover:text-white"
             }`}
           >
-            <Grid className="w-3.5 h-3.5" />
+            <Grid className="h-3.5 w-3.5" />
             <span>Kart Listesi (13)</span>
           </button>
         </div>

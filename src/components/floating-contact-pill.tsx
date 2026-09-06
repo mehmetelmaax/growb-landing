@@ -26,10 +26,10 @@ export const FloatingContactPill: React.FC = () => {
       {/* Avatar with Online Pulse Badge */}
       <div className="relative">
         <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-full border-2 border-white bg-neutral-100 shadow-sm">
-          {/* TODO_CONTENT: [CEO Görseli Bekleniyor - Floating Contact Pill Avatar] */}
+          {/* TODO_CONTENT: [Gerçek kurucu fotoğraf çekimi sonrası güncellenecek - Temsili stok fotoğrafı] */}
           <Image
             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
-            alt="Mehmet Demir - GrowB Dijital Büyüme Danışmanı"
+            alt="Temsili görsel"
             width={44}
             height={44}
             className="h-full w-full object-cover"

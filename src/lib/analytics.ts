@@ -98,6 +98,10 @@ export function updateConsent(status: ConsentType): void {
     });
   }
 
+  if (window.fbq) {
+    window.fbq("consent", isGranted ? "grant" : "revoke");
+  }
+
   window.dispatchEvent(new CustomEvent("cookie_consent_updated", { detail: status }));
 }
 

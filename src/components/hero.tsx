@@ -45,14 +45,25 @@ export const Hero: React.FC = () => {
   }, [revealedCount, isCompleted]);
 
   // HERO KİLİT MEKANİZMASI: 13 Polen Dolana Kadar Sayfa Kilitlidir
+  // (WCAG: prefers-reduced-motion, mobil dokunmatik ve klavye gezintisinde kilit devre dışıdır)
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if ("scrollRestoration" in window.history) {
-        window.history.scrollRestoration = "manual";
-      }
-      if (window.scrollY > 0 && !isCompletedRef.current) {
-        window.scrollTo(0, 0);
-      }
+    if (typeof window === "undefined") return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile =
+      window.innerWidth < 1024 || "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    if (prefersReducedMotion || isMobile) {
+      setRevealedCount(13);
+      setIsCompleted(true);
+      return;
+    }
+
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    if (window.scrollY > 0 && !isCompletedRef.current) {
+      window.scrollTo(0, 0);
     }
 
     const setLock = (locked: boolean) => {
@@ -90,34 +101,22 @@ export const Hero: React.FC = () => {
       advancePollen(e.deltaY > 0 ? 1 : -1);
     };
 
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0]?.clientY ?? 0;
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!isCompletedRef.current) e.preventDefault();
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isCompletedRef.current) return;
-      const deltaY = touchStartY - (e.changedTouches[0]?.clientY ?? 0);
-      if (Math.abs(deltaY) > 25) {
-        advancePollen(deltaY > 0 ? 1 : -1);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (["Tab", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"].includes(e.key)) {
+        setRevealedCount(13);
+        setIsCompleted(true);
+        setLock(false);
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.documentElement.style.overflow = document.body.style.overflow = "";
       document.documentElement.style.height = document.body.style.height = "";
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isCompleted]);
 

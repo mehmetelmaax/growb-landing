@@ -1,3 +1,18 @@
+/**
+ * GrowB Landing — Hizmetler Bölümü Fare Tekerleği Kontrol Kancası
+ *
+ * GEREKÇE (WCAG 2.1 AA & UX Erişilebilirlik Uyumu):
+ * 1. prefers-reduced-motion (WCAG 2.2.2 & 2.3.3): Vestibüler bozukluğu veya hareket hassasiyeti
+ *    olan ziyaretçilerde sistem genelinde animasyon azaltma tercih edildiğinde tekerlek kilidi
+ *    tamamen devre dışı bırakılır, sayfa doğal hızında akar.
+ * 2. Klavye Navigasyonu (WCAG 2.1.1 Klavye Erişilebilirliği): Klavye ve ekran okuyucu kullanan
+ *    ziyaretçilerin Tab, Ok tuşları, PageUp/Down ile gezinmesini engellememek için klavye
+ *    etkileşimlerinde tekerlek kilidi anında serbest bırakılır.
+ * 3. Mobil Dokunmatik Deneyim (Touch UX): Dokunmatik ekranlarda doğal momentum kaydırma
+ *    (inertial scrolling) hissinin bozulmaması ve ekranın takıldığı algısının oluşmaması için
+ *    mobil ve dokunmatik cihazlarda (<1024px ve touch) bu mekanizma tamamen kapalıdır.
+ */
+
 import { useEffect, useRef, useCallback } from "react";
 
 interface UseServicesWheelLockProps {
@@ -47,7 +62,22 @@ export function useServicesWheelLock({
 
   useEffect(() => {
     const sectionEl = sectionRef.current;
-    if (!sectionEl) return;
+    if (!sectionEl || typeof window === "undefined") return;
+
+    // WCAG 1: prefers-reduced-motion kontrolü
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      unlockPage();
+      return;
+    }
+
+    // WCAG 3: Mobilde tamamen kapalı (touch ve ekran genişliği kontrolü)
+    const isMobileDevice =
+      window.innerWidth < 1024 || "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    if (isMobileDevice) {
+      unlockPage();
+      return;
+    }
 
     const handleScrollCheck = () => {
       if (isCompletedServicesRef.current) return;
@@ -62,6 +92,7 @@ export function useServicesWheelLock({
 
     window.addEventListener("scroll", handleScrollCheck, { passive: true });
 
+    // Masaüstü fare tekerleği adımlaması
     const handleWheel = (e: WheelEvent) => {
       if (isCompletedServicesRef.current) return;
 
@@ -84,44 +115,25 @@ export function useServicesWheelLock({
       }
     };
 
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0]?.clientY ?? 0;
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (isCompletedServicesRef.current) return;
-      const rect = sectionEl.getBoundingClientRect();
-      if (rect.top <= 80 && rect.bottom >= window.innerHeight * 0.4) {
-        e.preventDefault();
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isCompletedServicesRef.current) return;
-      const rect = sectionEl.getBoundingClientRect();
-      if (rect.top > 80 || rect.bottom < window.innerHeight * 0.4) return;
-
-      const deltaY = touchStartY - (e.changedTouches[0]?.clientY ?? 0);
-      if (deltaY > 35) {
-        onNext();
-      } else if (deltaY < -35) {
-        onPrev();
+    // WCAG 2: Klavye navigasyonunda tekerlek kilidini derhal serbest bırak
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        ["Tab", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", "Space"].includes(
+          e.key
+        )
+      ) {
+        unlockPage();
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       unlockPage();
       window.removeEventListener("scroll", handleScrollCheck);
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [totalServices, lockPage, unlockPage, onNext, onPrev, sectionRef]);
 

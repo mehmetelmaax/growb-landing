@@ -122,10 +122,10 @@ export const NavbarServicesDropdown: React.FC<NavbarServicesDropdownProps> = ({
             </div>
 
             <div className="relative mb-3 h-24 w-full overflow-hidden rounded-xl border border-neutral-200">
-              {/* TODO_CONTENT: [CEO Görseli Bekleniyor - Navbar Hizmetler Önizleme] */}
+              {/* TODO_CONTENT: [Gerçek ajans ekibi fotoğraf çekimi sonrası güncellenecek - Temsili stok fotoğrafı] */}
               <Image
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&auto=format&fit=crop&q=80"
-                alt="GrowB Dijital Strateji Ekibi"
+                alt="Temsili görsel"
                 fill
                 className="object-cover"
               />
