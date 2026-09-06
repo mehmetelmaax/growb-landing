@@ -56,7 +56,7 @@ export const FeaturedWorks: React.FC = () => {
                       alt={client.name}
                       width={180}
                       height={70}
-                      className="max-h-full max-w-full object-contain opacity-70 grayscale filter transition-all duration-300 group-hover:scale-105 group-hover:opacity-100 group-hover:grayscale-0"
+                      className="max-h-full max-w-full object-contain filter transition-all duration-300 group-hover:scale-105"
                     />
                   </div>
 
