@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight, Sparkles, Phone } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
@@ -25,8 +25,8 @@ const ConsultationModal = dynamic(
 
 export const Hero: React.FC = () => {
   const [variant, setVariant] = useState<HeroVariantKey>("control");
-  const [revealedCount, setRevealedCount] = useState<number>(1);
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [revealedCount, setRevealedCount] = useState<number>(13);
+  const [isCompleted, setIsCompleted] = useState<boolean>(true);
   const [hoveredPollen, setHoveredPollen] = useState<HivePollen | null>(null);
   const [isAnalysisModalOpen, setIsAnalysisModalOpen] = useState(false);
 
@@ -35,107 +35,10 @@ export const Hero: React.FC = () => {
   }, []);
 
   const copy = HERO_COPY_VARIANTS[variant];
-  const revealedCountRef = useRef(1);
-  const isCompletedRef = useRef(false);
-  const lastWheelTimeRef = useRef(0);
-
-  useEffect(() => {
-    revealedCountRef.current = revealedCount;
-    isCompletedRef.current = isCompleted;
-  }, [revealedCount, isCompleted]);
-
-  // HERO KİLİT MEKANİZMASI: 13 Polen Dolana Kadar Sayfa Kilitlidir
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if ("scrollRestoration" in window.history) {
-        window.history.scrollRestoration = "manual";
-      }
-      if (window.scrollY > 0 && !isCompletedRef.current) {
-        window.scrollTo(0, 0);
-      }
-    }
-
-    const setLock = (locked: boolean) => {
-      document.documentElement.style.overflow = document.body.style.overflow = locked
-        ? "hidden"
-        : "";
-      document.documentElement.style.height = document.body.style.height = locked ? "100%" : "";
-    };
-    setLock(!isCompleted);
-
-    const handleWheel = (e: WheelEvent) => {
-      if (isCompletedRef.current) return;
-      e.preventDefault();
-      e.stopPropagation();
-
-      const now = Date.now();
-      if (now - lastWheelTimeRef.current < 160) return;
-
-      if (e.deltaY > 0) {
-        lastWheelTimeRef.current = now;
-        setRevealedCount((prev) => {
-          const next = Math.min(13, prev + 1);
-          if (next === 13) {
-            setTimeout(() => {
-              setIsCompleted(true);
-              setLock(false);
-            }, 400);
-          }
-          return next;
-        });
-      } else if (e.deltaY < 0) {
-        lastWheelTimeRef.current = now;
-        setRevealedCount((prev) => Math.max(1, prev - 1));
-      }
-    };
-
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0]?.clientY ?? 0;
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!isCompletedRef.current) e.preventDefault();
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isCompletedRef.current) return;
-      const deltaY = touchStartY - (e.changedTouches[0]?.clientY ?? 0);
-      if (deltaY > 25) {
-        setRevealedCount((prev) => {
-          const next = Math.min(13, prev + 1);
-          if (next === 13) {
-            setTimeout(() => {
-              setIsCompleted(true);
-              setLock(false);
-            }, 400);
-          }
-          return next;
-        });
-      } else if (deltaY < -25) {
-        setRevealedCount((prev) => Math.max(1, prev - 1));
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
-
-    return () => {
-      document.documentElement.style.overflow = document.body.style.overflow = "";
-      document.documentElement.style.height = document.body.style.height = "";
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [isCompleted]);
 
   const completeInstantly = () => {
     setRevealedCount(13);
     setIsCompleted(true);
-    document.documentElement.style.overflow = document.body.style.overflow = "";
-    document.documentElement.style.height = document.body.style.height = "";
   };
 
   return (

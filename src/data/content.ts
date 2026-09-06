@@ -55,7 +55,9 @@ export const SITE_CONFIG = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com",
   socials: {
     whatsapp: "https://wa.me/905414842426",
+    instagram: "https://www.instagram.com/growb.dijital/",
   },
+  instagramHandle: "@growb.dijital",
   getWhatsappUrl: (message?: string) => {
     return message
       ? `https://wa.me/905414842426?text=${encodeURIComponent(message)}`
@@ -105,13 +107,44 @@ export const CLIENT_LOGOS = [
 ];
 
 export const MANIFESTO_WORDS = [
-  "TÜRKİYE'DE", "HER", "GÜN", "BİNLERCE", "MÜŞTERİ", "TELEFONDAN",
-  "HİZMET", "VE", "USTA", "ARIYOR.", "FAKAT", "YAVAŞ", "SİTELER,",
-  "TELEFONA", "ÇIKMAYAN", "FREELANCER'LAR", "VE", "BOŞA", "GİDEN",
-  "REKLAM", "BÜTÇELERİ", "İŞLETMELERİN", "PARASINI", "YUTUYOR.",
-  "BİZ", "MASRAF", "DEĞİL;", "BÜYÜME", "ORTAĞINIZIZ",
-  "TELEFONUNUZU", "HER", "GÜN", "DÜZENLİ", "ÇALDIRAN", "BİR",
-  "SATIŞ", "MAKİNESİ", "KURUYORUZ."
+  "TÜRKİYE'DE",
+  "HER",
+  "GÜN",
+  "BİNLERCE",
+  "MÜŞTERİ",
+  "TELEFONDAN",
+  "HİZMET",
+  "VE",
+  "USTA",
+  "ARIYOR.",
+  "FAKAT",
+  "YAVAŞ",
+  "SİTELER,",
+  "TELEFONA",
+  "ÇIKMAYAN",
+  "FREELANCER'LAR",
+  "VE",
+  "BOŞA",
+  "GİDEN",
+  "REKLAM",
+  "BÜTÇELERİ",
+  "İŞLETMELERİN",
+  "PARASINI",
+  "YUTUYOR.",
+  "BİZ",
+  "MASRAF",
+  "DEĞİL;",
+  "BÜYÜME",
+  "ORTAĞINIZIZ",
+  "TELEFONUNUZU",
+  "HER",
+  "GÜN",
+  "DÜZENLİ",
+  "ÇALDIRAN",
+  "BİR",
+  "SATIŞ",
+  "MAKİNESİ",
+  "KURUYORUZ.",
 ];
 
 export const METRICS_DATA = [
@@ -355,5 +388,6 @@ export const FINAL_CTA_DATA = {
     "15 dakikalık ücretsiz strateji görüşmesi planlayın; bölgenizdeki pazar potansiyelini, rakip açıklarını ve işletmenize özel büyüme yol haritasını birlikte netleştirelim.",
   ctaText: "15 Dk Görüşme Planla",
   ctaHref: "#iletisim",
-  guaranteeText: "🔒 %100 Resmi Sözleşmeli Hizmet • %50 Canlı Test Onayı Güvencesi • 1 Yıl Yazılım Desteği",
+  guaranteeText:
+    "🔒 %100 Resmi Sözleşmeli Hizmet • %50 Canlı Test Onayı Güvencesi • 1 Yıl Yazılım Desteği",
 };

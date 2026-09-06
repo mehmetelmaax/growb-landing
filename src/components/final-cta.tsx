@@ -6,6 +6,7 @@ import { FINAL_CTA_DATA } from "@/data/content";
 import { Send, ShieldCheck, Sparkles } from "lucide-react";
 import { FinalCtaServiceSelector } from "./final-cta/final-cta-service-selector";
 import { FinalCtaSuccessCard } from "./final-cta/final-cta-success-card";
+import { FinalCtaInputFields } from "./final-cta/final-cta-input-fields";
 import { useFormAbandonment } from "@/hooks/use-form-abandonment";
 import { trackLead } from "@/lib/analytics";
 
@@ -136,84 +137,18 @@ export const FinalCta: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                      <label
-                        htmlFor="final-name"
-                        className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
-                      >
-                        Yetkili Adı Soyadı
-                      </label>
-                      <input
-                        id="final-name"
-                        type="text"
-                        value={name}
-                        onFocus={() => onFieldFocus("name")}
-                        onBlur={() => onFieldBlur("name")}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Örn: Mehmet Demir"
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="final-phone"
-                        className="mb-1.5 block font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300]"
-                      >
-                        Telefon Numarası *
-                      </label>
-                      <input
-                        id="final-phone"
-                        type="tel"
-                        required
-                        value={phone}
-                        onFocus={() => onFieldFocus("phone")}
-                        onBlur={() => onFieldBlur("phone")}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="0541 484 24 26"
-                        className="w-full rounded-xl border border-[#FFC300]/50 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="final-sector"
-                      className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
-                    >
-                      Sektörünüz / İşletmeniz
-                    </label>
-                    <input
-                      id="final-sector"
-                      type="text"
-                      value={sector}
-                      onFocus={() => onFieldFocus("sector")}
-                      onBlur={() => onFieldBlur("sector")}
-                      onChange={(e) => setSector(e.target.value)}
-                      placeholder="Örn: Evden Eve Nakliyat, Klinik, Otel..."
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="final-notes"
-                      className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
-                    >
-                      Eklemek İstediğiniz Not (Opsiyonel)
-                    </label>
-                    <textarea
-                      id="final-notes"
-                      rows={2}
-                      value={notes}
-                      onFocus={() => onFieldFocus("notes")}
-                      onBlur={() => onFieldBlur("notes")}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Örn: Mevcut sitemiz var ancak Google Haritalarda çıkmıyoruz..."
-                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
-                    />
-                  </div>
+                  <FinalCtaInputFields
+                    name={name}
+                    setName={setName}
+                    phone={phone}
+                    setPhone={setPhone}
+                    sector={sector}
+                    setSector={setSector}
+                    notes={notes}
+                    setNotes={setNotes}
+                    onFieldFocus={onFieldFocus}
+                    onFieldBlur={onFieldBlur}
+                  />
 
                   <div className="flex select-none items-start gap-2.5 text-xs text-neutral-400">
                     <input

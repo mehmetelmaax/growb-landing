@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { ArrowUpRight, MapPin, Phone, Mail, Clock, Instagram } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
 
 export const FooterNavColumns: React.FC = () => {
@@ -200,6 +200,26 @@ export const FooterNavColumns: React.FC = () => {
               </div>
             </div>
             <ArrowUpRight className="h-3.5 w-3.5 text-neutral-400 transition-colors group-hover:text-[#FFC300]" />
+          </a>
+
+          <a
+            href={SITE_CONFIG.socials.instagram}
+            target="_blank"
+            rel="noreferrer"
+            className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-3 transition-all hover:border-[#E1306C]/40 hover:bg-[#E1306C]/10 focus-visible:ring-2 focus-visible:ring-[#FFC300]"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#E1306C]/15 text-[#E1306C]">
+                <Instagram className="h-3.5 w-3.5" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-mono text-[10px] uppercase text-neutral-400">Instagram</span>
+                <span className="text-xs font-bold text-white transition-colors group-hover:text-[#E1306C]">
+                  {SITE_CONFIG.instagramHandle}
+                </span>
+              </div>
+            </div>
+            <ArrowUpRight className="h-3.5 w-3.5 text-neutral-400 transition-colors group-hover:text-[#E1306C]" />
           </a>
 
           <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/[0.02] p-3 font-mono text-xs text-neutral-400">

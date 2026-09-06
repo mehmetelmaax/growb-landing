@@ -42,8 +42,8 @@ export const WhoAreWe: React.FC = () => {
           if (el) {
             const rect = el.getBoundingClientRect();
             const windowHeight = window.innerHeight;
-            const startY = windowHeight * 0.9;
-            const endY = windowHeight * 0.5;
+            const startY = windowHeight * 0.95;
+            const endY = windowHeight * 0.55;
             const p = Math.max(0, Math.min(1, (startY - rect.top) / (startY - endY)));
             setProgress(p);
           }

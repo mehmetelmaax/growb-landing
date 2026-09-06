@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Menu, X, Moon, Sun } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { NavbarServicesDropdown } from "./navbar/navbar-services-dropdown";
 
 const NAV_LINKS = [
@@ -18,7 +18,6 @@ export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isDarkIcon, setIsDarkIcon] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -102,15 +101,6 @@ export const Navbar: React.FC = () => {
         </nav>
 
         <div className="hidden shrink-0 items-center justify-end gap-4 lg:flex lg:flex-1 xl:gap-5">
-          <button
-            type="button"
-            onClick={() => setIsDarkIcon((prev) => !prev)}
-            aria-label="Tema Modunu Değiştir"
-            className="rounded-md p-1 text-neutral-400 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#FFC300]"
-          >
-            {isDarkIcon ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-[#FFC300]" />}
-          </button>
-
           <a
             href="#iletisim"
             onClick={unlockScroll}

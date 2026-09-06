@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight, Star, Globe, MessageSquare } from "lucide-react";
+import { ArrowUpRight, Star, Globe, MessageSquare, Instagram } from "lucide-react";
 import { ScrollToTopButton } from "@/components/scroll-to-top-button";
 import { SITE_CONFIG } from "@/data/content";
 import { FooterNavColumns } from "./footer/footer-nav-columns";
@@ -14,6 +14,16 @@ export const Footer: React.FC = () => {
       <div className="relative mx-auto flex max-w-[1440px] flex-col items-stretch gap-4 sm:gap-6 lg:flex-row">
         {/* Sol Dikey Sosyal Medya Hapı */}
         <div className="z-20 hidden shrink-0 flex-col items-center justify-center gap-5 self-center rounded-full border border-white/20 bg-white/10 px-3 py-7 shadow-[0_15px_35px_rgba(0,0,0,0.5)] backdrop-blur-xl lg:flex">
+          <a
+            href={SITE_CONFIG.socials.instagram}
+            target="_blank"
+            rel="noreferrer"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-neutral-300 transition-all duration-300 hover:bg-[#E1306C] hover:text-white hover:shadow-[0_0_20px_#E1306C] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
+            aria-label="Instagram Profilimiz"
+            title="Instagram"
+          >
+            <Instagram className="h-4 w-4" />
+          </a>
           <a
             href={SITE_CONFIG.getWhatsappUrl("Merhaba GrowB Dijital, footer üzerinden ulaşıyorum.")}
             target="_blank"
@@ -37,6 +47,15 @@ export const Footer: React.FC = () => {
         {/* Ana Koyu Kart */}
         <div className="relative flex-1 overflow-hidden rounded-[2rem] border border-neutral-800 bg-[#111111] p-6 text-white shadow-2xl sm:rounded-[3rem] sm:p-10 md:p-12 lg:p-14">
           <div className="mb-6 flex w-fit items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-neutral-300 backdrop-blur-xl lg:hidden">
+            <a
+              href={SITE_CONFIG.socials.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-[#E1306C]"
+              aria-label="Instagram Profilimiz"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
             <a
               href={SITE_CONFIG.getWhatsappUrl("Merhaba GrowB Dijital, web sitenizden ulaşıyorum.")}
               target="_blank"

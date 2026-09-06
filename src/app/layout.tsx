@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
 import { CookieBanner } from "@/components/cookie-banner";
-import { FloatingContactPill } from "@/components/floating-contact-pill";
 
 const AnalyticsProvider = dynamic(
   () => import("@/components/analytics/analytics-provider").then((mod) => mod.AnalyticsProvider),
@@ -103,6 +102,7 @@ export default function RootLayout({
       { "@type": "AdministrativeArea", name: "Aksaray" },
       { "@type": "Country", name: "Türkiye" },
     ],
+    sameAs: ["https://www.instagram.com/growb.dijital/"],
   };
 
   return (
@@ -127,7 +127,6 @@ export default function RootLayout({
         <AnalyticsProvider>
           {children}
           <CookieBanner />
-          <FloatingContactPill />
         </AnalyticsProvider>
       </body>
     </html>

@@ -35,9 +35,10 @@ export const Manifesto: React.FC = () => {
           if (el) {
             const rect = el.getBoundingClientRect();
             const windowHeight = window.innerHeight;
-            const total = windowHeight + rect.height;
-            const current = windowHeight - rect.top;
-            const p = Math.max(0, Math.min(1, current / total));
+            // Ekrana girer girmez hızla başlar, merkezde tamamlanır
+            const startY = windowHeight * 0.92;
+            const endY = windowHeight * 0.38;
+            const p = Math.max(0, Math.min(1, (startY - rect.top) / (startY - endY)));
             setProgress(p);
           }
           ticking = false;
@@ -57,27 +58,39 @@ export const Manifesto: React.FC = () => {
     <section
       id="manifesto"
       ref={containerRef}
-      className="relative overflow-hidden border-y border-white/5 bg-[#0A0A0A] py-32"
+      className="relative overflow-hidden border-y border-white/5 bg-[#0A0A0A] py-24 sm:py-28"
     >
       <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
         <h2 className="flex select-none flex-wrap justify-center gap-x-3.5 gap-y-2 text-3xl font-black leading-[1.15] tracking-tight sm:gap-x-5 sm:text-5xl md:text-6xl lg:text-7xl">
           {MANIFESTO_WORDS.map((word, index) => {
-            const start = (index / totalWords) * 0.7;
-            const end = Math.min(1, ((index + 1) / totalWords) * 0.7 + 0.1);
-            let wordOpacity = 0.18;
+            const step = 0.85 / totalWords;
+            const start = index * step;
+            const end = Math.min(1, start + step * 1.6);
+            let wordOpacity = 0.32;
             if (progress >= end) {
               wordOpacity = 1;
             } else if (progress > start) {
-              wordOpacity = 0.18 + ((progress - start) / (end - start)) * 0.82;
+              wordOpacity = 0.32 + ((progress - start) / (end - start)) * 0.68;
             }
+            const isHighlight =
+              word === "BÜYÜME" ||
+              word === "ORTAĞINIZIZ." ||
+              word === "SATIŞ" ||
+              word === "MAKİNESİ";
+
             return (
               <span
                 key={index}
                 style={{
                   opacity: wordOpacity,
-                  color: wordOpacity > 0.6 ? "#FFFDF5" : "rgba(255, 253, 245, 0.18)",
+                  color:
+                    wordOpacity > 0.6
+                      ? isHighlight
+                        ? "#FFC300"
+                        : "#FFFDF5"
+                      : "rgba(255, 253, 245, 0.32)",
                 }}
-                className="transition-colors duration-150"
+                className="transition-all duration-100 ease-out"
               >
                 {word}
               </span>
