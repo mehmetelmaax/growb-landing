@@ -45,3 +45,4 @@ export class InMemoryRateLimiter {
 
 export const globalInMemoryRateLimiter = new InMemoryRateLimiter(10 * 60 * 1000, 5);
 export const pagespeedInMemoryRateLimiter = new InMemoryRateLimiter(10 * 60 * 1000, 3);
+export const invalidRequestsRateLimiter = new InMemoryRateLimiter(10 * 60 * 1000, 30);

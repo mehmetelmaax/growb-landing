@@ -14,7 +14,7 @@ export const FooterNavColumns: React.FC = () => {
         <ul className="flex flex-col space-y-3 text-sm font-medium text-neutral-300">
           <li>
             <a
-              href="#manifesto"
+              href="/#manifesto"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               Büyüme Manifestosu
@@ -22,7 +22,7 @@ export const FooterNavColumns: React.FC = () => {
           </li>
           <li>
             <a
-              href="#hizmetler"
+              href="/#hizmetler"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               13 Uzmanlık Hizmeti
@@ -30,7 +30,7 @@ export const FooterNavColumns: React.FC = () => {
           </li>
           <li>
             <a
-              href="#surec"
+              href="/#surec"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               4 Aşamalı Süreç
@@ -38,7 +38,7 @@ export const FooterNavColumns: React.FC = () => {
           </li>
           <li>
             <a
-              href="#metrikler"
+              href="/#metrikler"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               Saha Metrikleri
@@ -54,7 +54,7 @@ export const FooterNavColumns: React.FC = () => {
           </li>
           <li>
             <a
-              href="#projeler"
+              href="/#projeler"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               Canlı Referanslar
@@ -62,7 +62,7 @@ export const FooterNavColumns: React.FC = () => {
           </li>
           <li>
             <a
-              href="#skor-ogren"
+              href="/#skor-ogren"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               Hız & SEO Testi
@@ -70,7 +70,7 @@ export const FooterNavColumns: React.FC = () => {
           </li>
           <li>
             <a
-              href="#sss"
+              href="/#sss"
               className="rounded transition-colors hover:text-[#FFC300] focus-visible:ring-2 focus-visible:ring-[#FFC300]"
             >
               Sıkça Sorulanlar

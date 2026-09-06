@@ -153,3 +153,89 @@ describe("Web Sitesi URL Doğrulama & Normalizasyon (normalizeUrl)", () => {
     expect(normalizeUrl("http://")).toBeNull();
   });
 });
+
+describe("Lead API Uç Noktası & Hata Mesajları Güvenliği (POST /api/lead)", () => {
+  it("Telefon eksik olduğunda Zod Türkçe hata döner ve details sızdırmaz", async () => {
+    const { POST } = await import("@/app/api/lead/route");
+    const req = new Request("http://localhost:3000/api/lead", {
+      method: "POST",
+      body: JSON.stringify({ kvkkConsent: true }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(400);
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json.error).toBe("Telefon numarası zorunludur.");
+    expect(json.details).toBeUndefined(); // Şema detayları asla sızdırılmaz
+  });
+
+  it("KVKK onayı eksik olduğunda Türkçe hata döner", async () => {
+    const { POST } = await import("@/app/api/lead/route");
+    const req = new Request("http://localhost:3000/api/lead", {
+      method: "POST",
+      body: JSON.stringify({ phone: "05414842426" }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(400);
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json.error).toBe("KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.");
+    expect(json.details).toBeUndefined();
+  });
+
+  it("Bildirim kanalları yapılandırılmamışsa HTTP 500 döner ve WhatsApp linki sunar", async () => {
+    const originalToken = process.env.TELEGRAM_BOT_TOKEN;
+    const originalChatId = process.env.TELEGRAM_CHAT_ID;
+    const originalResend = process.env.RESEND_API_KEY;
+
+    delete process.env.TELEGRAM_BOT_TOKEN;
+    delete process.env.TELEGRAM_CHAT_ID;
+    delete process.env.RESEND_API_KEY;
+
+    try {
+      const { POST } = await import("@/app/api/lead/route");
+      const req = new Request("http://localhost:3000/api/lead", {
+        method: "POST",
+        body: JSON.stringify({
+          phone: "05414842426",
+          kvkkConsent: true,
+        }),
+      });
+      const res = await POST(req);
+      expect(res.status).toBe(500);
+      const json = await res.json();
+      expect(json.success).toBe(false);
+      expect(json.error).toContain("Şu an talebinizi sistem üzerinden alamıyoruz");
+      expect(json.whatsappUrl).toBeDefined();
+    } finally {
+      process.env.TELEGRAM_BOT_TOKEN = originalToken;
+      process.env.TELEGRAM_CHAT_ID = originalChatId;
+      process.env.RESEND_API_KEY = originalResend;
+    }
+  });
+
+  it("Hatalı form gönderimleri (örn: 5 kez) geçerli istek kotasını (5/10dk) tüketmez", async () => {
+    const { POST } = await import("@/app/api/lead/route");
+    const testIp = "192.168.99.77";
+
+    // 5 kez hatalı istek gönder (telefon eksik)
+    for (let i = 0; i < 5; i++) {
+      const req = new Request("http://localhost:3000/api/lead", {
+        method: "POST",
+        headers: { "x-forwarded-for": testIp },
+        body: JSON.stringify({ kvkkConsent: true }),
+      });
+      const res = await POST(req);
+      expect(res.status).toBe(400); // 429 DEĞİL, 400 dönmeli!
+    }
+
+    // 6. hatalı istekte de hemen 429 almamalı (hatalı istek eşiği 30'dur)
+    const req6 = new Request("http://localhost:3000/api/lead", {
+      method: "POST",
+      headers: { "x-forwarded-for": testIp },
+      body: JSON.stringify({ kvkkConsent: true }),
+    });
+    const res6 = await POST(req6);
+    expect(res6.status).toBe(400);
+  });
+});

@@ -6,10 +6,6 @@ export async function GET() {
   return NextResponse.json(
     {
       status: "ok",
-      service: "growb-landing",
-      timestamp: new Date().toISOString(),
-      version: "1.0.0",
-      uptime: Math.floor(process.uptime()),
     },
     {
       status: 200,

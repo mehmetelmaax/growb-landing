@@ -136,23 +136,64 @@ export function normalizeUrl(input: string): string | null {
  */
 export const LeadPayloadSchema = z.object({
   type: z
-    .enum(["PROJE_BASLAT", "DETAY_AL", "ANALIZ", "HIZ_SKORU", "HIZMET_TEKLIF"])
+    .enum(["PROJE_BASLAT", "DETAY_AL", "ANALIZ", "HIZ_SKORU", "HIZMET_TEKLIF"], {
+      message: "Geçersiz talep türü.",
+    })
     .default("PROJE_BASLAT"),
-  name: z.string().trim().max(80, "Isim en fazla 80 karakter olabilir.").optional().nullable(),
-  phone: z.string().min(1, "Telefon numarasi zorunludur."),
-  service: z.string().trim().max(100).optional().nullable(),
-  siteUrl: z.string().trim().max(250).optional().nullable(),
-  sector: z.string().trim().max(80).optional().nullable(),
-  source: z.string().trim().max(120).default("Web Sitesi"),
-  notes: z.string().trim().max(1000).optional().nullable(),
+  name: z
+    .string({ message: "İsim geçerli bir metin olmalıdır." })
+    .trim()
+    .max(80, "İsim en fazla 80 karakter olabilir.")
+    .optional()
+    .nullable(),
+  phone: z
+    .string({ message: "Telefon numarası zorunludur." })
+    .trim()
+    .min(1, "Telefon numarası zorunludur."),
+  service: z
+    .string({ message: "Hizmet alanı geçerli bir metin olmalıdır." })
+    .trim()
+    .max(100, "Hizmet alanı en fazla 100 karakter olabilir.")
+    .optional()
+    .nullable(),
+  siteUrl: z
+    .string({ message: "Web sitesi adresi geçerli bir metin olmalıdır." })
+    .trim()
+    .max(250, "Web sitesi adresi en fazla 250 karakter olabilir.")
+    .optional()
+    .nullable(),
+  sector: z
+    .string({ message: "Sektör bilgisi geçerli bir metin olmalıdır." })
+    .trim()
+    .max(80, "Sektör bilgisi en fazla 80 karakter olabilir.")
+    .optional()
+    .nullable(),
+  source: z
+    .string({ message: "Kaynak bilgisi geçerli bir metin olmalıdır." })
+    .trim()
+    .max(120, "Kaynak bilgisi en fazla 120 karakter olabilir.")
+    .default("Web Sitesi"),
+  notes: z
+    .string({ message: "Not alanı geçerli bir metin olmalıdır." })
+    .trim()
+    .max(1000, "Not alanı en fazla 1000 karakter olabilir.")
+    .optional()
+    .nullable(),
   // Honeypot Alani (Bot yakalama - Bos olmali)
-  website: z.string().optional().nullable(),
+  website: z.string({ message: "Geçersiz form verisi." }).optional().nullable(),
   // KVKK Acik Riza Onayi (Zorunlu)
-  kvkkConsent: z.boolean().refine((val) => val === true, {
-    message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.",
-  }),
+  kvkkConsent: z
+    .boolean({ message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir." })
+    .refine((val) => val === true, {
+      message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.",
+    }),
   // Cift submit engelleme (Idempotency Key)
-  idempotencyKey: z.string().trim().max(100).optional().nullable(),
+  idempotencyKey: z
+    .string({ message: "Geçersiz istek anahtarı." })
+    .trim()
+    .max(100)
+    .optional()
+    .nullable(),
 });
 
 export type LeadPayload = z.infer<typeof LeadPayloadSchema>;

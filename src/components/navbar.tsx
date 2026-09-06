@@ -102,7 +102,7 @@ export const Navbar: React.FC = () => {
 
         <div className="hidden shrink-0 items-center justify-end gap-4 lg:flex lg:flex-1 xl:gap-5">
           <a
-            href="#iletisim"
+            href="/#iletisim"
             onClick={unlockScroll}
             className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#FFC300] px-5 py-2.5 text-xs font-bold tracking-tight text-[#0A0A0A] shadow-md transition-all hover:scale-105 hover:bg-[#FFA000] focus-visible:ring-2 focus-visible:ring-white active:scale-95 sm:text-sm"
           >
@@ -113,7 +113,7 @@ export const Navbar: React.FC = () => {
 
         <div className="flex shrink-0 items-center gap-2 lg:hidden">
           <a
-            href="#iletisim"
+            href="/#iletisim"
             className="inline-flex items-center gap-1 rounded-full bg-[#FFC300] px-4 py-2 text-xs font-bold text-[#0A0A0A] hover:bg-[#FFA000]"
           >
             <span>Başlat</span>
@@ -176,7 +176,7 @@ export const Navbar: React.FC = () => {
 
         <div className="border-t border-white/10 pt-3">
           <a
-            href="#iletisim"
+            href="/#iletisim"
             onClick={unlockScroll}
             className="flex w-full items-center justify-center gap-1.5 rounded-full bg-[#FFC300] py-3 text-sm font-bold text-[#0A0A0A]"
           >

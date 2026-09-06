@@ -155,9 +155,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               <Sparkles className="h-4 w-4 text-accent" />
               <span>Paket Kapsamı</span>
             </div>
-            <h3 className="mb-6 text-xl font-bold text-cream sm:text-2xl">
+            <h2 className="mb-6 text-xl font-bold text-cream sm:text-2xl">
               Net Teslimatlar & Süreç
-            </h3>
+            </h2>
             <ul className="space-y-3.5">
               {service.deliverables.map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3 text-sm text-neutral-300">
@@ -174,7 +174,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 <Zap className="h-4 w-4 text-accent" />
                 <span>Çalışma Adımları</span>
               </div>
-              <h3 className="mb-6 text-xl font-bold text-cream sm:text-2xl">Nasıl İlerliyoruz?</h3>
+              <h2 className="mb-6 text-xl font-bold text-cream sm:text-2xl">Nasıl İlerliyoruz?</h2>
               <ul className="mb-8 space-y-4">
                 {service.howItWorks.map((step, idx) => (
                   <li
@@ -200,9 +200,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
         {/* Other 12 Services */}
         <div className="border-t border-white/10 pt-10">
-          <h4 className="mb-6 font-sans text-base font-bold text-cream">
+          <h3 className="mb-6 font-sans text-base font-bold text-cream">
             Diğer Uzmanlık Alanlarımızı İnceleyin:
-          </h4>
+          </h3>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {ALL_13_SERVICES_DETAILED.filter((s) => s.slug !== service.slug).map((s) => (
               <Link

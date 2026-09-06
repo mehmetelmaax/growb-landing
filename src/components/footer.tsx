@@ -101,7 +101,7 @@ export const Footer: React.FC = () => {
 
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <a
-                  href="#iletisim"
+                  href="/#iletisim"
                   className="inline-flex items-center gap-2 rounded-full bg-[#FFC300] px-6 py-3 text-xs font-extrabold tracking-tight text-[#0A0A0A] shadow-[0_10px_25px_rgba(255,195,0,0.3)] transition-all duration-200 hover:scale-105 hover:bg-[#FFA000] focus-visible:ring-2 focus-visible:ring-white sm:text-sm"
                 >
                   <span>Projeyi Başlat</span>
