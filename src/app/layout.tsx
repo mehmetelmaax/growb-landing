@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { CookieBanner } from "@/components/cookie-banner";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 const inter = localFont({
   src: [
@@ -90,7 +91,7 @@ export default function RootLayout({
     url: siteUrl,
     logo: `${siteUrl}/growb-logo.jpg`,
     image: `${siteUrl}/growb-logo.jpg`,
-    telephone: "+905414842426",
+    telephone: SITE_CONFIG.phoneInternational,
     priceRange: "₺₺₺",
     address: {
       "@type": "PostalAddress",

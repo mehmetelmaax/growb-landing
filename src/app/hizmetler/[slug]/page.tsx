@@ -14,6 +14,7 @@ import {
   MessageSquare,
   Zap,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
@@ -75,7 +76,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       "@type": "ProfessionalService",
       name: "GrowB Dijital Pazarlama Ajansı",
       url: siteUrl,
-      telephone: "+905414842426",
+      telephone: SITE_CONFIG.phoneInternational,
     },
     areaServed: ["Nevşehir", "Kırşehir", "Konya", "Aksaray", "Türkiye"].map((name) => ({
       "@type": name === "Türkiye" ? "Country" : "AdministrativeArea",
@@ -164,7 +165,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
           <div className="flex flex-wrap items-center gap-4">
             <a
-              href="https://wa.me/905414842426?text=Merhaba,%20hizmetleriniz%20hakkinda%20bilgi%20almak%20istiyorum."
+              href={SITE_CONFIG.getWhatsappUrl(
+                "Merhaba, hizmetleriniz hakkinda bilgi almak istiyorum."
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-bold text-[#0A0A0A] shadow-lg shadow-accent/20 transition-all hover:brightness-110"
@@ -173,11 +176,11 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               <span>WhatsApp ile Hızlı Başlat</span>
             </a>
             <a
-              href="tel:+905414842426"
+              href={SITE_CONFIG.getPhoneUrl()}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/10"
             >
               <Phone className="h-4 w-4 text-accent" />
-              <span>0541 484 24 26</span>
+              <span>{SITE_CONFIG.phone}</span>
             </a>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, FileCheck, Scale, AlertCircle } from "lucide-react";
 import type { Metadata } from "next";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Mesafeli Hizmet Sözleşmesi",
@@ -53,14 +54,14 @@ export default function MesafeliHizmetSozlesmesiPage() {
           <h2 className="text-xl font-bold text-white">Madde 1 — Taraflar</h2>
           <div className="space-y-1 rounded-xl border border-white/10 bg-[#141414] p-4 text-xs text-neutral-300">
             <div>
-              <strong>Hizmet Sağlayıcı:</strong> GrowB Dijital (Nevşehir V.D. 381 049 2910)
+              <strong>Hizmet Sağlayıcı:</strong> {SITE_CONFIG.brandName} ({SITE_CONFIG.taxInfo})
             </div>
             <div>
-              <strong>Adres:</strong> Kapadokya / Nevşehir
+              <strong>Adres:</strong> {SITE_CONFIG.addressRegion} / {SITE_CONFIG.addressLocality}
             </div>
             <div>
-              <strong>E-Posta:</strong> info@growbdijital.com | <strong>Telefon:</strong> 0541 484
-              24 26
+              <strong>E-Posta:</strong> {SITE_CONFIG.email} | <strong>Telefon:</strong>{" "}
+              {SITE_CONFIG.phone}
             </div>
           </div>
           <p className="pt-1 text-xs text-neutral-400">

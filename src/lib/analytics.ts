@@ -2,6 +2,7 @@
  * GrowB Landing — GA4 & Meta Pixel Analitik Entegrasyonu & Consent Mode v2
  * KVKK/GDPR Uyumlu, Tip Güvenli ve Sıfır Bağımlılıklı İstemci Analitik Katmanı
  */
+import { SITE_CONFIG } from "./site-config";
 
 declare global {
   interface Window {
@@ -173,7 +174,7 @@ export function trackPhoneClick(source: string, phone?: string): void {
   if (window.gtag && GA_TRACKING_ID) {
     window.gtag("event", "contact_phone", {
       source_component: source,
-      phone_number: phone || "05414842426",
+      phone_number: phone || SITE_CONFIG.phoneRaw,
     });
   }
 

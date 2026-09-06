@@ -11,6 +11,7 @@ export const WebsiteScoreAudit: React.FC = () => {
   const [url, setUrl] = useState("");
   const [sector, setSector] = useState("");
   const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [scanStatus, setScanStatus] = useState(
@@ -64,6 +65,7 @@ export const WebsiteScoreAudit: React.FC = () => {
               notes: `Canlı PageSpeed - Performans: ${perf}/100, SEO: ${seo}/100, Best Practices: ${bp}/100, LCP: ${data.data.lcp}, FCP: ${data.data.fcp}, CLS: ${data.data.cls}`,
               source: "Hız & SEO Testi Bölümü (#skor-ogren)",
               kvkkConsent: true,
+              website,
             }),
           }).catch((err) => console.error("Audit lead error:", err));
         }
@@ -113,6 +115,16 @@ export const WebsiteScoreAudit: React.FC = () => {
 
         <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-[#141414] p-6 shadow-2xl sm:p-10">
           <form onSubmit={handleScan} aria-busy={isScanning} className="space-y-6">
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              className="pointer-events-none absolute -z-10 h-0 w-0 overflow-hidden opacity-0"
+            />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
               <div className="md:col-span-5">
                 <label

@@ -3,6 +3,7 @@
 import React from "react";
 import { MONTHLY_GROWTH_PACKAGES } from "@/data/pricing-catalog-data";
 import { Check, ArrowUpRight } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const TabMonthly: React.FC = () => {
   return (
@@ -119,7 +120,9 @@ export const TabMonthly: React.FC = () => {
             </div>
 
             <a
-              href={`https://wa.me/905414842426?text=${encodeURIComponent(`Merhaba GrowB Dijital, Aylık Büyüme Paketi (${pkg.name} - ${pkg.price}/ay) hakkında bilgi almak ve başlamak istiyorum.`)}`}
+              href={SITE_CONFIG.getWhatsappUrl(
+                `Merhaba GrowB Dijital, Aylık Büyüme Paketi (${pkg.name} - ${pkg.price}/ay) hakkında bilgi almak ve başlamak istiyorum.`
+              )}
               target="_blank"
               rel="noreferrer"
               className={`flex w-full items-center justify-center gap-2 rounded-full py-4 text-xs font-black uppercase tracking-wider shadow-md transition-all focus-visible:ring-2 focus-visible:ring-white sm:text-sm ${

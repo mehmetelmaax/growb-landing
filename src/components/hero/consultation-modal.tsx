@@ -14,7 +14,13 @@ interface ConsultationModalProps {
 }
 
 export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({ siteUrl: "", sector: "", phone: "", contactName: "" });
+  const [formData, setFormData] = useState({
+    siteUrl: "",
+    sector: "",
+    phone: "",
+    contactName: "",
+    website: "",
+  });
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
@@ -49,6 +55,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
           source: "Hero Ekranı",
           kvkkConsent: true,
           idempotencyKey,
+          website: formData.website,
         }),
       });
       const data = await res.json();
@@ -120,6 +127,16 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
             )}
 
             <form onSubmit={handleFormSubmit} aria-busy={isSubmittingLead} className="space-y-4">
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                className="pointer-events-none absolute -z-10 h-0 w-0 overflow-hidden opacity-0"
+              />
               <div>
                 <label
                   htmlFor="hero-site-url"

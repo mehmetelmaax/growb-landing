@@ -236,8 +236,8 @@ describe("Penetrasyon & Siber Güvenlik Test Paketi", () => {
       // X-Frame-Options (Clickjacking önleme)
       expect(headersMap.get("X-Frame-Options")).toBe("SAMEORIGIN");
 
-      // X-XSS-Protection
-      expect(headersMap.get("X-XSS-Protection")).toBe("1; mode=block");
+      // X-XSS-Protection (OWASP/MDN: 0 deprecated/vulnerable block mode disabled)
+      expect(headersMap.get("X-XSS-Protection")).toBe("0");
 
       // Referrer-Policy
       expect(headersMap.get("Referrer-Policy")).toBe("strict-origin-when-cross-origin");

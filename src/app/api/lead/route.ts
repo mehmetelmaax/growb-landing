@@ -4,6 +4,7 @@ import { Redis } from "@upstash/redis";
 import { normalizeTurkishPhone, LeadPayloadSchema } from "@/lib/validators";
 import { globalInMemoryRateLimiter } from "@/lib/rate-limiter";
 import { sendLeadNotifications } from "@/lib/notifications";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 // =========================================================================
 // UPSTASH REDIS SERVERLESS RATE LIMITER (Vercel Multi-Instance)
@@ -136,7 +137,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: "Lutfen gecerli bir Turkiye cep telefonu numarasi giriniz (Orn: 0541 484 24 26).",
+          error: `Lutfen gecerli bir Turkiye cep telefonu numarasi giriniz (Orn: ${SITE_CONFIG.phone}).`,
         },
         { status: 400 }
       );

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Shield, CheckCircle2, Lock, FileText, Mail } from "lucide-react";
 import type { Metadata } from "next";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "KVKK Aydınlatma Metni",
@@ -211,8 +212,8 @@ export default function KvkkAydinlatmaPage() {
             iletebilirsiniz:
             <div className="mt-2 font-mono font-bold text-white">
               E-Posta:{" "}
-              <a href="mailto:info@growbdijital.com" className="text-[#FFC300] underline">
-                info@growbdijital.com
+              <a href={SITE_CONFIG.getMailtoUrl()} className="text-[#FFC300] underline">
+                {SITE_CONFIG.email}
               </a>
             </div>
           </div>

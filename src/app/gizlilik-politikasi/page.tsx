@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, ShieldCheck, Lock, Eye, Server } from "lucide-react";
 import type { Metadata } from "next";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Gizlilik Politikası",
@@ -98,8 +99,8 @@ export default function GizlilikPolitikasiPage() {
 
         <div className="rounded-2xl border border-white/10 bg-[#141414] p-6 text-sm text-neutral-400">
           Politikamızla ilgili her türlü soru ve güvenlik geri bildiriminiz için{" "}
-          <a href="mailto:info@growbdijital.com" className="font-medium text-[#FFC300] underline">
-            info@growbdijital.com
+          <a href={SITE_CONFIG.getMailtoUrl()} className="font-medium text-[#FFC300] underline">
+            {SITE_CONFIG.email}
           </a>{" "}
           üzerinden doğrudan teknik ekibimize ulaşabilirsiniz.
         </div>

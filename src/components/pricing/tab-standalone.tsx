@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { STANDALONE_SERVICES_PRICING } from "@/data/pricing-catalog-data";
 import { ArrowUpRight } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const TabStandalone: React.FC = () => {
   const [standaloneCategory, setStandaloneCategory] = useState<string>("all");
@@ -104,7 +105,9 @@ export const TabStandalone: React.FC = () => {
                 Sözleşmeli & Taahhütlü Teslim
               </span>
               <a
-                href={`https://wa.me/905414842426?text=${encodeURIComponent(`Merhaba GrowB Dijital, #${service.code} ${service.title} hizmetiniz için teklif almak istiyorum.`)}`}
+                href={SITE_CONFIG.getWhatsappUrl(
+                  `Merhaba GrowB Dijital, #${service.code} ${service.title} hizmetiniz için teklif almak istiyorum.`
+                )}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[#FFC300] hover:text-[#0A0A0A] focus-visible:ring-2 focus-visible:ring-[#FFC300]"

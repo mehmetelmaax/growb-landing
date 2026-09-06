@@ -7,6 +7,7 @@ import { CampaignPricing } from "@/components/campaign-pricing";
 import { PricingTabsClient } from "@/components/pricing-tabs-client";
 import { ESTABLISHMENT_PACKAGES, MONTHLY_GROWTH_PACKAGES } from "@/data/pricing-catalog-data";
 import { Sparkles, ShieldCheck, ArrowLeft, Phone, Percent } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
@@ -58,7 +59,7 @@ export default function PricingPage() {
     provider: {
       "@type": "ProfessionalService",
       name: "GrowB Dijital Pazarlama Ajansı",
-      telephone: "+905414842426",
+      telephone: SITE_CONFIG.phoneInternational,
       url: siteUrl,
     },
     itemListElement: [
@@ -152,11 +153,11 @@ export default function PricingPage() {
               <span>%50 Başlangıç - %50 Teslimde Ödeme</span>
             </div>
             <a
-              href="tel:05414842426"
+              href={SITE_CONFIG.getPhoneUrl()}
               className="flex items-center gap-2 rounded-full border border-[#FFC300]/30 bg-[#FFC300]/10 px-3.5 py-2 font-bold text-[#FFC300] transition-all hover:bg-[#FFC300] hover:text-black"
             >
               <Phone className="h-4 w-4" />
-              <span>Danışma Hattı: 0541 484 24 26</span>
+              <span>Danışma Hattı: {SITE_CONFIG.phone}</span>
             </a>
           </div>
         </div>
@@ -206,7 +207,9 @@ export default function PricingPage() {
               Hemen Teklif İste
             </Link>
             <a
-              href="https://wa.me/905414842426?text=Merhaba,%20fiyat%20listenizi%20inceledim,%20i%C5%9Fletmem%20i%C3%A7in%20teklif%20g%C3%B6r%C3%BC%C5%9Fmek%20istiyorum."
+              href={SITE_CONFIG.getWhatsappUrl(
+                "Merhaba, fiyat listenizi inceledim, işletmem için teklif görüşmek istiyorum."
+              )}
               target="_blank"
               rel="noreferrer"
               className="rounded-full border border-white/20 bg-white/10 px-8 py-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-white/20 sm:text-sm"

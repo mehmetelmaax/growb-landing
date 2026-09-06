@@ -35,37 +35,8 @@ export interface FaqItem {
   answer: string;
 }
 
-export const SITE_CONFIG = {
-  name: "Growb.",
-  subName: "DİJİTAL PAZARLAMA AJANSI",
-  location: "NEVŞEHİR",
-  tagline: "Dijitaldeki tüm işlerinizi yöneten büyüme ortağınız.",
-  phone: "0541 484 24 26",
-  phoneRaw: "05414842426",
-  phoneInternational: "+905414842426",
-  whatsappNumber: "905414842426",
-  email: "info@growbdijital.com",
-  address: "Online & Türkiye Geneli Kesintisiz Dijital Hizmet",
-  addressLocality: "Nevşehir",
-  addressRegion: "Kapadokya",
-  addressCountry: "TR",
-  taxInfo: "Nevşehir V.D. 381 049 2910",
-  founder: "Mehmet Demir",
-  founderRole: "Ajans Kurucusu & Büyüme Danışmanı",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com",
-  socials: {
-    whatsapp: "https://wa.me/905414842426",
-    instagram: "https://www.instagram.com/growb.dijital/",
-  },
-  instagramHandle: "@growb.dijital",
-  getWhatsappUrl: (message?: string) => {
-    return message
-      ? `https://wa.me/905414842426?text=${encodeURIComponent(message)}`
-      : "https://wa.me/905414842426";
-  },
-  getPhoneUrl: () => "tel:05414842426",
-  getMailtoUrl: () => "mailto:info@growbdijital.com",
-};
+import { SITE_CONFIG } from "@/lib/site-config";
+export { SITE_CONFIG };
 
 export const NAV_LINKS = [
   { name: "Manifesto", href: "#manifesto" },
@@ -364,8 +335,9 @@ export const FAQ_DATA: FaqItem[] = [
   {
     id: "faq-6",
     question: "Resmi şirket misiniz, sözleşme yapıyor muyuz?",
+    // TODO_CONTENT: [Garanti kapsamı iş sahibi kararıyla netleştirilecek - 've garantili' kaldırıldı]
     answer:
-      "Evet. GrowB Dijital; Türkiye geneli hizmet veren, resmi sözleşmeli ve garantili çalışan profesyonel bir büyüme ajansıdır. Her proje başlamadan önce yazılı maddelerle resmi sözleşmeye bağlanır ve %50 test onayından sonra teslim edilir.",
+      "Evet. GrowB Dijital; Türkiye geneli hizmet veren, resmi sözleşmeli çalışan profesyonel bir büyüme ajansıdır. Her proje başlamadan önce yazılı maddelerle resmi sözleşmeye bağlanır ve %50 test onayından sonra teslim edilir.",
   },
   {
     id: "faq-7",
@@ -376,8 +348,7 @@ export const FAQ_DATA: FaqItem[] = [
   {
     id: "faq-8",
     question: "İş bittikten sonra bir sorun çıkarsa muhatap bulabilecek miyim?",
-    answer:
-      "Kesinlikle evet. Aracı sekreter veya çağrı merkezi yoktur. Kurucumuz Mehmet Demir'in doğrudan cep telefonu (0541 484 24 26) tüm müşterilerimize açıktır ve 1 yıl boyunca kesintisiz yazılım desteği sunulmaktadır.",
+    answer: `Kesinlikle evet. Aracı sekreter veya çağrı merkezi yoktur. Kurucumuz ${SITE_CONFIG.founder}'in doğrudan cep telefonu (${SITE_CONFIG.phone}) tüm müşterilerimize açıktır ve 1 yıl boyunca kesintisiz yazılım desteği sunulmaktadır.`,
   },
 ];
 

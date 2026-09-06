@@ -1,4 +1,5 @@
-﻿import React from "react";
+import React from "react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 interface FinalCtaInputFieldsProps {
   name: string;
@@ -62,7 +63,7 @@ export const FinalCtaInputFields: React.FC<FinalCtaInputFieldsProps> = ({
             onFocus={() => onFieldFocus("phone")}
             onBlur={() => onFieldBlur("phone")}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="0541 484 24 26"
+            placeholder={SITE_CONFIG.phone}
             className="w-full rounded-xl border border-[#FFC300]/50 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
           />
         </div>

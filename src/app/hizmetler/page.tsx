@@ -2,10 +2,15 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/navbar";
-import { HoneycombHive } from "@/components/honeycomb-hive";
-import { Footer } from "@/components/footer";
 import { Phone, ArrowLeft, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
+
+const HoneycombHive = dynamic(() =>
+  import("@/components/honeycomb-hive").then((mod) => mod.HoneycombHive)
+);
+const Footer = dynamic(() => import("@/components/footer").then((mod) => mod.Footer));
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
@@ -133,11 +138,11 @@ export default function ServicesIndexPage() {
               <span>Sözleşmeli Performans Taahhüdü</span>
             </div>
             <a
-              href="tel:05414842426"
+              href={SITE_CONFIG.getPhoneUrl()}
               className="flex items-center gap-2 rounded-full border border-[#FFC300]/30 bg-[#FFC300]/10 px-3.5 py-2 font-bold text-[#FFC300] transition-all hover:bg-[#FFC300] hover:text-black"
             >
               <Phone className="h-4 w-4" />
-              <span>Canlı Danışman: 0541 484 24 26</span>
+              <span>Canlı Danışman: {SITE_CONFIG.phone}</span>
             </a>
           </div>
         </div>
@@ -168,7 +173,9 @@ export default function ServicesIndexPage() {
               Ücretsiz Analiz & Teklif Al
             </Link>
             <a
-              href="https://wa.me/905414842426?text=Merhaba,%20GrowB%20hizmetleri%20hakk%C4%B1nda%20g%C3%B6r%C3%BC%C5%9Fmek%20istiyorum."
+              href={SITE_CONFIG.getWhatsappUrl(
+                "Merhaba, GrowB hizmetleri hakkında görüşmek istiyorum."
+              )}
               target="_blank"
               rel="noreferrer"
               className="rounded-full border border-white/20 bg-white/10 px-8 py-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-white/20 sm:text-sm"

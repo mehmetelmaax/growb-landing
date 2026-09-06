@@ -19,7 +19,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
   onClose,
   service,
 }) => {
-  const [detailForm, setDetailForm] = useState({ name: "", phone: "", note: "" });
+  const [detailForm, setDetailForm] = useState({ name: "", phone: "", note: "", website: "" });
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isDetailSubmitted, setIsDetailSubmitted] = useState(false);
   const [isDetailSubmitting, setIsDetailSubmitting] = useState(false);
@@ -42,6 +42,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
           phone: detailForm.phone,
           service: service.title,
           notes: detailForm.note || "",
+          website: detailForm.website,
           source: `Hizmetler Bölümü (#${service.num} ${service.title} Detay Al Modalı)`,
           kvkkConsent: true,
         }),
@@ -124,6 +125,16 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   aria-busy={isDetailSubmitting}
                   className="space-y-4"
                 >
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    value={detailForm.website}
+                    onChange={(e) => setDetailForm({ ...detailForm, website: e.target.value })}
+                    className="pointer-events-none absolute -z-10 h-0 w-0 overflow-hidden opacity-0"
+                  />
                   <div>
                     <label
                       htmlFor="service-author-name"

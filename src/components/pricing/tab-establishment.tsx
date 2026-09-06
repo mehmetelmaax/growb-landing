@@ -3,6 +3,7 @@
 import React from "react";
 import { ESTABLISHMENT_PACKAGES, ESTABLISHMENT_COMPARISON_ROWS } from "@/data/pricing-catalog-data";
 import { Clock, RefreshCw, Gift, ArrowUpRight } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const TabEstablishment: React.FC = () => {
   return (
@@ -74,7 +75,9 @@ export const TabEstablishment: React.FC = () => {
             </div>
 
             <a
-              href={`https://wa.me/905414842426?text=${encodeURIComponent(`Merhaba GrowB Dijital, ${pkg.name} (${pkg.price}) hakkında teklif ve sözleşme detaylarını görüşmek istiyorum.`)}`}
+              href={SITE_CONFIG.getWhatsappUrl(
+                `Merhaba GrowB Dijital, ${pkg.name} (${pkg.price}) hakkında teklif ve sözleşme detaylarını görüşmek istiyorum.`
+              )}
               target="_blank"
               rel="noreferrer"
               className={`flex w-full items-center justify-center gap-2 rounded-full py-4 text-xs font-black uppercase tracking-wider shadow-md transition-all focus-visible:ring-2 focus-visible:ring-white sm:text-sm ${

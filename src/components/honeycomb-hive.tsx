@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import { Sparkles, Hexagon, Grid } from "lucide-react";
 import { ALL_13_SERVICES_DETAILED } from "@/data/services-detail-data";
 import { HiveFormationView } from "@/components/honeycomb/hive-formation-view";
-import { HiveDetailBox } from "@/components/honeycomb/hive-detail-box";
+
+const HiveDetailBox = dynamic(() =>
+  import("@/components/honeycomb/hive-detail-box").then((mod) => mod.HiveDetailBox)
+);
 
 const SERVICE_ICONS: Record<string, { emoji: string }> = {
   "web-tasarim-yazilim": { emoji: "💻" },

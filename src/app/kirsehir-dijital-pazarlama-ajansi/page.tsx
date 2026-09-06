@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MapPin, ArrowLeft } from "lucide-react";
 import { AybarNakliyatCaseStudy } from "@/components/kirsehir/aybar-nakliyat-case-study";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
@@ -58,7 +59,7 @@ export default function KirsehirLandingPage() {
     "@type": "ProfessionalService",
     name: "GrowB Dijital — Kırşehir Dijital Pazarlama & Yerel SEO",
     url: `${siteUrl}/kirsehir-dijital-pazarlama-ajansi`,
-    telephone: "+905414842426",
+    telephone: SITE_CONFIG.phoneInternational,
     areaServed: {
       "@type": "AdministrativeArea",
       name: "Kırşehir",
@@ -127,7 +128,9 @@ export default function KirsehirLandingPage() {
               Kırşehir İçin Büyüme Görüşmesi Planla
             </Link>
             <a
-              href="https://wa.me/905414842426?text=Merhaba,%20K%C4%B1r%C5%9Fehir%20i%C5%9Fletmem%20i%C3%A7in%20yerel%20SEO%20ve%20web%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+              href={SITE_CONFIG.getWhatsappUrl(
+                "Merhaba, Kırşehir işletmem için yerel SEO ve web hizmeti hakkında bilgi almak istiyorum."
+              )}
               target="_blank"
               rel="noreferrer"
               className="rounded-full border border-white/20 bg-white/10 px-8 py-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-white/20 sm:text-sm"
