@@ -54,14 +54,12 @@ function isDuplicateSubmission(key: string): boolean {
 }
 
 async function checkInvalidRateLimit(ip: string): Promise<NextResponse | null> {
+  const errMsg = "Çok fazla hatalı istek gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.";
   if (upstashInvalidRatelimit) {
     const { success, reset } = await upstashInvalidRatelimit.limit(ip);
     if (!success) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Çok fazla hatalı istek gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.",
-        },
+        { success: false, error: errMsg },
         {
           status: 429,
           headers: { "Retry-After": Math.ceil((reset - Date.now()) / 1000).toString() },
@@ -72,10 +70,7 @@ async function checkInvalidRateLimit(ip: string): Promise<NextResponse | null> {
     const { allowed } = invalidRequestsRateLimiter.check(ip);
     if (!allowed) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Çok fazla hatalı istek gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.",
-        },
+        { success: false, error: errMsg },
         { status: 429, headers: { "Retry-After": "600" } }
       );
     }
@@ -180,17 +175,21 @@ export async function POST(request: Request) {
     }
 
     // 7. Bildirim Doğrulama (Telegram ve/veya Resend Zorunlu Kontrolü)
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
-    const resendApiKey = process.env.RESEND_API_KEY;
+    const botToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
+    const chatId = process.env.TELEGRAM_CHAT_ID?.trim();
+    const resendApiKey = process.env.RESEND_API_KEY?.trim();
     const isRandevu = data.type === "RANDEVU" || data.type === "GORUSME_PLANLA";
     const waText = isRandevu
       ? `Merhaba GrowB Dijital, ${data.appointmentDate || "yakın bir tarih"} (${data.appointmentTime || "uygun saat"}) için 15 dakikalık büyüme görüşmesi randevusu almak istiyorum.`
       : "Merhaba GrowB Dijital, web sitesi üzerinden randevu/teklif talebinde bulunmak istiyorum.";
     const waFallbackUrl = SITE_CONFIG.getWhatsappUrl(waText);
 
+    if (!botToken || !chatId) {
+      console.warn("[LEAD CONFIG] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID tanımlı değil!");
+    }
+
     if ((!botToken || !chatId) && !resendApiKey) {
-      console.error("[SECURITY 500] Hiçbir bildirim kanalı (Telegram / Resend) yapılandırılmamış!");
+      console.error("[LEAD CONFIG] Hiçbir bildirim kanalı (Telegram / Resend) yapılandırılmamış!");
       return NextResponse.json(
         {
           success: false,
@@ -202,14 +201,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const { tgSuccess, emailSent } = await sendLeadNotifications({
+    const { tgSuccess, emailSent, tgConfigMissing, tgError } = await sendLeadNotifications({
       data,
       normalizedPhone,
       clientIp,
     });
 
     if (!tgSuccess && !emailSent) {
-      console.error("[SECURITY 500] Hem Telegram hem Resend bildirim kanalı başarısız oldu!");
+      if (tgConfigMissing) {
+        console.error("[LEAD ERROR] TELEGRAM_BOT_TOKEN tanımlı değil ve alternatif kanal yok!");
+      } else {
+        console.error(`[LEAD ERROR] Telegram API hata döndü: ${tgError || "Bilinmeyen hata"}`);
+      }
       return NextResponse.json(
         {
           success: false,

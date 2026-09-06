@@ -4,14 +4,21 @@ import { pagespeedInMemoryRateLimiter } from "@/lib/rate-limiter";
 
 describe("PageSpeed API Uç Noktası (POST /api/pagespeed)", () => {
   const originalFetch = global.fetch;
+  const originalApiKey = process.env.PAGESPEED_API_KEY;
 
   beforeEach(() => {
     vi.restoreAllMocks();
     pagespeedInMemoryRateLimiter.reset();
+    process.env.PAGESPEED_API_KEY = "test-pagespeed-api-key";
   });
 
   afterEach(() => {
     global.fetch = originalFetch;
+    if (originalApiKey !== undefined) {
+      process.env.PAGESPEED_API_KEY = originalApiKey;
+    } else {
+      delete process.env.PAGESPEED_API_KEY;
+    }
   });
 
   it("Gövdede URL eksikse HTTP 400 ve açıklayıcı hata mesajı döner", async () => {
@@ -179,5 +186,67 @@ describe("PageSpeed API Uç Noktası (POST /api/pagespeed)", () => {
     const json4 = await res4.json();
     expect(json4.success).toBe(false);
     expect(json4.error).toContain("Çok fazla analiz isteği gönderdiniz");
+  });
+
+  it("PAGESPEED_API_KEY tanımlı değilse Google'a istek atmaz, HTTP 503 ve bakım mesajı döner", async () => {
+    delete process.env.PAGESPEED_API_KEY;
+    const fetchSpy = vi.fn();
+    global.fetch = fetchSpy;
+
+    const req = new Request("http://localhost:3000/api/pagespeed", {
+      method: "POST",
+      body: JSON.stringify({ url: "https://nokey-test.com" }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(503);
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json.error).toBe(
+      "Skor servisi şu an bakımda, ücretsiz manuel analiz talep edebilirsiniz."
+    );
+    expect(json.canConsult).toBe(true);
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("Google PageSpeed 403 (yetki/kısıtlama) döndüğünde HTTP 503 ve bakım mesajı döner", async () => {
+    process.env.PAGESPEED_API_KEY = "invalid-or-restricted-key";
+    global.fetch = vi.fn().mockImplementation(async () => ({
+      ok: false,
+      status: 403,
+      text: async () => JSON.stringify({ error: { message: "API key not valid." } }),
+    })) as unknown as typeof fetch;
+
+    const req = new Request("http://localhost:3000/api/pagespeed", {
+      method: "POST",
+      body: JSON.stringify({ url: "https://auth-error-test.com" }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(503);
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json.error).toBe(
+      "Skor servisi şu an bakımda, ücretsiz manuel analiz talep edebilirsiniz."
+    );
+    expect(json.canConsult).toBe(true);
+  });
+
+  it("Google PageSpeed 429 (gerçek kota aşımı) döndüğünde HTTP 429 ve kota mesajı döner", async () => {
+    process.env.PAGESPEED_API_KEY = "valid-key-but-quota-exceeded";
+    global.fetch = vi.fn().mockImplementation(async () => ({
+      ok: false,
+      status: 429,
+      text: async () => JSON.stringify({ error: { message: "RESOURCE_EXHAUSTED" } }),
+    })) as unknown as typeof fetch;
+
+    const req = new Request("http://localhost:3000/api/pagespeed", {
+      method: "POST",
+      body: JSON.stringify({ url: "https://quota-error-test.com" }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(429);
+    const json = await res.json();
+    expect(json.success).toBe(false);
+    expect(json.error).toContain("Google PageSpeed analiz servisi genel kotasına ulaşıldı");
+    expect(json.canConsult).toBe(true);
   });
 });

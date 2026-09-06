@@ -10,6 +10,9 @@ export interface SendNotificationsParams {
 export interface NotificationResult {
   tgSuccess: boolean;
   emailSent: boolean;
+  tgConfigMissing?: boolean;
+  tgError?: string;
+  tgStatusCode?: number;
 }
 
 /**
@@ -66,12 +69,21 @@ export async function sendLeadNotifications({
   const nowStr = new Date().toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" });
   let tgSuccess = false;
   let emailSent = false;
+  let tgConfigMissing = false;
+  let tgError: string | undefined;
+  let tgStatusCode: number | undefined;
 
   // 1. Telegram Bildirimi
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const botToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
+  const chatId = process.env.TELEGRAM_CHAT_ID?.trim();
 
-  if (botToken && chatId) {
+  if (!botToken) {
+    tgConfigMissing = true;
+    console.warn("[TELEGRAM CONFIG] TELEGRAM_BOT_TOKEN tanımlı değil!");
+  } else if (!chatId) {
+    tgConfigMissing = true;
+    console.warn("[TELEGRAM CONFIG] TELEGRAM_CHAT_ID tanımlı değil!");
+  } else {
     try {
       const messageText = buildTelegramMessage(data, normalizedPhone, clientIp, nowStr);
       const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -85,17 +97,18 @@ export async function sendLeadNotifications({
         signal: AbortSignal.timeout(8000),
       });
 
-      const tgData = await tgRes.json();
+      tgStatusCode = tgRes.status;
+      const tgData = await tgRes.json().catch(() => ({}));
       if (tgRes.ok && tgData.ok) {
         tgSuccess = true;
       } else {
-        console.error("[TELEGRAM API ERROR]", tgData);
+        tgError = tgData.description || `HTTP ${tgRes.status}`;
+        console.error(`[TELEGRAM API ERROR] Telegram API hata döndü (${tgRes.status}):`, tgData);
       }
     } catch (err) {
-      console.error("[TELEGRAM FETCH TIMEOUT/NETWORK ERROR]", err);
+      tgError = err instanceof Error ? err.message : String(err);
+      console.error("[TELEGRAM NETWORK ERROR] Telegram API bağlantı hatası:", err);
     }
-  } else {
-    console.error("[SECURITY] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID eksik!");
   }
 
   // 2. Resend Yedek E-posta Bildirimi
@@ -133,5 +146,5 @@ export async function sendLeadNotifications({
     }
   }
 
-  return { tgSuccess, emailSent };
+  return { tgSuccess, emailSent, tgConfigMissing, tgError, tgStatusCode };
 }

@@ -41,6 +41,7 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 
 const memoryCache = new Map<string, { timestamp: number; data: PageSpeedData }>();
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const MAINTENANCE_MSG = "Skor servisi şu an bakımda, ücretsiz manuel analiz talep edebilirsiniz.";
 
 export async function POST(request: Request) {
   try {
@@ -48,31 +49,24 @@ export async function POST(request: Request) {
     const clientIp =
       forwarded?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "127.0.0.1";
 
+    const rateLimitMsg =
+      "Çok fazla analiz isteği gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.";
     if (upstashRatelimit) {
       const { success, reset } = await upstashRatelimit.limit(clientIp);
       if (!success) {
         return NextResponse.json(
-          {
-            success: false,
-            error: "Çok fazla analiz isteği gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.",
-          },
+          { success: false, error: rateLimitMsg },
           {
             status: 429,
             headers: { "Retry-After": Math.ceil((reset - Date.now()) / 1000).toString() },
           }
         );
       }
-    } else {
-      const { allowed } = pagespeedInMemoryRateLimiter.check(clientIp);
-      if (!allowed) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: "Çok fazla analiz isteği gönderdiniz. Lütfen 10 dakika sonra tekrar deneyin.",
-          },
-          { status: 429, headers: { "Retry-After": "600" } }
-        );
-      }
+    } else if (!pagespeedInMemoryRateLimiter.check(clientIp).allowed) {
+      return NextResponse.json(
+        { success: false, error: rateLimitMsg },
+        { status: 429, headers: { "Retry-After": "600" } }
+      );
     }
 
     let body: { url?: string };
@@ -111,7 +105,6 @@ export async function POST(request: Request) {
     }
 
     const cacheKey = new URL(targetUrl).hostname.toLowerCase();
-
     if (redisClient) {
       try {
         const cachedRaw = await redisClient.get<PageSpeedData | string>(
@@ -136,11 +129,19 @@ export async function POST(request: Request) {
       });
     }
 
-    const apiKey = process.env.PAGESPEED_API_KEY?.trim() || "";
-    const keyParam = apiKey ? `&key=${encodeURIComponent(apiKey)}` : "";
+    // 1. Durum: PAGESPEED_API_KEY tanımlı değil -> Google'a istek ATMA, logla ve bakım mesajı dön
+    const apiKey = process.env.PAGESPEED_API_KEY?.trim();
+    if (!apiKey) {
+      console.warn("[PAGESPEED CONFIG] API anahtari tanimli degil");
+      return NextResponse.json(
+        { success: false, error: MAINTENANCE_MSG, canConsult: true },
+        { status: 503 }
+      );
+    }
+
     const apiUrl =
       `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}` +
-      `&strategy=mobile&category=performance&category=seo&category=best-practices${keyParam}`;
+      `&strategy=mobile&category=performance&category=seo&category=best-practices&key=${encodeURIComponent(apiKey)}`;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 45000);
@@ -152,7 +153,7 @@ export async function POST(request: Request) {
         signal: controller.signal,
         next: { revalidate: 86400 },
       });
-    } catch (err) {
+    } catch {
       clearTimeout(timeoutId);
       return NextResponse.json(
         {
@@ -168,17 +169,47 @@ export async function POST(request: Request) {
 
     if (!psiRes.ok) {
       const errorText = await psiRes.text();
+
+      // 2. Durum: Google 403 dönüyor (API etkin değil, yetkisiz veya kısıtlama hatası)
+      if (psiRes.status === 403) {
+        console.error(
+          "[PAGESPEED AUTH] Google API anahtarı geçersiz, kısıtlı veya API etkin değil (403):",
+          errorText.slice(0, 200)
+        );
+        return NextResponse.json(
+          { success: false, error: MAINTENANCE_MSG, canConsult: true },
+          { status: 503 }
+        );
+      }
+
+      // 3. Durum: Anahtar var ve Google gerçekten 429 kota aşımı dönüyor
       const isQuota =
         psiRes.status === 429 || errorText.includes("quota") || errorText.includes("RATE_LIMIT");
+      if (isQuota) {
+        console.warn("[PAGESPEED QUOTA] Google PageSpeed API kotasına ulaşıldı (429)");
+        return NextResponse.json(
+          {
+            success: false,
+            error:
+              "Google PageSpeed analiz servisi genel kotasına ulaşıldı. 15 dakikalık ücretsiz manuel analiz talep edebilirsiniz.",
+            canConsult: true,
+          },
+          { status: 429 }
+        );
+      }
+
+      console.error(
+        `[PAGESPEED API ERROR] Google API hata döndü (${psiRes.status}):`,
+        errorText.slice(0, 200)
+      );
       return NextResponse.json(
         {
           success: false,
-          error: isQuota
-            ? "Google PageSpeed analiz servisi genel kotasına ulaşıldı. 15 dakikalık ücretsiz manuel analiz talep edebilirsiniz."
-            : "Google analiz motoru bu alan adını tarayamadı. Adres genel erişime açık olmayabilir.",
+          error:
+            "Google analiz motoru bu alan adını tarayamadı. Adres genel erişime açık olmayabilir.",
           canConsult: true,
         },
-        { status: psiRes.status === 429 ? 429 : 502 }
+        { status: 502 }
       );
     }
 
@@ -191,11 +222,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const perfCat = lighthouse.categories.performance;
-    const seoCat = lighthouse.categories.seo;
-    const bpCat = lighthouse.categories["best-practices"];
+    const { performance: perfCat, seo: seoCat, "best-practices": bpCat } = lighthouse.categories;
     const audits = lighthouse.audits || {};
-
     const performanceScore = Math.round((perfCat?.score ?? 0) * 100);
     const seoScore = Math.round((seoCat?.score ?? 0) * 100);
     const bestPracticesScore = Math.round((bpCat?.score ?? 0) * 100);
