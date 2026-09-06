@@ -151,6 +151,8 @@ export const LeadPayloadSchema = z.object({
   kvkkConsent: z.boolean().refine((val) => val === true, {
     message: "KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.",
   }),
+  // Cift submit engelleme (Idempotency Key)
+  idempotencyKey: z.string().trim().max(100).optional().nullable(),
 });
 
 export type LeadPayload = z.infer<typeof LeadPayloadSchema>;

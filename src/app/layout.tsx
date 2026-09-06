@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import dynamic from "next/dynamic";
 import { CookieBanner } from "@/components/cookie-banner";
 import { FloatingContactPill } from "@/components/floating-contact-pill";
+
+const AnalyticsProvider = dynamic(
+  () => import("@/components/analytics/analytics-provider").then((mod) => mod.AnalyticsProvider),
+  { ssr: false }
+);
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -118,9 +124,11 @@ export default function RootLayout({
         >
           Ana İçeriğe Atla
         </a>
-        {children}
-        <CookieBanner />
-        <FloatingContactPill />
+        <AnalyticsProvider>
+          {children}
+          <CookieBanner />
+          <FloatingContactPill />
+        </AnalyticsProvider>
       </body>
     </html>
   );

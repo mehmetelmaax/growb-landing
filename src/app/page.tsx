@@ -3,12 +3,24 @@ import { Preloader } from "@/components/preloader";
 import { BackgroundEffects } from "@/components/background-effects";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
-import { LogoMarquee } from "@/components/logo-marquee";
-import { WorkTogetherMarquee } from "@/components/work-together-marquee";
-import { Pricing } from "@/components/pricing";
-import { FinalCta } from "@/components/final-cta";
-import { Footer } from "@/components/footer";
+const LogoMarquee = dynamic(
+  () => import("@/components/logo-marquee").then((mod) => mod.LogoMarquee),
+  { ssr: false }
+);
+const Footer = dynamic(() => import("@/components/footer").then((mod) => mod.Footer), {
+  ssr: false,
+});
 
+const WorkTogetherMarquee = dynamic(
+  () => import("@/components/work-together-marquee").then((mod) => mod.WorkTogetherMarquee),
+  { ssr: false }
+);
+const Pricing = dynamic(() => import("@/components/pricing").then((mod) => mod.Pricing), {
+  ssr: false,
+});
+const FinalCta = dynamic(() => import("@/components/final-cta").then((mod) => mod.FinalCta), {
+  ssr: false,
+});
 const Manifesto = dynamic(() => import("@/components/manifesto").then((mod) => mod.Manifesto), {
   ssr: false,
 });

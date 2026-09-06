@@ -2,17 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  Gauge,
-  AlertTriangle,
-  ArrowUpRight,
-  RefreshCw,
-  ShieldCheck,
-  Globe,
-  MessageSquare,
-  Activity,
-} from "lucide-react";
+import { Gauge, ArrowUpRight, RefreshCw, ShieldCheck, Globe, Activity } from "lucide-react";
 import { WebsiteAuditResult, AuditData } from "./audit/website-audit-result";
+import { WebsiteAuditError } from "./audit/website-audit-error";
+import { trackLead } from "@/lib/analytics";
 
 export const WebsiteScoreAudit: React.FC = () => {
   const [url, setUrl] = useState("");
@@ -61,6 +54,11 @@ export const WebsiteScoreAudit: React.FC = () => {
       if (res.ok && data.success && data.data) {
         setResult(data.data);
         if (phone && kvkkConsent) {
+          trackLead({
+            formId: "speed_audit_form",
+            source: "Hız & SEO Testi Bölümü",
+            service: "Canlı Lighthouse Skoru",
+          });
           fetch("/api/lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -78,7 +76,7 @@ export const WebsiteScoreAudit: React.FC = () => {
       } else {
         setErrorInfo(
           data.error ||
-            "Web sitenizin adresine Google sunucuları üzerinden erişilemedi. Web siteniz güvenlik duvarı arkasında olabilir veya alan adı yayında olmayabilir."
+            "Web sitenize Google sunucuları üzerinden erişilemedi. Alan adınız yayında olmayabilir."
         );
       }
     } catch (err) {
@@ -238,37 +236,7 @@ export const WebsiteScoreAudit: React.FC = () => {
             </div>
           )}
 
-          {errorInfo && !isScanning && (
-            <div
-              role="alert"
-              className="animate-in fade-in mt-6 space-y-4 rounded-2xl border border-amber-500/30 bg-amber-950/20 p-6 text-neutral-300 duration-300"
-            >
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
-                <div>
-                  <h4 className="mb-1 text-sm font-bold text-amber-400">
-                    Otomatik Tarama Sınırlaması
-                  </h4>
-                  <p className="text-xs leading-relaxed text-neutral-300">{errorInfo}</p>
-                </div>
-              </div>
-              <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-2 sm:flex-row">
-                <span className="text-xs text-neutral-400">
-                  Uzmanlarımız sitenizi ve rakiplerinizi manuel inceleyip 15 dakikalık ücretsiz
-                  rapor hazırlayabilir.
-                </span>
-                <a
-                  href={`https://wa.me/905414842426?text=${encodeURIComponent("Merhaba, web sitem için 15 dakikalık ücretsiz analiz talep ediyorum: " + url)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-[#FFC300] px-4 py-2 text-xs font-bold text-black transition-colors hover:bg-[#e6b000] focus-visible:ring-2 focus-visible:ring-white"
-                >
-                  <MessageSquare className="h-3.5 w-3.5" />
-                  <span>Ücretsiz Rapor İste</span>
-                </a>
-              </div>
-            </div>
-          )}
+          {errorInfo && !isScanning && <WebsiteAuditError errorInfo={errorInfo} url={url} />}
 
           {result && !isScanning && <WebsiteAuditResult result={result} />}
         </div>

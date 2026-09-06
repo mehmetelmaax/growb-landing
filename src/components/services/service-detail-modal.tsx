@@ -6,6 +6,7 @@ import { Sparkles, CheckCircle2, X, Send, MessageSquare } from "lucide-react";
 import { ServiceDetail } from "@/data/services-detail-data";
 import { SITE_CONFIG } from "@/data/content";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
+import { trackLead, trackWhatsAppClick } from "@/lib/analytics";
 
 interface ServiceDetailModalProps {
   isOpen: boolean;
@@ -48,6 +49,11 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
       const data = await res.json();
       if (res.ok && data.success) {
         setIsDetailSubmitted(true);
+        trackLead({
+          formId: "service_detail_modal",
+          source: "Hizmetler Modalı",
+          service: service.title,
+        });
       } else {
         setErrorMessage(data.error || "Form iletilemedi. Lütfen bilgilerinizi kontrol ediniz.");
       }
@@ -222,6 +228,7 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                   href={getWaServiceUrl()}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackWhatsAppClick("service_modal_success", service.title)}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-3.5 text-sm font-bold tracking-tight text-white shadow-lg transition-all hover:bg-emerald-400"
                 >
                   <MessageSquare className="h-4 w-4" />

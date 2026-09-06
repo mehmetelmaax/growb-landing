@@ -27,6 +27,25 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 }
 
 // =========================================================================
+// IDEMPOTENCY / ÇİFT SUBMIT ENGELLEME CACHE (60 saniye)
+// =========================================================================
+const idempotencyCache = new Map<string, number>();
+
+function isDuplicateSubmission(key: string): boolean {
+  const now = Date.now();
+  for (const [k, timestamp] of idempotencyCache.entries()) {
+    if (now - timestamp > 60_000) {
+      idempotencyCache.delete(k);
+    }
+  }
+  if (idempotencyCache.has(key)) {
+    return true;
+  }
+  idempotencyCache.set(key, now);
+  return false;
+}
+
+// =========================================================================
 // ANA POST HANDLER
 // =========================================================================
 export async function POST(request: Request) {
@@ -120,6 +139,22 @@ export async function POST(request: Request) {
           error: "Lutfen gecerli bir Turkiye cep telefonu numarasi giriniz (Orn: 0541 484 24 26).",
         },
         { status: 400 }
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // E. ÇİFT SUBMIT / IDEMPOTENCY DEDUP KONTROLÜ
+    // -----------------------------------------------------------------------
+    const dedupKey = data.idempotencyKey || `${clientIp}:${normalizedPhone}:${data.type}`;
+    if (isDuplicateSubmission(dedupKey)) {
+      console.warn(`[IDEMPOTENCY DEDUP] Çift gönderim engellendi: ${dedupKey}`);
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Talebiniz ekibimize ulaştı. En kısa sürede sizinle iletişime geçeceğiz.",
+          deduplicated: true,
+        },
+        { status: 200 }
       );
     }
 

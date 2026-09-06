@@ -2,9 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { FINAL_CTA_DATA, SITE_CONFIG } from "@/data/content";
-import { Send, CheckCircle2, ShieldCheck, Sparkles, PhoneCall } from "lucide-react";
+import { FINAL_CTA_DATA } from "@/data/content";
+import { Send, ShieldCheck, Sparkles } from "lucide-react";
 import { FinalCtaServiceSelector } from "./final-cta/final-cta-service-selector";
+import { FinalCtaSuccessCard } from "./final-cta/final-cta-success-card";
+import { useFormAbandonment } from "@/hooks/use-form-abandonment";
+import { trackLead } from "@/lib/analytics";
 
 export const FinalCta: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -19,6 +22,16 @@ export const FinalCta: React.FC = () => {
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [idempotencyKey] = useState(() =>
+    typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `cta_${Date.now()}_${Math.random()}`
+  );
+
+  const { onFieldFocus, onFieldBlur, markSubmitted } = useFormAbandonment({
+    formId: "final_cta_form",
+    isSubmitted: formSubmitted,
+  });
 
   const toggleService = (title: string) => {
     if (selectedServices.includes(title)) {
@@ -32,7 +45,7 @@ export const FinalCta: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone || !kvkkConsent) return;
+    if (isSubmitting || !phone || !kvkkConsent) return;
     setIsSubmitting(true);
     setErrorMessage(null);
     try {
@@ -42,17 +55,24 @@ export const FinalCta: React.FC = () => {
         body: JSON.stringify({
           type: "PROJE_BASLAT",
           name: name || "Belirtilmedi",
-          phone: phone,
+          phone,
           sector: sector || "Belirtilmedi",
           service: selectedServices.join(" + "),
           notes: notes || "",
           source: "Ana Sayfa Proje Başlat (#iletisim)",
           kvkkConsent: true,
+          idempotencyKey,
         }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setFormSubmitted(true);
+        markSubmitted();
+        trackLead({
+          formId: "final_cta_form",
+          source: "Ana Sayfa Proje Başlat",
+          service: selectedServices[0] || "Genel Büyüme",
+        });
       } else {
         setErrorMessage(data.error || "Form gönderilemedi. Lütfen bilgilerinizi kontrol ediniz.");
       }
@@ -68,7 +88,6 @@ export const FinalCta: React.FC = () => {
     <section id="iletisim" className="relative overflow-hidden bg-[#0A0A0A] py-12 sm:py-16">
       <div id="randevu-al" className="pointer-events-none absolute -top-24 left-0" />
       <div id="randevu" className="pointer-events-none absolute -top-24 left-0" />
-
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute bottom-0 left-1/2 h-[450px] w-[700px] -translate-x-1/2 rounded-full bg-[#FFC300]/[0.06] blur-[160px]" />
       </div>
@@ -92,26 +111,11 @@ export const FinalCta: React.FC = () => {
 
             <div className="mt-8 w-full max-w-2xl sm:mt-10">
               {formSubmitted ? (
-                <div
-                  role="alert"
-                  className="rounded-2xl border border-[#FFC300]/40 bg-[#FFC300]/10 p-8 text-center"
-                >
-                  <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#FFC300]" />
-                  <h3 className="text-xl font-bold text-white">
-                    Talebiniz 10 Saniye İçinde Alındı!
-                  </h3>
-                  <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-neutral-300">
-                    Seçtiğiniz alanlar doğrultusunda yetkili ekibimiz numaranızı arayacak veya
-                    WhatsApp üzerinden büyüme planınızı iletecektir.
-                  </p>
-                  <a
-                    href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFC300] px-7 py-3 text-sm font-bold text-[#0A0A0A] shadow-lg transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-white"
-                  >
-                    <PhoneCall className="h-4 w-4" />
-                    <span>Hemen Şimdi Arayın: {SITE_CONFIG.phone}</span>
-                  </a>
-                </div>
+                <FinalCtaSuccessCard
+                  name={name}
+                  sector={sector}
+                  selectedServices={selectedServices}
+                />
               ) : (
                 <form
                   onSubmit={handleSubmit}
@@ -144,9 +148,11 @@ export const FinalCta: React.FC = () => {
                         id="final-name"
                         type="text"
                         value={name}
+                        onFocus={() => onFieldFocus("name")}
+                        onBlur={() => onFieldBlur("name")}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Örn: Mehmet Demir"
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
+                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
                       />
                     </div>
 
@@ -162,9 +168,11 @@ export const FinalCta: React.FC = () => {
                         type="tel"
                         required
                         value={phone}
+                        onFocus={() => onFieldFocus("phone")}
+                        onBlur={() => onFieldBlur("phone")}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="0541 484 24 26"
-                        className="w-full rounded-xl border border-[#FFC300]/50 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
+                        className="w-full rounded-xl border border-[#FFC300]/50 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -180,9 +188,11 @@ export const FinalCta: React.FC = () => {
                       id="final-sector"
                       type="text"
                       value={sector}
+                      onFocus={() => onFieldFocus("sector")}
+                      onBlur={() => onFieldBlur("sector")}
                       onChange={(e) => setSector(e.target.value)}
-                      placeholder="Örn: Evden Eve Nakliyat, Diş Kliniği, Butik Otel..."
-                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
+                      placeholder="Örn: Evden Eve Nakliyat, Klinik, Otel..."
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 
@@ -197,9 +207,11 @@ export const FinalCta: React.FC = () => {
                       id="final-notes"
                       rows={2}
                       value={notes}
+                      onFocus={() => onFieldFocus("notes")}
+                      onBlur={() => onFieldBlur("notes")}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="Örn: Mevcut sitemiz var ancak Google Haritalarda çıkmıyoruz..."
-                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
+                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 

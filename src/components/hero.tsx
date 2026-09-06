@@ -4,8 +4,19 @@ import React, { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight, Sparkles, Phone } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
-import { HivePollen } from "@/data/hero-pollens-data";
-import { HeroHoneycomb } from "@/components/hero/hero-honeycomb";
+import type { HivePollen } from "@/data/hero-pollens-data";
+import {
+  getABVariant,
+  HERO_EXPERIMENT,
+  HERO_COPY_VARIANTS,
+  HeroVariantKey,
+} from "@/lib/ab-testing";
+import { trackPhoneClick } from "@/lib/analytics";
+
+const HeroHoneycomb = dynamic(
+  () => import("@/components/hero/hero-honeycomb").then((mod) => mod.HeroHoneycomb),
+  { ssr: false }
+);
 
 const ConsultationModal = dynamic(
   () => import("@/components/hero/consultation-modal").then((mod) => mod.ConsultationModal),
@@ -13,12 +24,17 @@ const ConsultationModal = dynamic(
 );
 
 export const Hero: React.FC = () => {
-  // Başlangıçta sadece merkez Growb var (1/13) ve sayfa kilitli
+  const [variant, setVariant] = useState<HeroVariantKey>("control");
   const [revealedCount, setRevealedCount] = useState<number>(1);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [hoveredPollen, setHoveredPollen] = useState<HivePollen | null>(null);
   const [isAnalysisModalOpen, setIsAnalysisModalOpen] = useState(false);
 
+  useEffect(() => {
+    setVariant(getABVariant(HERO_EXPERIMENT));
+  }, []);
+
+  const copy = HERO_COPY_VARIANTS[variant];
   const revealedCountRef = useRef(1);
   const isCompletedRef = useRef(false);
   const lastWheelTimeRef = useRef(0);
@@ -39,22 +55,13 @@ export const Hero: React.FC = () => {
       }
     }
 
-    const lock = () => {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.height = "100%";
-      document.body.style.height = "100%";
+    const setLock = (locked: boolean) => {
+      document.documentElement.style.overflow = document.body.style.overflow = locked
+        ? "hidden"
+        : "";
+      document.documentElement.style.height = document.body.style.height = locked ? "100%" : "";
     };
-
-    const unlock = () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-      document.documentElement.style.height = "";
-      document.body.style.height = "";
-    };
-
-    if (!isCompleted) lock();
-    else unlock();
+    setLock(!isCompleted);
 
     const handleWheel = (e: WheelEvent) => {
       if (isCompletedRef.current) return;
@@ -71,7 +78,7 @@ export const Hero: React.FC = () => {
           if (next === 13) {
             setTimeout(() => {
               setIsCompleted(true);
-              unlock();
+              setLock(false);
             }, 400);
           }
           return next;
@@ -99,7 +106,7 @@ export const Hero: React.FC = () => {
           if (next === 13) {
             setTimeout(() => {
               setIsCompleted(true);
-              unlock();
+              setLock(false);
             }, 400);
           }
           return next;
@@ -115,9 +122,8 @@ export const Hero: React.FC = () => {
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
-      if (isCompletedRef.current) {
-        unlock();
-      }
+      document.documentElement.style.overflow = document.body.style.overflow = "";
+      document.documentElement.style.height = document.body.style.height = "";
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
@@ -128,10 +134,8 @@ export const Hero: React.FC = () => {
   const completeInstantly = () => {
     setRevealedCount(13);
     setIsCompleted(true);
-    document.documentElement.style.overflow = "";
-    document.body.style.overflow = "";
-    document.documentElement.style.height = "";
-    document.body.style.height = "";
+    document.documentElement.style.overflow = document.body.style.overflow = "";
+    document.documentElement.style.height = document.body.style.height = "";
   };
 
   return (
@@ -146,11 +150,12 @@ export const Hero: React.FC = () => {
           <div className="mb-5 flex flex-wrap items-center gap-3 sm:mb-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FFC300]/30 bg-white/5 px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300] shadow-sm">
               <Sparkles className="h-3.5 w-3.5 animate-pulse text-[#FFC300]" />
-              <span>GROWB DİJİTAL BÜYÜME AJANSI</span>
+              <span>{copy.badge}</span>
             </div>
 
             <a
               href={SITE_CONFIG.getPhoneUrl()}
+              onClick={() => trackPhoneClick("hero_badge_pill")}
               className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 font-mono text-xs text-emerald-400 shadow-sm transition-colors hover:border-emerald-500/50 hover:text-emerald-300"
               title={`Doğrudan Arayın: ${SITE_CONFIG.phone}`}
             >
@@ -161,16 +166,14 @@ export const Hero: React.FC = () => {
           </div>
 
           <h1 className="mb-5 font-sans text-3xl font-black leading-[1.08] tracking-[-0.035em] text-white sm:mb-6 sm:text-5xl lg:text-[4rem]">
-            Markanızı dijitalde{" "}
+            {copy.headline.split(" ").slice(0, 2).join(" ")}{" "}
             <span className="text-[#FFC300] underline decoration-[#FFC300]/40 decoration-4">
-              büyütüyoruz.
+              {copy.headline.split(" ").slice(2).join(" ")}
             </span>
           </h1>
 
           <p className="mb-6 max-w-xl font-sans text-sm font-normal leading-relaxed text-neutral-300 sm:mb-8 sm:text-base lg:text-lg">
-            Strateji, reklam yönetimi, içerik üretimi, SEO ve satış altyapısı.{" "}
-            <strong className="font-semibold text-white">13 uzmanlık alanı tek çatı altında</strong>{" "}
-            — ayrı ayrı tedarikçiyle uğraşmayın.
+            {copy.subtitle}
           </p>
 
           <div className="mb-8 flex w-full flex-wrap items-center gap-3.5 sm:mb-10 sm:w-auto sm:gap-5">
@@ -179,12 +182,13 @@ export const Hero: React.FC = () => {
               onClick={() => setIsAnalysisModalOpen(true)}
               className="group inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] px-6 py-3.5 text-sm font-black tracking-tight text-[#0A0A0A] shadow-[0_10px_35px_rgba(255,195,0,0.35)] transition-all hover:scale-105 hover:bg-[#FFA000] active:scale-95 sm:px-7 sm:py-4 sm:text-base"
             >
-              <span>Ücretsiz Analiz İsteyin</span>
+              <span>{copy.ctaPrimary}</span>
               <ArrowRight className="h-4 w-4 stroke-[3] transition-transform group-hover:translate-x-1" />
             </button>
 
             <a
               href={SITE_CONFIG.getPhoneUrl()}
+              onClick={() => trackPhoneClick("hero_cta_phone")}
               className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-3 text-white shadow-md transition-all hover:scale-105 hover:border-[#FFC300] hover:bg-white/15 active:scale-95 sm:px-5 sm:py-3.5"
             >
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FFC300] text-[#0A0A0A] shadow-sm transition-transform group-hover:rotate-12 sm:h-8 sm:w-8">
