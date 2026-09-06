@@ -1,5 +1,6 @@
 import React from "react";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { Clock } from "lucide-react";
 
 interface FinalCtaInputFieldsProps {
   name: string;
@@ -10,9 +11,18 @@ interface FinalCtaInputFieldsProps {
   setSector: (v: string) => void;
   notes: string;
   setNotes: (v: string) => void;
+  appointmentTime: string;
+  setAppointmentTime: (v: string) => void;
   onFieldFocus: (field: string) => void;
   onFieldBlur: (field: string) => void;
 }
+
+const TIME_SLOTS = [
+  "Hemen / Bugün",
+  "Yarın 10:00 - 12:00",
+  "Yarın 14:00 - 16:00",
+  "İlk Uygun Saat",
+];
 
 export const FinalCtaInputFields: React.FC<FinalCtaInputFieldsProps> = ({
   name,
@@ -23,6 +33,8 @@ export const FinalCtaInputFields: React.FC<FinalCtaInputFieldsProps> = ({
   setSector,
   notes,
   setNotes,
+  appointmentTime,
+  setAppointmentTime,
   onFieldFocus,
   onFieldBlur,
 }) => {
@@ -69,23 +81,51 @@ export const FinalCtaInputFields: React.FC<FinalCtaInputFieldsProps> = ({
         </div>
       </div>
 
-      <div>
-        <label
-          htmlFor="final-sector"
-          className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
-        >
-          Sektörünüz / İşletmeniz
-        </label>
-        <input
-          id="final-sector"
-          type="text"
-          value={sector}
-          onFocus={() => onFieldFocus("sector")}
-          onBlur={() => onFieldBlur("sector")}
-          onChange={(e) => setSector(e.target.value)}
-          placeholder="Örn: Evden Eve Nakliyat, Klinik, Otel..."
-          className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
-        />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label
+            htmlFor="final-sector"
+            className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
+          >
+            Sektörünüz / İşletmeniz
+          </label>
+          <input
+            id="final-sector"
+            type="text"
+            value={sector}
+            onFocus={() => onFieldFocus("sector")}
+            onBlur={() => onFieldBlur("sector")}
+            onChange={(e) => setSector(e.target.value)}
+            placeholder="Örn: Evden Eve Nakliyat, Klinik, Otel..."
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label className="mb-1.5 flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-neutral-400">
+            <Clock className="h-3 w-3 text-[#FFC300]" />
+            <span>Görüşme Zamanı Tercihi</span>
+          </label>
+          <div className="grid grid-cols-2 gap-1.5">
+            {TIME_SLOTS.map((slot) => {
+              const isSelected = appointmentTime === slot;
+              return (
+                <button
+                  key={slot}
+                  type="button"
+                  onClick={() => setAppointmentTime(slot)}
+                  className={`rounded-lg px-2 py-2 text-center text-xs font-medium transition-all ${
+                    isSelected
+                      ? "border border-[#FFC300] bg-[#FFC300]/20 text-[#FFC300]"
+                      : "border border-white/5 bg-white/5 text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  {slot}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <div>
@@ -102,7 +142,7 @@ export const FinalCtaInputFields: React.FC<FinalCtaInputFieldsProps> = ({
           onFocus={() => onFieldFocus("notes")}
           onBlur={() => onFieldBlur("notes")}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Örn: Mevcut sitemiz var ancak Google Haritalarda çıkmıyoruz..."
+          placeholder="Örn: 15 dakikalık strateji görüşmesinde Google reklamlarımızı ve web sitemizi değerlendirmek istiyoruz..."
           className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
         />
       </div>

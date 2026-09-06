@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, MessageSquare, PhoneCall } from "lucide-react";
+import { CheckCircle2, MessageSquare, PhoneCall, Clock } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
 import { trackWhatsAppClick, trackPhoneClick } from "@/lib/analytics";
 
@@ -9,29 +9,40 @@ interface FinalCtaSuccessCardProps {
   name: string;
   sector: string;
   selectedServices: string[];
+  appointmentTime?: string;
 }
 
 export const FinalCtaSuccessCard: React.FC<FinalCtaSuccessCardProps> = ({
   name,
   sector,
   selectedServices,
+  appointmentTime,
 }) => {
   const getWaSuccessUrl = () => {
-    const msg = `Merhaba GrowB, az önce web sitenizden teklif formu ilettim.\n\n👤 İsim: ${name || "Yetkili"}\n🏢 Sektör: ${sector || "Genel"}\n🎯 Alanlar: ${selectedServices.join(", ")}\n\n15 dakikalık büyüme görüşmesi için hazır mısınız?`;
+    const msg = `Merhaba GrowB, az önce web sitenizden 15 dakikalık büyüme görüşmesi randevusu oluşturdum.\n\n👤 İsim: ${name || "Yetkili"}\n🏢 Sektör: ${sector || "Genel"}\n⏰ Zaman: ${appointmentTime || "En Kısa Sürede"}\n🎯 Alanlar: ${selectedServices.join(", ")}\n\nDetayları netleştirmek için hazırım.`;
     return SITE_CONFIG.getWhatsappUrl(msg);
   };
 
   return (
     <div
       role="alert"
-      className="rounded-2xl border border-[#FFC300]/40 bg-[#FFC300]/10 p-8 text-center"
+      className="rounded-2xl border border-[#FFC300]/40 bg-[#FFC300]/10 p-6 text-center sm:p-8"
     >
       <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#FFC300]" />
-      <h3 className="text-xl font-bold text-white">Talebiniz Alındı!</h3>
+      <h3 className="text-xl font-bold text-white">Görüşme Randevunuz Alındı!</h3>
       <p className="mx-auto mt-2 max-w-lg text-sm leading-relaxed text-neutral-300">
-        Seçtiğiniz uzmanlık alanları inceleniyor. 15 dakika içinde telefon veya WhatsApp üzerinden
-        büyüme planınızı paylaşacağız.
+        Talebiniz Telegram bildirim hattımıza ulaştı. Belirttiğiniz saat aralığında (
+        <strong className="text-[#FFC300]">{appointmentTime || "En Kısa Sürede"}</strong>) büyüme
+        planınızı kurucularımızla netleştireceğiz.
       </p>
+
+      {appointmentTime && (
+        <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/40 px-3.5 py-1.5 font-mono text-xs text-neutral-300">
+          <Clock className="h-3.5 w-3.5 text-[#FFC300]" />
+          <span>Planlanan Zaman: {appointmentTime}</span>
+        </div>
+      )}
+
       <div className="mt-6 flex flex-col items-center justify-center gap-2.5 sm:flex-row sm:flex-wrap">
         <a
           href={getWaSuccessUrl()}

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { FINAL_CTA_DATA } from "@/data/content";
-import { Send, ShieldCheck, Sparkles } from "lucide-react";
+import { Send, ShieldCheck, Sparkles, MessageSquare } from "lucide-react";
 import { FinalCtaServiceSelector } from "./final-cta/final-cta-service-selector";
 import { FinalCtaSuccessCard } from "./final-cta/final-cta-success-card";
 import { FinalCtaInputFields } from "./final-cta/final-cta-input-fields";
@@ -21,9 +21,11 @@ export const FinalCta: React.FC = () => {
   const [sector, setSector] = useState("");
   const [notes, setNotes] = useState("");
   const [website, setWebsite] = useState("");
+  const [appointmentTime, setAppointmentTime] = useState("Hemen / Bugün");
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorWhatsappUrl, setErrorWhatsappUrl] = useState<string | null>(null);
   const [idempotencyKey] = useState(() =>
     typeof crypto !== "undefined" && crypto.randomUUID
       ? crypto.randomUUID()
@@ -50,19 +52,21 @@ export const FinalCta: React.FC = () => {
     if (isSubmitting || !phone || !kvkkConsent) return;
     setIsSubmitting(true);
     setErrorMessage(null);
+    setErrorWhatsappUrl(null);
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          type: "PROJE_BASLAT",
+          type: "RANDEVU",
           name: name || "Belirtilmedi",
           phone,
           sector: sector || "Belirtilmedi",
           service: selectedServices.join(" + "),
+          appointmentTime,
           notes: notes || "",
           website,
-          source: "Ana Sayfa Proje Başlat (#iletisim)",
+          source: "Ana Sayfa Görüşme & Randevu (#iletisim)",
           kvkkConsent: true,
           idempotencyKey,
         }),
@@ -73,11 +77,12 @@ export const FinalCta: React.FC = () => {
         markSubmitted();
         trackLead({
           formId: "final_cta_form",
-          source: "Ana Sayfa Proje Başlat",
+          source: "Ana Sayfa Randevu Formu",
           service: selectedServices[0] || "Genel Büyüme",
         });
       } else {
         setErrorMessage(data.error || "Form gönderilemedi. Lütfen bilgilerinizi kontrol ediniz.");
+        if (data.whatsappUrl) setErrorWhatsappUrl(data.whatsappUrl);
       }
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -120,6 +125,7 @@ export const FinalCta: React.FC = () => {
                   name={name}
                   sector={sector}
                   selectedServices={selectedServices}
+                  appointmentTime={appointmentTime}
                 />
               ) : (
                 <form
@@ -147,7 +153,18 @@ export const FinalCta: React.FC = () => {
                       role="alert"
                       className="rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-300"
                     >
-                      {errorMessage}
+                      <p>{errorMessage}</p>
+                      {errorWhatsappUrl && (
+                        <a
+                          href={errorWhatsappUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-[#25D366] px-3 py-1.5 font-bold text-black hover:bg-[#20bd5a]"
+                        >
+                          <MessageSquare className="h-3.5 w-3.5" />
+                          <span>WhatsApp ile Randevuyu Hemen Gönder</span>
+                        </a>
+                      )}
                     </div>
                   )}
 
@@ -160,6 +177,8 @@ export const FinalCta: React.FC = () => {
                     setSector={setSector}
                     notes={notes}
                     setNotes={setNotes}
+                    appointmentTime={appointmentTime}
+                    setAppointmentTime={setAppointmentTime}
                     onFieldFocus={onFieldFocus}
                     onFieldBlur={onFieldBlur}
                   />
@@ -198,7 +217,7 @@ export const FinalCta: React.FC = () => {
                     className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] py-4 text-sm font-extrabold tracking-tight text-[#0A0A0A] shadow-[0_10px_25px_rgba(255,195,0,0.35)] transition-all hover:scale-[1.01] hover:bg-[#FFA000] focus-visible:ring-2 focus-visible:ring-white disabled:opacity-50 sm:text-base"
                   >
                     {isSubmitting ? (
-                      <span>Gönderiliyor...</span>
+                      <span>Randevu Talebi Telegram&apos;a İletiliyor...</span>
                     ) : (
                       <>
                         <span>{FINAL_CTA_DATA.ctaText}</span>
@@ -213,7 +232,7 @@ export const FinalCta: React.FC = () => {
                       <span>{FINAL_CTA_DATA.guaranteeText}</span>
                     </span>
                     <span>•</span>
-                    <span>10 Saniye Bildirim</span>
+                    <span>Anında Telegram Bildirimi</span>
                   </div>
                 </form>
               )}

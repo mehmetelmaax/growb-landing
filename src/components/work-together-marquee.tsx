@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 
@@ -116,6 +118,12 @@ export const WorkTogetherMarquee: React.FC = () => {
         {/* Center Floating Round Badge - Continuously Rotating, No 'BAŞLA' text, Goes to #randevu-al */}
         <a
           href="#randevu-al"
+          onClick={(e) => {
+            if (typeof window !== "undefined") {
+              e.preventDefault();
+              window.dispatchEvent(new CustomEvent("open-appointment-modal"));
+            }
+          }}
           aria-label="Randevu Al & Görüşme Planla"
           className="group absolute left-1/2 top-1/2 z-30 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-2 border-black/15 bg-[#FFC300] text-[#0A0A0A] shadow-[0_20px_60px_rgba(255,195,0,0.5)] transition-all duration-300 hover:scale-110 hover:bg-[#FFA000] active:scale-95 sm:h-32 sm:w-32 md:h-40 md:w-40"
         >

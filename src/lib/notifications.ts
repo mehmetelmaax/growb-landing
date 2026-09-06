@@ -22,7 +22,9 @@ function buildTelegramMessage(
   nowStr: string
 ): string {
   let headerTitle = "🚨 <b>YENI GROWB LEAD TALEBI!</b>";
-  if (data.type === "PROJE_BASLAT") {
+  if (data.type === "RANDEVU" || data.type === "GORUSME_PLANLA") {
+    headerTitle = "📅 <b>YENİ BÜYÜME GÖRÜŞMESİ & RANDEVU TALEBİ!</b>";
+  } else if (data.type === "PROJE_BASLAT") {
     headerTitle = "🚀 <b>YENI PROJE BASLAT TALEBI!</b>";
   } else if (data.type === "DETAY_AL" || data.type === "ANALIZ") {
     headerTitle = "📊 <b>YENI DETAY VE ANALIZ TALEBI!</b>";
@@ -33,16 +35,23 @@ function buildTelegramMessage(
   }
 
   let text = `${headerTitle}\n━━━━━━━━━━━━━━━━━━━━\n`;
-  if (data.name) text += `👤 <b>Isim / Yetkili:</b> ${escapeHtml(data.name)}\n`;
+  if (data.name) text += `👤 <b>İsim / Yetkili:</b> ${escapeHtml(data.name)}\n`;
   text += `📱 <b>Telefon:</b> <code>${escapeHtml(normalizedPhone)}</code>\n`;
+  if (data.appointmentDate)
+    text += `🗓️ <b>Randevu Tarihi:</b> ${escapeHtml(data.appointmentDate)}\n`;
+  if (data.appointmentTime) text += `⏰ <b>Saat Aralığı:</b> ${escapeHtml(data.appointmentTime)}\n`;
+  if (data.meetingType) text += `📞 <b>Görüşme Kanalı:</b> ${escapeHtml(data.meetingType)}\n`;
   if (data.siteUrl) text += `🌐 <b>Web Sitesi:</b> ${escapeHtml(data.siteUrl)}\n`;
-  if (data.sector) text += `🏢 <b>Sektor:</b> ${escapeHtml(data.sector)}\n`;
+  if (data.sector) text += `🏢 <b>Sektör:</b> ${escapeHtml(data.sector)}\n`;
   if (data.service) text += `🛠️ <b>Hizmet:</b> ${escapeHtml(data.service)}\n`;
   if (data.notes) text += `💬 <b>Not:</b> ${escapeHtml(data.notes)}\n`;
   text += `📍 <b>Kaynak:</b> ${escapeHtml(data.source)}\n`;
   text += `📜 <b>KVKK Onayı:</b> Onaylandı (${nowStr})\n`;
   text += `🛡️ <b>IP:</b> <code>${escapeHtml(clientIp)}</code>\n`;
-  text += `📅 <b>Tarih:</b> ${nowStr}`;
+  text += `📅 <b>Tarih:</b> ${nowStr}\n`;
+  text += `━━━━━━━━━━━━━━━━━━━━\n`;
+  const cleanPhone = normalizedPhone.replace(/^0/, "90");
+  text += `👉 <a href="https://wa.me/${cleanPhone}">Müşteriye WhatsApp'tan Yanıt Ver</a>`;
   return text;
 }
 
@@ -102,9 +111,12 @@ export async function sendLeadNotifications({
           <h2>Yeni GrowB Lead Bildirimi</h2>
           <p><strong>Talep Turu:</strong> ${escapeHtml(data.type)}</p>
           <p><strong>Telefon:</strong> ${escapeHtml(normalizedPhone)}</p>
+          ${data.appointmentDate ? `<p><strong>Randevu Tarihi:</strong> ${escapeHtml(data.appointmentDate)}</p>` : ""}
+          ${data.appointmentTime ? `<p><strong>Saat Aralığı:</strong> ${escapeHtml(data.appointmentTime)}</p>` : ""}
+          ${data.meetingType ? `<p><strong>Görüşme Kanalı:</strong> ${escapeHtml(data.meetingType)}</p>` : ""}
           ${data.name ? `<p><strong>Yetkili:</strong> ${escapeHtml(data.name)}</p>` : ""}
           ${data.siteUrl ? `<p><strong>Web Sitesi:</strong> ${escapeHtml(data.siteUrl)}</p>` : ""}
-          ${data.sector ? `<p><strong>Sektor:</strong> ${escapeHtml(data.sector)}</p>` : ""}
+          ${data.sector ? `<p><strong>Sektör:</strong> ${escapeHtml(data.sector)}</p>` : ""}
           ${data.service ? `<p><strong>Hizmet:</strong> ${escapeHtml(data.service)}</p>` : ""}
           ${data.notes ? `<p><strong>Not:</strong> ${escapeHtml(data.notes)}</p>` : ""}
           <ul>

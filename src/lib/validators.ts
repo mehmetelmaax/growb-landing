@@ -136,10 +136,39 @@ export function normalizeUrl(input: string): string | null {
  */
 export const LeadPayloadSchema = z.object({
   type: z
-    .enum(["PROJE_BASLAT", "DETAY_AL", "ANALIZ", "HIZ_SKORU", "HIZMET_TEKLIF"], {
-      message: "Geçersiz talep türü.",
-    })
+    .enum(
+      [
+        "PROJE_BASLAT",
+        "DETAY_AL",
+        "ANALIZ",
+        "HIZ_SKORU",
+        "HIZMET_TEKLIF",
+        "RANDEVU",
+        "GORUSME_PLANLA",
+      ],
+      {
+        message: "Geçersiz talep türü.",
+      }
+    )
     .default("PROJE_BASLAT"),
+  appointmentDate: z
+    .string({ message: "Geçerli bir randevu tarihi belirtiniz." })
+    .trim()
+    .max(60, "Tarih en fazla 60 karakter olabilir.")
+    .optional()
+    .nullable(),
+  appointmentTime: z
+    .string({ message: "Geçerli bir randevu saati belirtiniz." })
+    .trim()
+    .max(30, "Saat en fazla 30 karakter olabilir.")
+    .optional()
+    .nullable(),
+  meetingType: z
+    .string({ message: "Geçerli bir görüşme kanalı belirtiniz." })
+    .trim()
+    .max(40, "Kanal en fazla 40 karakter olabilir.")
+    .optional()
+    .nullable(),
   name: z
     .string({ message: "İsim geçerli bir metin olmalıdır." })
     .trim()

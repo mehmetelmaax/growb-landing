@@ -183,9 +183,11 @@ export async function POST(request: Request) {
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
     const resendApiKey = process.env.RESEND_API_KEY;
-    const waFallbackUrl = SITE_CONFIG.getWhatsappUrl(
-      "Merhaba GrowB Dijital, web sitesi üzerinden randevu/teklif talebinde bulunmak istiyorum."
-    );
+    const isRandevu = data.type === "RANDEVU" || data.type === "GORUSME_PLANLA";
+    const waText = isRandevu
+      ? `Merhaba GrowB Dijital, ${data.appointmentDate || "yakın bir tarih"} (${data.appointmentTime || "uygun saat"}) için 15 dakikalık büyüme görüşmesi randevusu almak istiyorum.`
+      : "Merhaba GrowB Dijital, web sitesi üzerinden randevu/teklif talebinde bulunmak istiyorum.";
+    const waFallbackUrl = SITE_CONFIG.getWhatsappUrl(waText);
 
     if ((!botToken || !chatId) && !resendApiKey) {
       console.error("[SECURITY 500] Hiçbir bildirim kanalı (Telegram / Resend) yapılandırılmamış!");
@@ -222,7 +224,10 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Talebiniz ekibimize ulaştı. En kısa sürede sizinle iletişime geçeceğiz.",
+        message: isRandevu
+          ? "Randevu talebiniz ekibimize ulaştı. Belirttiğiniz saatte görüşmek üzere teyit mesajı iletilecektir."
+          : "Talebiniz ekibimize ulaştı. En kısa sürede sizinle iletişime geçeceğiz.",
+        whatsappUrl: waFallbackUrl,
       },
       { status: 200 }
     );
