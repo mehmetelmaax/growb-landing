@@ -13,7 +13,9 @@ export const WebsiteScoreAudit: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
-  const [scanStatus, setScanStatus] = useState("Google PageSpeed motoru başlatılıyor...");
+  const [scanStatus, setScanStatus] = useState(
+    "Google sitenizi tarıyor, 20-30 saniye sürebilir..."
+  );
   const [result, setResult] = useState<AuditData | null>(null);
   const [errorInfo, setErrorInfo] = useState<string | null>(null);
 
@@ -30,25 +32,14 @@ export const WebsiteScoreAudit: React.FC = () => {
     setIsScanning(true);
     setResult(null);
     setErrorInfo(null);
-    setScanStatus("Google Lighthouse v10 analiz motoruna bağlanılıyor...");
-
-    const t1 = setTimeout(
-      () => setScanStatus("Mobil Core Web Vitals (LCP, FCP, CLS) metrikleri ölçülüyor..."),
-      2500
-    );
-    const t2 = setTimeout(
-      () => setScanStatus("Performans ve SEO optimizasyon açıkları derleniyor..."),
-      6000
-    );
+    setScanStatus("Google sitenizi tarıyor, 20-30 saniye sürebilir...");
 
     try {
-      const res = await fetch("/api/audit", {
+      const res = await fetch("/api/pagespeed", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
-      clearTimeout(t1);
-      clearTimeout(t2);
 
       const data = await res.json();
       if (res.ok && data.success && data.data) {
@@ -59,6 +50,9 @@ export const WebsiteScoreAudit: React.FC = () => {
             source: "Hız & SEO Testi Bölümü",
             service: "Canlı Lighthouse Skoru",
           });
+          const perf = data.data.performanceScore ?? data.data.speedScore ?? 0;
+          const seo = data.data.seoScore ?? 0;
+          const bp = data.data.bestPracticesScore ?? 0;
           fetch("/api/lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -67,7 +61,7 @@ export const WebsiteScoreAudit: React.FC = () => {
               phone,
               siteUrl: url,
               sector: sector || "Belirtilmedi",
-              notes: `Canlı PageSpeed: ${data.data.speedScore}/100, LCP: ${data.data.lcp}, FCP: ${data.data.fcp}`,
+              notes: `Canlı PageSpeed - Performans: ${perf}/100, SEO: ${seo}/100, Best Practices: ${bp}/100, LCP: ${data.data.lcp}, FCP: ${data.data.fcp}, CLS: ${data.data.cls}`,
               source: "Hız & SEO Testi Bölümü (#skor-ogren)",
               kvkkConsent: true,
             }),
@@ -208,12 +202,12 @@ export const WebsiteScoreAudit: React.FC = () => {
               <button
                 type="submit"
                 disabled={isScanning}
-                className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] px-8 py-3.5 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A] shadow-lg transition-all hover:bg-[#e6b000] focus-visible:ring-2 focus-visible:ring-white disabled:opacity-50 sm:w-auto"
+                className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] px-8 py-3.5 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A] shadow-lg transition-all hover:bg-[#e6b000] focus-visible:ring-2 focus-visible:ring-white disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               >
                 {isScanning ? (
                   <>
-                    <RefreshCw className="h-4 w-4 animate-spin" />
-                    <span>Google Ölçüyor...</span>
+                    <RefreshCw className="h-4 w-4 shrink-0 animate-spin" />
+                    <span>Google sitenizi tarıyor, 20-30 saniye sürebilir...</span>
                   </>
                 ) : (
                   <>
