@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
 import { METRICS_DATA } from "@/data/content";
 
 interface CounterProps {
@@ -14,7 +13,25 @@ interface CounterProps {
 const Counter: React.FC<CounterProps> = ({ target, decimals, prefix = "", suffix = "" }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-50px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!inView) return;
@@ -38,7 +55,7 @@ const Counter: React.FC<CounterProps> = ({ target, decimals, prefix = "", suffix
   }, [inView, target]);
 
   return (
-    <span ref={ref} className="font-mono tracking-tight font-black">
+    <span ref={ref} className="font-mono font-black tracking-tight">
       {prefix}
       {count.toFixed(decimals)}
       {suffix}
@@ -48,36 +65,36 @@ const Counter: React.FC<CounterProps> = ({ target, decimals, prefix = "", suffix
 
 export const Metrics: React.FC = () => {
   return (
-    <section id="metrikler" className="py-24 md:py-36 bg-[#0D0D0D] border-y border-white/5 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+    <section
+      id="metrikler"
+      className="relative border-y border-white/5 bg-[#0D0D0D] py-24 md:py-36"
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <span className="text-xs font-mono font-bold tracking-[0.2em] text-accent uppercase block mb-3">
+            <span className="mb-3 block font-mono text-xs font-bold uppercase tracking-[0.2em] text-accent">
               // SAHA VERİLERİ & METRİKLER
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-cream tracking-tight">
+            <h2 className="text-3xl font-extrabold tracking-tight text-cream sm:text-5xl">
               Rakamlarla İspatlanmış Gerçek Etki.
             </h2>
           </div>
-          <p className="text-muted text-sm md:text-base max-w-md font-normal leading-relaxed">
-            Hizmet verdiğimiz işletmelerde laf üretmiyoruz; Google ölçümlerinde ve banka hesaplarında görülen somut sonuçlar kaydediyoruz.
+          <p className="max-w-md text-sm font-normal leading-relaxed text-muted md:text-base">
+            Hizmet verdiğimiz işletmelerde laf üretmiyoruz; Google ölçümlerinde ve banka
+            hesaplarında görülen somut sonuçlar kaydediyoruz.
           </p>
         </div>
 
         {/* 4 Columns Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {METRICS_DATA.map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-              className="p-8 rounded-3xl bg-surface border border-white/10 hover:border-accent/40 transition-all duration-300 group relative overflow-hidden"
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-surface p-8 transition-all duration-300 hover:border-accent/40"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/15 transition-all" />
+              <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-accent/5 blur-2xl transition-all group-hover:bg-accent/15" />
 
-              <div className="text-4xl md:text-5xl font-black text-cream group-hover:text-accent transition-colors mb-4 flex items-baseline">
+              <div className="mb-4 flex items-baseline text-4xl font-black text-cream transition-colors group-hover:text-accent md:text-5xl">
                 <Counter
                   target={item.target}
                   decimals={item.decimals}
@@ -86,13 +103,9 @@ export const Metrics: React.FC = () => {
                 />
               </div>
 
-              <h3 className="text-base font-bold text-cream mb-2 tracking-tight">
-                {item.label}
-              </h3>
-              <p className="text-xs text-muted leading-relaxed font-normal">
-                {item.desc}
-              </p>
-            </motion.div>
+              <h3 className="mb-2 text-base font-bold tracking-tight text-cream">{item.label}</h3>
+              <p className="text-xs font-normal leading-relaxed text-muted">{item.desc}</p>
+            </div>
           ))}
         </div>
       </div>

@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
 
 const MANIFESTO_WORDS = [
   "BİZ",
@@ -25,10 +24,32 @@ const MANIFESTO_WORDS = [
 
 export const Manifesto: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const el = containerRef.current;
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const total = windowHeight + rect.height;
+            const current = windowHeight - rect.top;
+            const p = Math.max(0, Math.min(1, current / total));
+            setProgress(p);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const totalWords = MANIFESTO_WORDS.length;
 
@@ -41,36 +62,29 @@ export const Manifesto: React.FC = () => {
       <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
         <h2 className="flex select-none flex-wrap justify-center gap-x-3.5 gap-y-2 text-3xl font-black leading-[1.15] tracking-tight sm:gap-x-5 sm:text-5xl md:text-6xl lg:text-7xl">
           {MANIFESTO_WORDS.map((word, index) => {
-            const start = index / totalWords;
-            const end = start + 1 / totalWords;
+            const start = (index / totalWords) * 0.7;
+            const end = Math.min(1, ((index + 1) / totalWords) * 0.7 + 0.1);
+            let wordOpacity = 0.18;
+            if (progress >= end) {
+              wordOpacity = 1;
+            } else if (progress > start) {
+              wordOpacity = 0.18 + ((progress - start) / (end - start)) * 0.82;
+            }
             return (
-              <WordReveal
+              <span
                 key={index}
-                word={word}
-                progress={scrollYProgress}
-                range={[start * 0.7, Math.min(1, end * 0.7 + 0.1)]}
-              />
+                style={{
+                  opacity: wordOpacity,
+                  color: wordOpacity > 0.6 ? "#FFFDF5" : "rgba(255, 253, 245, 0.18)",
+                }}
+                className="transition-colors duration-150"
+              >
+                {word}
+              </span>
             );
           })}
         </h2>
       </div>
     </section>
-  );
-};
-
-interface WordRevealProps {
-  word: string;
-  progress: MotionValue<number>;
-  range: [number, number];
-}
-
-const WordReveal: React.FC<WordRevealProps> = ({ word, progress, range }) => {
-  const opacity = useTransform(progress, range, [0.18, 1]);
-  const color = useTransform(progress, range, ["rgba(255, 253, 245, 0.18)", "#FFFDF5"]);
-
-  return (
-    <motion.span style={{ opacity, color }} className="transition-colors">
-      {word}
-    </motion.span>
   );
 };

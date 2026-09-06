@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { FAQ_DATA } from "@/data/content";
 import { Plus } from "lucide-react";
 
@@ -13,17 +12,18 @@ export const Faq: React.FC = () => {
   };
 
   return (
-    <section id="sss" className="py-8 sm:py-10 relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <span className="text-xs font-mono font-bold tracking-[0.2em] text-accent uppercase block mb-3">
+    <section id="sss" className="relative py-8 sm:py-10">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 text-center">
+          <span className="mb-3 block font-mono text-xs font-bold uppercase tracking-[0.2em] text-accent">
             // AKLINIZA TAKILANLAR
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-cream tracking-tight mb-4">
+          <h2 className="mb-4 text-3xl font-black tracking-tight text-cream sm:text-5xl">
             Sıkça Sorulan Sorular.
           </h2>
-          <p className="text-muted text-sm sm:text-base max-w-lg mx-auto font-normal">
-            Esnafımızın ve büyüme ortaklarımızın bize en sık danıştığı konuları ve verdiğimiz yazılı taahhütleri şeffaflıkla derledik.
+          <p className="mx-auto max-w-lg text-sm font-normal text-muted sm:text-base">
+            Esnafımızın ve büyüme ortaklarımızın bize en sık danıştığı konuları ve verdiğimiz yazılı
+            taahhütleri şeffaflıkla derledik.
           </p>
         </div>
 
@@ -34,45 +34,39 @@ export const Faq: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className="rounded-2xl bg-surface border border-white/10 hover:border-accent/40 transition-colors overflow-hidden"
+                className="overflow-hidden rounded-2xl border border-white/10 bg-surface transition-colors hover:border-accent/40"
               >
                 <button
+                  type="button"
                   onClick={() => toggleFaq(item.id)}
-                  className="w-full flex items-center justify-between p-5 sm:p-6 text-left text-cream select-none"
+                  className="flex w-full select-none items-center justify-between p-5 text-left text-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:p-6"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-base sm:text-lg font-bold tracking-tight pr-4">
+                  <span className="pr-4 text-base font-bold tracking-tight sm:text-lg">
                     {item.question}
                   </span>
-                  <motion.div
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 transition-colors ${
+                  <div
+                    className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
                       isOpen
-                        ? "border-accent bg-accent text-[#0A0A0A]"
+                        ? "rotate-45 border-accent bg-accent text-[#0A0A0A]"
                         : "border-white/10 bg-surface-dark text-muted"
                     }`}
                   >
-                    <Plus className="w-4 h-4" />
-                  </motion.div>
+                    <Plus className="h-4 w-4" />
+                  </div>
                 </button>
 
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-muted leading-relaxed border-t border-white/5 font-normal">
-                        {item.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="border-t border-white/5 px-5 pb-6 pt-1 text-sm font-normal leading-relaxed text-muted sm:px-6 sm:text-base">
+                      {item.answer}
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}

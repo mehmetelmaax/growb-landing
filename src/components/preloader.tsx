@@ -1,81 +1,90 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export const Preloader: React.FC = () => {
-  const [show, setShow] = useState(true);
+  const [mounted, setMounted] = useState(true);
+  const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    // 2.4 saniye (2-3 saniye arası estetik giriş efekti)
-    const timer = setTimeout(() => {
-      setShow(false);
-    }, 2400);
-    return () => clearTimeout(timer);
+    // 2.0 saniye gösterim, ardından yumuşak 0.6s fade-out
+    const fadeTimer = setTimeout(() => {
+      setFading(true);
+    }, 2000);
+    const removeTimer = setTimeout(() => {
+      setMounted(false);
+    }, 2600);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(removeTimer);
+    };
   }, []);
 
+  if (!mounted) return null;
+
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          key="preloader"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
-          className="fixed inset-0 z-[99999] bg-[#0A0A0A] flex flex-col items-center justify-center pointer-events-none select-none"
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none fixed inset-0 z-[99999] flex select-none flex-col items-center justify-center bg-[#0A0A0A] transition-opacity duration-500 ease-out ${
+        fading ? "opacity-0" : "opacity-100"
+      }`}
+    >
+      <style>{`
+        @keyframes preloaderLogo {
+          0% { opacity: 0; transform: translateY(15px) scale(0.8); }
+          25% { opacity: 1; transform: translateY(0) scale(1.05); }
+          55% { opacity: 1; transform: translateY(0) scale(1); }
+          80% { opacity: 1; transform: translateY(0) scale(1); }
+          100% { opacity: 0; transform: translate(-120px, -150px) scale(0.5); }
+        }
+        @keyframes preloaderDot {
+          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px #FFC300); }
+          50% { transform: scale(1.25); filter: drop-shadow(0 0 16px #FFC300); }
+        }
+        @keyframes preloaderProgress {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+        @keyframes preloaderSlogan {
+          0% { opacity: 0; transform: translateY(10px); }
+          30% { opacity: 0.9; transform: translateY(0); }
+          75% { opacity: 0.9; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-10px); }
+        }
+      `}</style>
+
+      {/* Parıldayan Altın Halo Arka Plan */}
+      <div className="pointer-events-none absolute h-72 w-72 rounded-full bg-[#FFC300]/10 blur-[120px]" />
+
+      {/* Logo */}
+      <div
+        style={{ animation: "preloaderLogo 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
+        className="relative z-10 flex items-baseline font-sans text-6xl font-black tracking-tight text-white sm:text-8xl"
+      >
+        <span>Growb</span>
+        <span
+          style={{ animation: "preloaderDot 1.2s ease-in-out infinite" }}
+          className="ml-0.5 inline-block text-7xl leading-none text-[#FFC300] sm:text-9xl"
         >
-          {/* Parıldayan Altın Halo Arka Plan */}
-          <div className="absolute w-72 h-72 rounded-full bg-[#FFC300]/10 blur-[120px] pointer-events-none" />
+          .
+        </span>
+      </div>
 
-          {/* Logo Animasyonu: 0-2.4s boyunca merkezde parlar ve köşeye süzülür */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 15 }}
-            animate={{ 
-              opacity: [0, 1, 1, 1, 0],
-              scale: [0.8, 1.05, 1, 1, 0.45],
-              x: [0, 0, 0, 0, -220],
-              y: [15, 0, 0, 0, -260],
-            }}
-            transition={{ 
-              duration: 2.3, 
-              times: [0, 0.25, 0.55, 0.8, 1], 
-              ease: [0.16, 1, 0.3, 1] 
-            }}
-            className="flex items-baseline text-6xl sm:text-8xl font-black text-white tracking-tight relative z-10 font-sans"
-          >
-            <span>Growb</span>
-            <motion.span 
-              animate={{ 
-                scale: [1, 1.25, 1], 
-                filter: ["drop-shadow(0 0 0px #FFC300)", "drop-shadow(0 0 16px #FFC300)", "drop-shadow(0 0 4px #FFC300)"] 
-              }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-[#FFC300] text-7xl sm:text-9xl leading-none inline-block ml-0.5"
-            >
-              .
-            </motion.span>
-          </motion.div>
-
-          {/* Alt Slogan & İlerleme Çizgisi */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: [0, 0.9, 0.9, 0], y: [10, 0, 0, -10] }}
-            transition={{ duration: 2.1, times: [0, 0.3, 0.75, 1], ease: "easeInOut" }}
-            className="mt-6 flex flex-col items-center gap-2 relative z-10"
-          >
-            <span className="text-xs font-mono tracking-[0.2em] text-neutral-400 uppercase">
-              Büyüme Ortağınız
-            </span>
-            <div className="w-28 h-0.5 bg-white/10 rounded-full overflow-hidden">
-              <motion.div 
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1.8, ease: "easeInOut" }}
-                className="h-full bg-[#FFC300]"
-              />
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      {/* Alt Slogan & İlerleme Çizgisi */}
+      <div
+        style={{ animation: "preloaderSlogan 2.0s ease-in-out forwards" }}
+        className="relative z-10 mt-6 flex flex-col items-center gap-2"
+      >
+        <span className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400">
+          Büyüme Ortağınız
+        </span>
+        <div className="h-0.5 w-28 overflow-hidden rounded-full bg-white/10">
+          <div
+            style={{ animation: "preloaderProgress 1.7s ease-in-out forwards" }}
+            className="h-full bg-[#FFC300]"
+          />
+        </div>
+      </div>
+    </div>
   );
 };

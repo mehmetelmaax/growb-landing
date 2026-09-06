@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, CheckCircle2, X, Send, MessageSquare } from "lucide-react";
 import { ServiceDetail } from "@/data/services-detail-data";
 import { SITE_CONFIG } from "@/data/content";
@@ -61,48 +60,39 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+        <div className="animate-in fade-in fixed inset-0 z-[99999] flex items-center justify-center p-4 duration-200">
+          <div
             onClick={onClose}
-            className="absolute inset-0 bg-black/85 backdrop-blur-md"
+            className="absolute inset-0 cursor-pointer bg-black/85 backdrop-blur-md"
           />
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg bg-[#111111] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 select-text"
-          >
+          <div className="animate-in zoom-in-95 slide-in-from-bottom-5 relative z-10 w-full max-w-lg select-text rounded-3xl border border-white/15 bg-[#111111] p-6 shadow-2xl duration-200 sm:p-8">
             <button
               type="button"
               onClick={onClose}
-              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="absolute right-5 top-5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/10 text-neutral-300 transition-colors hover:bg-white/20 hover:text-white"
               aria-label="Kapat"
             >
-              <X className="w-4 h-4" />
+              <X className="h-4 w-4" />
             </button>
 
             {!isDetailSubmitted ? (
               <div>
-                <div className="flex items-center gap-2 text-xs font-mono text-[#FFC300] uppercase mb-2">
-                  <Sparkles className="w-4 h-4" />
+                <div className="mb-2 flex items-center gap-2 font-mono text-xs uppercase text-[#FFC300]">
+                  <Sparkles className="h-4 w-4" />
                   <span>HİZMET DETAYI & TEKLİF FORMU</span>
                 </div>
-                <h3 className="text-2xl font-black text-white mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-sm text-neutral-400 mb-6">
-                  Bu uzmanlık alanımız hakkında detaylı bilgi, kapsam ve işletmenize özel teklif almak için numaranızı iletin.
+                <h3 className="mb-2 text-2xl font-black text-white">{service.title}</h3>
+                <p className="mb-6 text-sm text-neutral-400">
+                  Bu uzmanlık alanımız hakkında detaylı bilgi, kapsam ve işletmenize özel teklif
+                  almak için numaranızı iletin.
                 </p>
 
                 <form onSubmit={handleDetailSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-mono text-neutral-300 mb-1">
+                    <label className="mb-1 block font-mono text-xs text-neutral-300">
                       Yetkili Adı Soyadı
                     </label>
                     <input
@@ -110,12 +100,12 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                       placeholder="Adınız ve Soyadınız"
                       value={detailForm.name}
                       onChange={(e) => setDetailForm({ ...detailForm, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-neutral-500 text-sm focus:border-[#FFC300] focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition-colors placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-neutral-300 mb-1">
+                    <label className="mb-1 block font-mono text-xs text-neutral-300">
                       WhatsApp Telefon Numaranız *
                     </label>
                     <input
@@ -124,12 +114,12 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                       placeholder="05XX XXX XX XX"
                       value={detailForm.phone}
                       onChange={(e) => setDetailForm({ ...detailForm, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-neutral-500 text-sm focus:border-[#FFC300] focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition-colors placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono text-neutral-300 mb-1">
+                    <label className="mb-1 block font-mono text-xs text-neutral-300">
                       Varsa Özel Notunuz
                     </label>
                     <textarea
@@ -137,66 +127,72 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
                       placeholder="İşletmeniz veya beklentiniz hakkında kısa not..."
                       value={detailForm.note}
                       onChange={(e) => setDetailForm({ ...detailForm, note: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-neutral-500 text-sm focus:border-[#FFC300] focus:outline-none transition-colors resize-none"
+                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white transition-colors placeholder:text-neutral-500 focus:border-[#FFC300] focus:outline-none"
                     />
                   </div>
 
                   {/* KVKK Onay Kutusu */}
-                  <label className="flex items-start gap-2 text-xs text-neutral-400 cursor-pointer select-none pt-1">
+                  <label className="flex cursor-pointer select-none items-start gap-2 pt-1 text-xs text-neutral-400">
                     <input
                       type="checkbox"
                       required
                       checked={kvkkConsent}
                       onChange={(e) => setKvkkConsent(e.target.checked)}
-                      className="mt-0.5 w-4 h-4 rounded bg-white/5 border border-white/20 text-[#FFC300] focus:ring-[#FFC300] accent-[#FFC300]"
+                      className="mt-0.5 h-4 w-4 rounded border border-white/20 bg-white/5 text-[#FFC300] accent-[#FFC300] focus:ring-[#FFC300]"
                     />
                     <span>
-                      <Link href="/kvkk-aydinlatma-metni" target="_blank" className="text-white underline hover:text-[#FFC300]">
+                      <Link
+                        href="/kvkk-aydinlatma-metni"
+                        target="_blank"
+                        className="text-white underline hover:text-[#FFC300]"
+                      >
                         KVKK Aydınlatma Metni
                       </Link>
-                      &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza veriyorum. *
+                      &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza
+                      veriyorum. *
                     </span>
                   </label>
 
                   <button
                     type="submit"
                     disabled={isDetailSubmitting || !kvkkConsent}
-                    className="w-full py-3.5 rounded-xl bg-[#FFC300] hover:bg-[#FFA000] text-[#0A0A0A] font-black text-sm tracking-tight transition-all shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#FFC300] py-3.5 text-sm font-black tracking-tight text-[#0A0A0A] shadow-lg transition-all hover:scale-[1.02] hover:bg-[#FFA000] active:scale-[0.98] disabled:opacity-50"
                   >
                     {isDetailSubmitting ? (
                       <span>İletiliyor...</span>
                     ) : (
                       <>
                         <span>Detay ve Teklif İste</span>
-                        <Send className="w-4 h-4" />
+                        <Send className="h-4 w-4" />
                       </>
                     )}
                   </button>
                 </form>
               </div>
             ) : (
-              <div className="text-center py-6">
-                <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
-                  <CheckCircle2 className="w-7 h-7" />
+              <div className="py-6 text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/20 text-emerald-400">
+                  <CheckCircle2 className="h-7 w-7" />
                 </div>
-                <h3 className="text-2xl font-black text-white mb-2">Talebiniz Alındı!</h3>
-                <p className="text-sm text-neutral-300 mb-6 leading-relaxed">
-                  <strong>{service.title}</strong> talebiniz doğrudan yetkili ekibimize iletildi. En kısa sürede WhatsApp veya telefon ile geri dönüş yapılacaktır.
+                <h3 className="mb-2 text-2xl font-black text-white">Talebiniz Alındı!</h3>
+                <p className="mb-6 text-sm leading-relaxed text-neutral-300">
+                  <strong>{service.title}</strong> talebiniz doğrudan yetkili ekibimize iletildi. En
+                  kısa sürede WhatsApp veya telefon ile geri dönüş yapılacaktır.
                 </p>
                 <a
                   href={getWaServiceUrl()}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm tracking-tight transition-all shadow-lg"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-3.5 text-sm font-bold tracking-tight text-white shadow-lg transition-all hover:bg-emerald-400"
                 >
-                  <MessageSquare className="w-4 h-4" />
+                  <MessageSquare className="h-4 w-4" />
                   <span>WhatsApp ile Hızlı Bağlan</span>
                 </a>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       )}
-    </AnimatePresence>
+    </>
   );
 };

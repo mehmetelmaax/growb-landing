@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, CheckCircle2, X, Send, MessageSquare } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
 
@@ -55,23 +54,15 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+        <div className="animate-in fade-in fixed inset-0 z-[99999] flex items-center justify-center p-4 duration-200">
+          <div
             onClick={onClose}
-            className="absolute inset-0 bg-black/85 backdrop-blur-md"
+            className="absolute inset-0 cursor-pointer bg-black/85 backdrop-blur-md"
           />
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative z-10 w-full max-w-lg select-text rounded-3xl border border-white/15 bg-[#111111] p-6 shadow-2xl sm:p-8"
-          >
+          <div className="animate-in zoom-in-95 slide-in-from-bottom-5 relative z-10 w-full max-w-lg select-text rounded-3xl border border-white/15 bg-[#111111] p-6 shadow-2xl duration-200 sm:p-8">
             <button
               type="button"
               onClick={onClose}
@@ -210,9 +201,9 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                 </a>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       )}
-    </AnimatePresence>
+    </>
   );
 };

@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
 import { CircularBadge } from "./ui/circular-badge";
 import { PhoneCall } from "lucide-react";
 
@@ -32,12 +31,32 @@ const MANIFESTO_WORDS: WordItem[] = [
 export const WhoAreWe: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
-  // Ekranın ortasına ulaştığında yazının tamamını net ve okunur hale getiren scroll progress
-  const { scrollYProgress } = useScroll({
-    target: textContainerRef,
-    offset: ["start 0.9", "center 0.5"],
-  });
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const el = textContainerRef.current;
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const startY = windowHeight * 0.9;
+            const endY = windowHeight * 0.5;
+            const p = Math.max(0, Math.min(1, (startY - rect.top) / (startY - endY)));
+            setProgress(p);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section
@@ -86,14 +105,7 @@ export const WhoAreWe: React.FC = () => {
               const start = idx * step;
               const end = Math.min(1, start + step * 2);
 
-              return (
-                <KineticWord
-                  key={idx}
-                  word={word}
-                  progress={scrollYProgress}
-                  range={[start, end]}
-                />
-              );
+              return <KineticWord key={idx} word={word} progress={progress} range={[start, end]} />;
             })}
           </h2>
         </div>
@@ -187,15 +199,23 @@ export const WhoAreWe: React.FC = () => {
 
 interface KineticWordProps {
   word: WordItem;
-  progress: MotionValue<number>;
+  progress: number;
   range: [number, number];
 }
 
 const KineticWord: React.FC<KineticWordProps> = ({ word, progress, range }) => {
-  // Yavaşça mouse indikçe yukarıdan aşağıya süzülerek inme hareketi
-  const y = useTransform(progress, range, [-15, 0]);
-  // Sayfa ortasında netleşen yüksek kontrastlı açılma
-  const opacity = useTransform(progress, range, [0.28, 1]);
+  const [start, end] = range;
+  let wordOpacity = 0.28;
+  let y = -15;
+
+  if (progress >= end) {
+    wordOpacity = 1;
+    y = 0;
+  } else if (progress > start) {
+    const norm = (progress - start) / (end - start);
+    wordOpacity = 0.28 + norm * 0.72;
+    y = -15 + norm * 15;
+  }
 
   let wordStyle = "text-[#0A0A0A]";
   if (word.type === "highlight") {
@@ -207,11 +227,11 @@ const KineticWord: React.FC<KineticWordProps> = ({ word, progress, range }) => {
   }
 
   return (
-    <motion.span
-      style={{ y, opacity }}
-      className={`inline-block transition-colors duration-150 ${wordStyle}`}
+    <span
+      style={{ transform: `translateY(${y}px)`, opacity: wordOpacity }}
+      className={`inline-block transition-transform duration-100 ease-out ${wordStyle}`}
     >
       {word.text}
-    </motion.span>
+    </span>
   );
 };

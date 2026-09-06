@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, MapPin, CheckCircle2, X, ExternalLink, Sparkles } from "lucide-react";
 
 export interface ClientReference {
@@ -310,140 +309,127 @@ export const FeaturedWorks: React.FC = () => {
       </div>
 
       {/* DETAIL MODAL (Opened ONLY upon clicking "İncele" or clicking the card) */}
-      <AnimatePresence>
-        {selectedClient && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedClient(null)}
-              className="absolute inset-0 cursor-pointer bg-black/85 backdrop-blur-md"
-            />
+      {selectedClient && (
+        <div className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center p-4 duration-200 sm:p-6 lg:p-8">
+          <div
+            onClick={() => setSelectedClient(null)}
+            className="absolute inset-0 cursor-pointer bg-black/85 backdrop-blur-md"
+          />
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[28px] border border-white/20 bg-[#141414] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.9)] sm:p-8"
+          <div className="animate-in zoom-in-95 slide-in-from-bottom-5 relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[28px] border border-white/20 bg-[#141414] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.9)] duration-200 sm:p-8">
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setSelectedClient(null)}
+              className="absolute right-5 top-5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-neutral-300 transition-colors hover:bg-white/15 hover:text-white"
             >
-              {/* Close Button */}
+              <X className="h-4 w-4" />
+            </button>
+
+            {/* Header: Logo, Name & City */}
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-2">
+                <Image
+                  src={selectedClient.logo}
+                  alt={selectedClient.name}
+                  width={64}
+                  height={64}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                    {selectedClient.name}
+                  </h3>
+                  <span className="rounded-full bg-[#FFC300]/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#FFC300]">
+                    {selectedClient.badge}
+                  </span>
+                </div>
+                <div className="mt-1 flex items-center gap-2 font-mono text-xs text-neutral-400">
+                  <MapPin className="h-3.5 w-3.5 text-[#FFC300]" />
+                  <span>{selectedClient.city}</span>
+                  <span>•</span>
+                  <span>{selectedClient.category}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Summary */}
+            <p className="mb-6 text-sm leading-relaxed text-neutral-300">
+              {selectedClient.summary}
+            </p>
+
+            {/* 3 Metric Pills */}
+            <div className="mb-6 grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center">
+              <div>
+                <span className="block font-mono text-[11px] uppercase tracking-wider text-neutral-400">
+                  Mobil Açılış
+                </span>
+                <span className="text-base font-black text-[#FFC300] sm:text-lg">
+                  {selectedClient.metrics.speed}
+                </span>
+              </div>
+              <div className="border-x border-white/10">
+                <span className="block font-mono text-[11px] uppercase tracking-wider text-neutral-400">
+                  Müşteri Çağrısı
+                </span>
+                <span className="text-base font-black text-white sm:text-lg">
+                  {selectedClient.metrics.calls}
+                </span>
+              </div>
+              <div>
+                <span className="block font-mono text-[11px] uppercase tracking-wider text-neutral-400">
+                  Arama Sırası
+                </span>
+                <span className="text-xs font-bold text-emerald-400 sm:text-sm">
+                  {selectedClient.metrics.seoRank}
+                </span>
+              </div>
+            </div>
+
+            {/* What We Did List */}
+            <div className="mb-6">
+              <h4 className="mb-3 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-neutral-400">
+                <Sparkles className="h-3.5 w-3.5 text-[#FFC300]" />
+                <span>Bu Projede Ne Yaptık?</span>
+              </h4>
+              <ul className="space-y-2">
+                {selectedClient.whatWeDid.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2.5 text-xs text-neutral-300 sm:text-sm"
+                  >
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#FFC300]" />
+                    <span className="leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Footer Actions */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
+              <a
+                href={selectedClient.url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#FFC300] px-5 py-2.5 text-xs font-bold text-[#0A0A0A] shadow-md transition-all hover:bg-[#e6b000] hover:shadow-lg"
+              >
+                <span>Canlı Siteyi Ziyaret Et</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+
               <button
                 type="button"
                 onClick={() => setSelectedClient(null)}
-                className="absolute right-5 top-5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-neutral-300 transition-colors hover:bg-white/15 hover:text-white"
-                aria-label="Kapat"
+                className="rounded-full bg-white/5 px-4 py-2 text-xs font-semibold text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
               >
-                <X className="h-4 w-4" />
+                Kapat
               </button>
-
-              {/* Modal Header */}
-              <div className="mb-6 flex items-start gap-4 pr-8">
-                <div className="flex h-16 w-20 shrink-0 items-center justify-center rounded-2xl border border-neutral-200 bg-white p-2.5 shadow-sm">
-                  <Image
-                    src={selectedClient.logo}
-                    alt={selectedClient.name}
-                    width={70}
-                    height={50}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-                <div>
-                  <div className="mb-1 flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold uppercase text-accent">
-                      {selectedClient.industryLabel}
-                    </span>
-                    <span className="text-neutral-600">•</span>
-                    <span className="flex items-center gap-1 font-mono text-xs text-neutral-400">
-                      <MapPin className="h-3 w-3 text-accent" />
-                      {selectedClient.city}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-black text-white sm:text-2xl">
-                    {selectedClient.name}
-                  </h3>
-                </div>
-              </div>
-
-              {/* 3 Core Results Metrics */}
-              <div className="mb-6 grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/5 p-3.5 text-center">
-                <div>
-                  <span className="block font-mono text-[10px] uppercase text-neutral-400">
-                    Açılış Hızı
-                  </span>
-                  <span className="text-base font-black text-accent sm:text-lg">
-                    {selectedClient.metrics.speed}
-                  </span>
-                </div>
-                <div className="border-x border-white/10">
-                  <span className="block font-mono text-[10px] uppercase text-neutral-400">
-                    Müşteri / Çağrı
-                  </span>
-                  <span className="text-base font-black text-emerald-400 sm:text-lg">
-                    {selectedClient.metrics.calls}
-                  </span>
-                </div>
-                <div>
-                  <span className="block font-mono text-[10px] uppercase text-neutral-400">
-                    Google Sırası
-                  </span>
-                  <span className="mt-0.5 block text-xs font-bold leading-tight text-white sm:text-sm">
-                    {selectedClient.metrics.seoRank}
-                  </span>
-                </div>
-              </div>
-
-              {/* Project Summary */}
-              <div className="mb-6">
-                <h4 className="mb-2 font-mono text-xs font-bold uppercase text-neutral-400">
-                  Proje Detayı
-                </h4>
-                <p className="text-sm leading-relaxed text-neutral-300">{selectedClient.summary}</p>
-              </div>
-
-              {/* What We Did Checklist */}
-              <div className="mb-6">
-                <h4 className="mb-3 font-mono text-xs font-bold uppercase text-accent">
-                  Bu Projede Neler Yaptık?
-                </h4>
-                <ul className="space-y-2.5">
-                  {selectedClient.whatWeDid.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-2.5 text-xs text-neutral-300 sm:text-sm"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Modal Footer Actions */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
-                <a
-                  href={selectedClient.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-black uppercase tracking-wide text-[#0A0A0A] shadow-md transition-all hover:scale-105 hover:bg-accent-hover"
-                >
-                  <span>Canlı Siteyi Ziyaret Et</span>
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedClient(null)}
-                  className="rounded-full bg-white/5 px-4 py-2 text-xs font-semibold text-neutral-400 transition-colors hover:bg-white/10 hover:text-white"
-                >
-                  Kapat
-                </button>
-              </div>
-            </motion.div>
+            </div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </section>
   );
 };

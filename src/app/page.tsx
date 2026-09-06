@@ -3,28 +3,40 @@ import { Preloader } from "@/components/preloader";
 import { BackgroundEffects } from "@/components/background-effects";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
-import { Manifesto } from "@/components/manifesto";
 import { LogoMarquee } from "@/components/logo-marquee";
-import { WhoAreWe } from "@/components/who-are-we";
 import { WorkTogetherMarquee } from "@/components/work-together-marquee";
 import { Pricing } from "@/components/pricing";
+import { FinalCta } from "@/components/final-cta";
 import { Footer } from "@/components/footer";
 
-const ServicesHoverList = dynamic(() =>
-  import("@/components/services-hover-list").then((mod) => mod.ServicesHoverList)
+const Manifesto = dynamic(() => import("@/components/manifesto").then((mod) => mod.Manifesto), {
+  ssr: false,
+});
+const WhoAreWe = dynamic(() => import("@/components/who-are-we").then((mod) => mod.WhoAreWe), {
+  ssr: false,
+});
+const ServicesHoverList = dynamic(
+  () => import("@/components/services-hover-list").then((mod) => mod.ServicesHoverList),
+  { ssr: false }
 );
-const ProcessGrid = dynamic(() =>
-  import("@/components/process-grid").then((mod) => mod.ProcessGrid)
+const ProcessGrid = dynamic(
+  () => import("@/components/process-grid").then((mod) => mod.ProcessGrid),
+  { ssr: false }
 );
-const Metrics = dynamic(() => import("@/components/metrics").then((mod) => mod.Metrics));
-const FeaturedWorks = dynamic(() =>
-  import("@/components/featured-works").then((mod) => mod.FeaturedWorks)
+const Metrics = dynamic(() => import("@/components/metrics").then((mod) => mod.Metrics), {
+  ssr: false,
+});
+const FeaturedWorks = dynamic(
+  () => import("@/components/featured-works").then((mod) => mod.FeaturedWorks),
+  { ssr: false }
 );
-const WebsiteScoreAudit = dynamic(() =>
-  import("@/components/website-score-audit").then((mod) => mod.WebsiteScoreAudit)
+const WebsiteScoreAudit = dynamic(
+  () => import("@/components/website-score-audit").then((mod) => mod.WebsiteScoreAudit),
+  { ssr: false }
 );
-const Faq = dynamic(() => import("@/components/faq").then((mod) => mod.Faq));
-import { FinalCta } from "@/components/final-cta";
+const Faq = dynamic(() => import("@/components/faq").then((mod) => mod.Faq), {
+  ssr: false,
+});
 
 import { FAQ_DATA } from "@/data/content";
 

@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Gauge,
   CheckCircle2,
@@ -12,7 +11,7 @@ import {
   ShieldCheck,
   Globe,
   MessageSquare,
-  Activity
+  Activity,
 } from "lucide-react";
 
 interface AuditData {
@@ -43,7 +42,9 @@ export const WebsiteScoreAudit: React.FC = () => {
     e.preventDefault();
     if (!url) return;
     if (phone && !kvkkConsent) {
-      alert("Telefon numaranız ile iletişime geçebilmemiz için KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir.");
+      alert(
+        "Telefon numaranız ile iletişime geçebilmemiz için KVKK Aydınlatma Metni'ni onaylamanız gerekmektedir."
+      );
       return;
     }
 
@@ -123,55 +124,60 @@ export const WebsiteScoreAudit: React.FC = () => {
   };
 
   return (
-    <section id="skor-ogren" className="py-12 sm:py-16 bg-[#0D0D0D] text-white relative overflow-hidden border-y border-white/10 font-sans">
+    <section
+      id="skor-ogren"
+      className="relative overflow-hidden border-y border-white/10 bg-[#0D0D0D] py-12 font-sans text-white sm:py-16"
+    >
       {/* Background radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#FFC300]/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFC300]/5 blur-[160px]" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFC300]/15 border border-[#FFC300]/30 text-[#FFC300] text-xs font-mono font-bold uppercase mb-4">
-            <Gauge className="w-4 h-4 text-[#FFC300]" />
+        <div className="mx-auto mb-8 max-w-3xl text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FFC300]/30 bg-[#FFC300]/15 px-3.5 py-1.5 font-mono text-xs font-bold uppercase text-[#FFC300]">
+            <Gauge className="h-4 w-4 text-[#FFC300]" />
             <span>CANLI GOOGLE PAGESPEED & CORE WEB VITALS TESTİ</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
-            Mevcut Dijital Varlığınızın<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-[#FFC300]">
+          <h2 className="mb-4 text-3xl font-black tracking-tight text-white sm:text-5xl">
+            Mevcut Dijital Varlığınızın
+            <br />
+            <span className="bg-gradient-to-r from-white via-neutral-200 to-[#FFC300] bg-clip-text text-transparent">
               Gerçek Satış ve Hız Skorunu Öğrenin.
             </span>
           </h2>
 
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
-            Google Lighthouse v10 analiz motoruyla web sitenizi canlı tarıyoruz. Gerçek mobil açılış hızı, LCP, CLS ve teknik optimizasyon açıklarınızı şeffaf olarak görün.
+          <p className="text-sm leading-relaxed text-neutral-400 sm:text-base">
+            Google Lighthouse v10 analiz motoruyla web sitenizi canlı tarıyoruz. Gerçek mobil açılış
+            hızı, LCP, CLS ve teknik optimizasyon açıklarınızı şeffaf olarak görün.
           </p>
         </div>
 
         {/* Audit Form Box */}
-        <div className="bg-[#141414] rounded-3xl p-6 sm:p-10 border border-white/15 shadow-2xl relative overflow-hidden">
+        <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-[#141414] p-6 shadow-2xl sm:p-10">
           <form onSubmit={handleScan} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
               {/* URL Input */}
               <div className="md:col-span-5">
-                <label className="block text-xs font-mono font-semibold text-neutral-300 uppercase mb-2">
+                <label className="mb-2 block font-mono text-xs font-semibold uppercase text-neutral-300">
                   Web Sitesi Adresiniz *
                 </label>
                 <div className="relative">
-                  <Globe className="w-4 h-4 text-neutral-500 absolute left-4 top-1/2 -translate-y-1/2" />
+                  <Globe className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
                   <input
                     type="text"
                     required
                     placeholder="www.firmaniz.com"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-[#1F1F1F] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#FFC300] text-sm transition-colors"
+                    className="w-full rounded-2xl border border-white/10 bg-[#1F1F1F] py-3.5 pl-11 pr-4 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
                   />
                 </div>
               </div>
 
               {/* Sector */}
               <div className="md:col-span-4">
-                <label className="block text-xs font-mono font-semibold text-neutral-300 uppercase mb-2">
+                <label className="mb-2 block font-mono text-xs font-semibold uppercase text-neutral-300">
                   Sektörünüz
                 </label>
                 <input
@@ -179,13 +185,13 @@ export const WebsiteScoreAudit: React.FC = () => {
                   placeholder="Örn: Nakliyat, Klinik, Avukat, Turizm..."
                   value={sector}
                   onChange={(e) => setSector(e.target.value)}
-                  className="w-full px-4 py-3.5 rounded-2xl bg-[#1F1F1F] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#FFC300] text-sm transition-colors"
+                  className="w-full rounded-2xl border border-white/10 bg-[#1F1F1F] px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
                 />
               </div>
 
               {/* Phone / WhatsApp */}
               <div className="md:col-span-3">
-                <label className="block text-xs font-mono font-semibold text-neutral-300 uppercase mb-2">
+                <label className="mb-2 block font-mono text-xs font-semibold uppercase text-neutral-300">
                   WhatsApp No (Opsiyonel)
                 </label>
                 <input
@@ -193,49 +199,54 @@ export const WebsiteScoreAudit: React.FC = () => {
                   placeholder="05XX XXX XX XX"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3.5 rounded-2xl bg-[#1F1F1F] border border-white/10 text-white placeholder-neutral-500 focus:outline-none focus:border-[#FFC300] text-sm transition-colors"
+                  className="w-full rounded-2xl border border-white/10 bg-[#1F1F1F] px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-colors focus:border-[#FFC300] focus:outline-none"
                 />
               </div>
             </div>
 
             {/* KVKK Onay Kutusu */}
             <div className="pt-1">
-              <label className="flex items-start gap-2 text-xs text-neutral-400 cursor-pointer select-none">
+              <label className="flex cursor-pointer select-none items-start gap-2 text-xs text-neutral-400">
                 <input
                   type="checkbox"
                   checked={kvkkConsent}
                   onChange={(e) => setKvkkConsent(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded bg-[#1F1F1F] border border-white/20 text-[#FFC300] focus:ring-[#FFC300] accent-[#FFC300]"
+                  className="mt-0.5 h-4 w-4 rounded border border-white/20 bg-[#1F1F1F] text-[#FFC300] accent-[#FFC300] focus:ring-[#FFC300]"
                 />
                 <span>
-                  <Link href="/kvkk-aydinlatma-metni" target="_blank" className="text-white underline hover:text-[#FFC300]">
+                  <Link
+                    href="/kvkk-aydinlatma-metni"
+                    target="_blank"
+                    className="text-white underline hover:text-[#FFC300]"
+                  >
                     KVKK Aydınlatma Metni
                   </Link>
-                  &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza veriyorum.
+                  &apos;ni okudum, iletişim kurulması amacıyla verilerimin işlenmesine açık rıza
+                  veriyorum.
                 </span>
               </label>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+            <div className="flex flex-col items-center justify-between gap-4 pt-2 sm:flex-row">
               <div className="flex items-center gap-2 text-xs text-neutral-400">
-                <ShieldCheck className="w-4 h-4 text-[#FFC300]" />
+                <ShieldCheck className="h-4 w-4 text-[#FFC300]" />
                 <span>Google PageSpeed v5 API ile canlı ölçüm yapılır.</span>
               </div>
 
               <button
                 type="submit"
                 disabled={isScanning}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#FFC300] hover:bg-[#e6b000] text-[#0A0A0A] font-extrabold text-xs tracking-wider uppercase transition-all shadow-lg hover:shadow-[#FFC300]/20 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] px-8 py-3.5 text-xs font-extrabold uppercase tracking-wider text-[#0A0A0A] shadow-lg transition-all hover:bg-[#e6b000] hover:shadow-[#FFC300]/20 disabled:opacity-50 sm:w-auto"
               >
                 {isScanning ? (
                   <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <RefreshCw className="h-4 w-4 animate-spin" />
                     <span>Google Ölçüyor...</span>
                   </>
                 ) : (
                   <>
                     <span>Canlı Skoru Şimdi Hesapla</span>
-                    <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                    <ArrowUpRight className="h-4 w-4 stroke-[2.5]" />
                   </>
                 )}
               </button>
@@ -244,137 +255,138 @@ export const WebsiteScoreAudit: React.FC = () => {
 
           {/* Tarama Durum Bildirimi */}
           {isScanning && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-6 p-4 rounded-2xl bg-[#FFC300]/10 border border-[#FFC300]/20 flex items-center gap-3 text-xs text-[#FFC300]"
-            >
-              <Activity className="w-4 h-4 animate-pulse shrink-0" />
+            <div className="animate-in fade-in mt-6 flex items-center gap-3 rounded-2xl border border-[#FFC300]/20 bg-[#FFC300]/10 p-4 text-xs text-[#FFC300] duration-300">
+              <Activity className="h-4 w-4 shrink-0 animate-pulse" />
               <span>{scanStatus}</span>
-            </motion.div>
+            </div>
           )}
 
           {/* Hata veya Güvenlik Duvarı Durumu (Fallback) */}
           {errorInfo && !isScanning && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-6 p-6 rounded-2xl bg-amber-950/20 border border-amber-500/30 text-neutral-300 space-y-4"
-            >
+            <div className="animate-in fade-in mt-6 space-y-4 rounded-2xl border border-amber-500/30 bg-amber-950/20 p-6 text-neutral-300 duration-300">
               <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
                 <div>
-                  <h4 className="text-sm font-bold text-amber-400 mb-1">Otomatik Tarama Sınırlaması</h4>
-                  <p className="text-xs text-neutral-300 leading-relaxed">{errorInfo}</p>
+                  <h4 className="mb-1 text-sm font-bold text-amber-400">
+                    Otomatik Tarama Sınırlaması
+                  </h4>
+                  <p className="text-xs leading-relaxed text-neutral-300">{errorInfo}</p>
                 </div>
               </div>
-              <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-2 sm:flex-row">
                 <span className="text-xs text-neutral-400">
-                  Uzmanlarımız sitenizi ve rakiplerinizi manuel inceleyip 15 dakikalık ücretsiz rapor hazırlayabilir.
+                  Uzmanlarımız sitenizi ve rakiplerinizi manuel inceleyip 15 dakikalık ücretsiz
+                  rapor hazırlayabilir.
                 </span>
                 <a
                   href={`https://wa.me/905414842426?text=${encodeURIComponent("Merhaba, web sitem için 15 dakikalık ücretsiz analiz talep ediyorum: " + url)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-4 py-2 rounded-xl bg-[#FFC300] hover:bg-[#e6b000] text-black font-bold text-xs flex items-center gap-1.5 transition-colors whitespace-nowrap"
+                  className="flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-[#FFC300] px-4 py-2 text-xs font-bold text-black transition-colors hover:bg-[#e6b000]"
                 >
-                  <MessageSquare className="w-3.5 h-3.5" />
+                  <MessageSquare className="h-3.5 w-3.5" />
                   <span>Ücretsiz Rapor İste</span>
                 </a>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Gerçek Sonuç Alanı */}
-          <AnimatePresence>
-            {result && !isScanning && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="mt-8 pt-8 border-t border-white/10"
-              >
-                {/* Rozet */}
-                <div className="flex items-center justify-between gap-2 mb-6">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>CANLI GOOGLE LIGHTHOUSE SONUCU {result.cachedAt ? `(${result.cachedAt})` : ""}</span>
-                  </div>
-                  <span className="text-xs font-mono text-neutral-500 truncate max-w-xs">{result.url}</span>
+          {result && !isScanning && (
+            <div className="animate-in fade-in slide-in-from-bottom-3 mt-8 border-t border-white/10 pt-8 duration-300">
+              {/* Rozet */}
+              <div className="mb-6 flex items-center justify-between gap-2">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-3 py-1 font-mono text-xs font-bold text-emerald-400">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <span>
+                    CANLI GOOGLE LIGHTHOUSE SONUCU {result.cachedAt ? `(${result.cachedAt})` : ""}
+                  </span>
                 </div>
+                <span className="max-w-xs truncate font-mono text-xs text-neutral-500">
+                  {result.url}
+                </span>
+              </div>
 
-                {/* Skor Kartları */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  <div className={`p-4 rounded-2xl border text-center ${getScoreBg(result.speedScore)}`}>
-                    <span className="text-xs font-mono text-neutral-400 uppercase block mb-1">Mobil Hız Skoru</span>
-                    <span className={`text-3xl font-black ${getScoreColor(result.speedScore)}`}>
-                      {result.speedScore}/100
-                    </span>
-                    <span className="text-[11px] text-neutral-400 block mt-1">LCP: {result.lcp}</span>
-                  </div>
-
-                  <div className={`p-4 rounded-2xl border text-center ${getScoreBg(result.seoScore)}`}>
-                    <span className="text-xs font-mono text-neutral-400 uppercase block mb-1">Google SEO Skoru</span>
-                    <span className={`text-3xl font-black ${getScoreColor(result.seoScore)}`}>
-                      {result.seoScore}/100
-                    </span>
-                    <span className="text-[11px] text-neutral-400 block mt-1">FCP: {result.fcp}</span>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-                    <span className="text-xs font-mono text-neutral-400 uppercase block mb-1">Düzen Kayması (CLS)</span>
-                    <span className="text-3xl font-black text-neutral-200">{result.cls}</span>
-                    <span className="text-[11px] text-neutral-500 block mt-1">Hedef: &lt; 0.1</span>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-                    <span className="text-xs font-mono text-neutral-400 uppercase block mb-1">Bloklama Süresi (TBT)</span>
-                    <span className="text-3xl font-black text-neutral-200">{result.tbt}</span>
-                    <span className="text-[11px] text-neutral-500 block mt-1">Hedef: &lt; 200ms</span>
-                  </div>
+              {/* Skor Kartları */}
+              <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+                <div
+                  className={`rounded-2xl border p-4 text-center ${getScoreBg(result.speedScore)}`}
+                >
+                  <span className="mb-1 block font-mono text-xs uppercase text-neutral-400">
+                    Mobil Hız Skoru
+                  </span>
+                  <span className={`text-3xl font-black ${getScoreColor(result.speedScore)}`}>
+                    {result.speedScore}/100
+                  </span>
                 </div>
-
-                {/* Kritik Açıklar */}
-                {result.criticalIssues.length > 0 && (
-                  <div className="p-6 rounded-2xl bg-[#1A1A1A] border border-white/10 mb-6">
-                    <h4 className="text-sm font-bold text-amber-400 uppercase mb-3 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-400" />
-                      <span>Google Tarafından Tespit Edilen İyileştirme Fırsatları:</span>
-                    </h4>
-                    <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-300">
-                      {result.criticalIssues.map((issue, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5">
-                          <span className="text-[#FFC300] font-bold mt-0.5">•</span>
-                          <span>{issue}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Aksiyon Kutusu */}
-                <div className="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-[#FFC300]/10 border border-[#FFC300]/30">
-                  <div className="text-left">
-                    <span className="text-sm font-bold text-white block">
-                      GrowB Next.js Mimarisi ile Hedef: <strong className="text-[#FFC300]">95+ Core Web Vitals</strong>
-                    </span>
-                    <span className="text-xs text-neutral-400">
-                      Mobil açılış hızınızı 1.5 saniyenin altına indirip Google reklam maliyetinizi düşürebiliriz.
-                    </span>
-                  </div>
-                  <a
-                    href={`https://wa.me/905414842426?text=${encodeURIComponent(`Merhaba GrowB Dijital, ${result.url} sitemin canlı PageSpeed analiz skorunu (${result.speedScore}/100) aldım. Detaylı optimizasyon görüşmesi yapmak istiyorum.`)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-5 py-2.5 rounded-full bg-[#FFC300] hover:bg-[#e6b000] text-[#0A0A0A] font-bold text-xs flex items-center gap-1.5 transition-all shadow-lg"
-                  >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>WhatsApp&apos;tan Çözüm Planı İste</span>
-                  </a>
+                <div
+                  className={`rounded-2xl border p-4 text-center ${getScoreBg(result.seoScore)}`}
+                >
+                  <span className="mb-1 block font-mono text-xs uppercase text-neutral-400">
+                    SEO Skoru
+                  </span>
+                  <span className={`text-3xl font-black ${getScoreColor(result.seoScore)}`}>
+                    {result.seoScore}/100
+                  </span>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <div className="rounded-2xl border border-white/10 bg-[#141414] p-4 text-center">
+                  <span className="mb-1 block font-mono text-xs uppercase text-neutral-400">
+                    Açılış Hızı
+                  </span>
+                  <span className="text-3xl font-black text-white">{result.speedSeconds}</span>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-[#141414] p-4 text-center">
+                  <span className="mb-1 block font-mono text-xs uppercase text-neutral-400">
+                    LCP (Ana İçerik)
+                  </span>
+                  <span className="text-3xl font-black text-white">{result.lcp}</span>
+                </div>
+              </div>
+
+              {/* Kritik Sorunlar ve Teşhis Listesi */}
+              {result.criticalIssues.length > 0 && (
+                <div className="mb-6 rounded-2xl border border-white/10 bg-[#141414] p-5">
+                  <div className="mb-3 flex items-center gap-2 text-amber-400">
+                    <AlertTriangle className="h-4 w-4" />
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider">
+                      Google Tarafından Tespit Edilen Kritik Sorunlar (
+                      {result.criticalIssues.length})
+                    </span>
+                  </div>
+                  <ul className="space-y-2">
+                    {result.criticalIssues.map((issue, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-neutral-300">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
+                        <span className="leading-relaxed">{issue}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Harekete Geçirme & Teklif Köprüsü */}
+              <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#FFC300]/20 bg-gradient-to-r from-[#FFC300]/10 via-[#FFC300]/5 to-transparent p-6 sm:flex-row">
+                <div className="text-center sm:text-left">
+                  <h4 className="mb-1 text-sm font-bold text-white">
+                    Bu skorları 95+ yeşil bölgeye taşımak ister misiniz?
+                  </h4>
+                  <span className="text-xs text-neutral-400">
+                    Mobil açılış hızınızı 1.5 saniyenin altına indirip Google reklam maliyetinizi
+                    düşürebiliriz.
+                  </span>
+                </div>
+                <a
+                  href={`https://wa.me/905414842426?text=${encodeURIComponent(`Merhaba GrowB Dijital, ${result.url} sitemin canlı PageSpeed analiz skorunu (${result.speedScore}/100) aldım. Detaylı optimizasyon görüşmesi yapmak istiyorum.`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 rounded-full bg-[#FFC300] px-5 py-2.5 text-xs font-bold text-[#0A0A0A] shadow-lg transition-all hover:bg-[#e6b000]"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  <span>WhatsApp&apos;tan Çözüm Planı İste</span>
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
