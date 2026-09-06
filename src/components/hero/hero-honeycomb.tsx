@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { Lock, Unlock, Zap } from "lucide-react";
 import { HIVE_POLLENS, getHexPath, HivePollen } from "@/data/hero-pollens-data";
 
 interface HeroHoneycombProps {
@@ -18,21 +18,43 @@ export const HeroHoneycomb: React.FC<HeroHoneycombProps> = ({
   isCompleted,
   hoveredPollen,
   setHoveredPollen,
-  completeInstantly: _completeInstantly,
+  completeInstantly,
 }) => {
   return (
     <div className="relative flex flex-col items-center justify-center lg:col-span-6">
-      {/* Durum Rozeti: 13 Büyüme Peteği Aktif */}
+      {/* Durum Rozeti: Kilit / Tamamlandı Bilgisi */}
       <div className="mb-3 flex w-full max-w-[520px] select-none items-center justify-between px-2 font-mono text-xs text-neutral-300">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-          <strong className="text-emerald-400">✨ 13 Büyüme Peteği Aktif // Kovan Hazır</strong>
+          {isCompleted ? (
+            <>
+              <Unlock className="h-3.5 w-3.5 text-emerald-400" />
+              <strong className="text-emerald-400">
+                ✨ Kovan tamamlandı! Sayfa akışı serbest ↓
+              </strong>
+            </>
+          ) : (
+            <>
+              <Lock className="h-3.5 w-3.5 animate-pulse text-[#FFC300]" />
+              <span>
+                🐝 GrowB Kovanı Örülüyor:{" "}
+                <strong className="text-sm text-[#FFC300]">{revealedCount}/13</strong>{" "}
+                <span className="text-neutral-400">(Aşağı kaydırın)</span>
+              </span>
+            </>
+          )}
         </div>
 
-        <div className="flex items-center gap-1 text-[11px] text-[#FFC300]">
-          <Sparkles className="h-3 w-3 text-[#FFC300]" />
-          <span>Hizmet Detayı İçin Tıklayın</span>
-        </div>
+        {!isCompleted && completeInstantly && (
+          <button
+            type="button"
+            onClick={completeInstantly}
+            className="flex cursor-pointer items-center gap-1 text-[11px] font-bold text-[#FFC300] transition-colors hover:underline"
+            title="Kovanı anında tamamla ve kilidi aç"
+          >
+            <Zap className="h-3 w-3 fill-current" />
+            <span>Kovanı Doldur</span>
+          </button>
+        )}
       </div>
 
       {/* MASAÜSTÜ & MOBİL: 13 POLEN KOVAN ÇİZİMİ */}

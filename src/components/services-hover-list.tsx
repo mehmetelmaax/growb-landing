@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
-import { Sparkles, ChevronLeft, ChevronRight, ArrowDown } from "lucide-react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
+import { Sparkles, ChevronLeft, ChevronRight, ArrowDown, Lock, Unlock } from "lucide-react";
 import { ALL_13_SERVICES_DETAILED } from "@/data/services-detail-data";
 import { ServiceCardDisplay } from "@/components/services/service-card-display";
 import { ServiceDetailModal } from "@/components/services/service-detail-modal";
@@ -44,12 +44,18 @@ export const ServicesHoverList: React.FC = () => {
     });
   }, []);
 
-  const { skipAllServices } = useServicesWheelLock({
+  const { skipAllServices, unlockPage } = useServicesWheelLock({
     totalServices,
     onNext: handleNext,
     onPrev: handlePrev,
     sectionRef,
   });
+
+  useEffect(() => {
+    if (currentIndex === totalServices - 1) {
+      unlockPage();
+    }
+  }, [currentIndex, totalServices, unlockPage]);
 
   const activeService = ALL_13_SERVICES_DETAILED[currentIndex] ?? ALL_13_SERVICES_DETAILED[0]!;
 
@@ -132,18 +138,25 @@ export const ServicesHoverList: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 pt-1 font-mono text-xs text-neutral-400">
-              <div className="flex items-center gap-1.5 text-neutral-300">
-                <Sparkles className="h-3.5 w-3.5 text-[#FFC300]" />
-                <span>Okları veya butonları kullanarak tüm hizmetleri inceleyin</span>
-              </div>
+              {currentIndex < totalServices - 1 ? (
+                <div className="flex items-center gap-1.5 text-[#FFC300]">
+                  <Lock className="h-3.5 w-3.5 animate-pulse" />
+                  <span>Kaydırarak ilerleyin ({13 - (currentIndex + 1)} hizmet kaldı)</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <Unlock className="h-3.5 w-3.5" />
+                  <span className="font-bold">13/13 Tamamlandı! Aşağı kaydırabilirsiniz ↓</span>
+                </div>
+              )}
               <span className="hidden text-neutral-600 sm:inline">•</span>
               <button
                 type="button"
                 onClick={skipAllServices}
                 className="flex cursor-pointer items-center gap-1 font-bold text-[#FFC300] transition-colors hover:text-white hover:underline"
-                title="Süreç bölümüne ilerle"
+                title="Tüm hizmet kartlarını atla ve sonraki sayfaya in"
               >
-                <span>Sürece İlerle</span>
+                <span>Tümünü atla</span>
                 <ArrowDown className="h-3 w-3" />
               </button>
             </div>
