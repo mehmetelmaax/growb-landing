@@ -47,8 +47,60 @@ export function escapeHtml(text: string): string {
 }
 
 /**
- * Web Sitesi URL Normalizasyonu
- * http/https ekler, gecerli hostname kontrol eder.
+ * SSRF & Guvensiz IP/Host Filtresi
+ * Loopback, private subnet'ler ve cloud metadata adreslerini engeller.
+ */
+function isPrivateIpOrHost(hostname: string): boolean {
+  const host = hostname
+    .toLowerCase()
+    .trim()
+    .replace(/^\[|\]$/g, "");
+
+  if (
+    host === "localhost" ||
+    host.endsWith(".localhost") ||
+    host.endsWith(".local") ||
+    host.endsWith(".internal") ||
+    host.endsWith(".lan") ||
+    host === "metadata.google.internal"
+  ) {
+    return true;
+  }
+
+  // IPv6 loopback / private
+  if (
+    host === "::1" ||
+    host === "::" ||
+    host.startsWith("fe80:") ||
+    host.startsWith("fc") ||
+    host.startsWith("fd")
+  ) {
+    return true;
+  }
+
+  // IPv4 denetimi
+  const ipv4Regex = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+  const match = host.match(ipv4Regex);
+  if (match) {
+    const octets = match.slice(1).map(Number);
+    if (octets.some((o) => o > 255)) return true; // Gecersiz IP
+    const a = octets[0];
+    const b = octets[1];
+    if (a === undefined || b === undefined) return true;
+    if (a === 127) return true; // 127.0.0.0/8 Loopback
+    if (a === 10) return true; // 10.0.0.0/8 Private
+    if (a === 172 && b >= 16 && b <= 31) return true; // 172.16.0.0/12 Private
+    if (a === 192 && b === 168) return true; // 192.168.0.0/16 Private
+    if (a === 169 && b === 254) return true; // 169.254.0.0/16 Link-Local / Metadata
+    if (a === 0) return true; // 0.0.0.0/8
+  }
+
+  return false;
+}
+
+/**
+ * Web Sitesi URL Normalizasyonu & SSRF Korumasi
+ * http/https ekler, gecerli hostname kontrol eder, intranet/metadata IP'lerini eler.
  */
 export function normalizeUrl(input: string): string | null {
   if (!input) return null;
@@ -58,7 +110,19 @@ export function normalizeUrl(input: string): string | null {
   }
   try {
     const parsed = new URL(target);
-    if (!parsed.hostname.includes(".")) {
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      return null;
+    }
+    const hostname = parsed.hostname;
+    if (!hostname || !hostname.includes(".")) {
+      return null;
+    }
+    if (isPrivateIpOrHost(hostname)) {
+      return null;
+    }
+    const parts = hostname.split(".");
+    const tld = parts[parts.length - 1];
+    if (!tld || (!/^\d+$/.test(tld) && !/^[a-z]{2,}$/i.test(tld))) {
       return null;
     }
     return parsed.href;

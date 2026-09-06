@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { Resend } from "resend";
-import { normalizeTurkishPhone, escapeHtml, LeadPayloadSchema } from "@/lib/validators";
+import { normalizeTurkishPhone, LeadPayloadSchema } from "@/lib/validators";
 import { globalInMemoryRateLimiter } from "@/lib/rate-limiter";
+import { sendLeadNotifications } from "@/lib/notifications";
 
 // =========================================================================
 // UPSTASH REDIS SERVERLESS RATE LIMITER (Vercel Multi-Instance)
@@ -140,97 +140,14 @@ export async function POST(request: Request) {
     }
 
     // -----------------------------------------------------------------------
-    // F. TELEGRAM MESAJ METNI OLUSTURMA
+    // F. BILDIRIM GÖNDERIMI (Telegram + Resend Yedek)
     // -----------------------------------------------------------------------
-    let headerTitle = "🚨 <b>YENI GROWB LEAD TALEBI!</b>";
-    if (data.type === "PROJE_BASLAT") {
-      headerTitle = "🚀 <b>YENI PROJE BASLAT TALEBI!</b>";
-    } else if (data.type === "DETAY_AL" || data.type === "ANALIZ") {
-      headerTitle = "📊 <b>YENI DETAY VE ANALIZ TALEBI!</b>";
-    } else if (data.type === "HIZ_SKORU") {
-      headerTitle = "⚡ <b>YENI HIZ & SEO SKORU TESTI!</b>";
-    } else if (data.type === "HIZMET_TEKLIF") {
-      headerTitle = "🐝 <b>YENI HIZMET DETAY TALEBI!</b>";
-    }
-
-    const nowStr = new Date().toLocaleString("tr-TR", {
-      timeZone: "Europe/Istanbul",
+    const { tgSuccess, emailSent } = await sendLeadNotifications({
+      data,
+      normalizedPhone,
+      clientIp,
     });
 
-    let messageText = `${headerTitle}\n━━━━━━━━━━━━━━━━━━━━\n`;
-    if (data.name) messageText += `👤 <b>Isim / Yetkili:</b> ${escapeHtml(data.name)}\n`;
-    messageText += `📱 <b>Telefon:</b> <code>${escapeHtml(normalizedPhone)}</code>\n`;
-    if (data.siteUrl) messageText += `🌐 <b>Web Sitesi:</b> ${escapeHtml(data.siteUrl)}\n`;
-    if (data.sector) messageText += `🏢 <b>Sektor:</b> ${escapeHtml(data.sector)}\n`;
-    if (data.service) messageText += `🛠️ <b>Hizmet:</b> ${escapeHtml(data.service)}\n`;
-    if (data.notes) messageText += `💬 <b>Not:</b> ${escapeHtml(data.notes)}\n`;
-    messageText += `📍 <b>Kaynak:</b> ${escapeHtml(data.source)}\n`;
-    messageText += `📜 <b>KVKK Onayı:</b> Onaylandı (${nowStr})\n`;
-    messageText += `🛡️ <b>IP:</b> <code>${escapeHtml(clientIp)}</code>\n`;
-    messageText += `📅 <b>Tarih:</b> ${nowStr}`;
-
-    // -----------------------------------------------------------------------
-    // G. TELEGRAM CAGRISI (8 saniye timeout ile)
-    // -----------------------------------------------------------------------
-    let tgSuccess = false;
-    try {
-      const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: messageText,
-          parse_mode: "HTML",
-        }),
-        signal: AbortSignal.timeout(8000),
-      });
-
-      const tgData = await tgRes.json();
-      if (tgRes.ok && tgData.ok) {
-        tgSuccess = true;
-      } else {
-        console.error("[TELEGRAM API ERROR]", tgData);
-      }
-    } catch (err: unknown) {
-      console.error("[TELEGRAM FETCH TIMEOUT/NETWORK ERROR]", err);
-    }
-
-    // -----------------------------------------------------------------------
-    // H. RESEND YEDEK E-POSTA BILDIRIMI (Fail-Safe)
-    // -----------------------------------------------------------------------
-    let emailSent = false;
-    if (process.env.RESEND_API_KEY) {
-      try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        const recipientEmail = process.env.LEAD_NOTIFICATION_EMAIL || "info@growbdijital.com";
-        await resend.emails.send({
-          from: "GrowB Dijital <onboarding@resend.dev>",
-          to: [recipientEmail],
-          subject: `Yeni Lead Talebi: ${normalizedPhone} (${data.type})`,
-          html: `
-            <h2>Yeni GrowB Lead Bildirimi</h2>
-            <p><strong>Talep Turu:</strong> ${escapeHtml(data.type)}</p>
-            <p><strong>Telefon:</strong> ${escapeHtml(normalizedPhone)}</p>
-            ${data.name ? `<p><strong>Yetkili:</strong> ${escapeHtml(data.name)}</p>` : ""}
-            ${data.siteUrl ? `<p><strong>Web Sitesi:</strong> ${escapeHtml(data.siteUrl)}</p>` : ""}
-            ${data.sector ? `<p><strong>Sektor:</strong> ${escapeHtml(data.sector)}</p>` : ""}
-            ${data.service ? `<p><strong>Hizmet:</strong> ${escapeHtml(data.service)}</p>` : ""}
-            ${data.notes ? `<p><strong>Not:</strong> ${escapeHtml(data.notes)}</p>` : ""}
-            <ul>
-                <li><b>Kaynak:</b> ${escapeHtml(data.source)}</li>
-                <li><b>KVKK Onayı:</b> Onaylandı (${nowStr})</li>
-                <li><b>IP:</b> ${escapeHtml(clientIp)}</li>
-            </ul>
-            <p><strong>Tarih:</strong> ${nowStr}</p>
-          `,
-        });
-        emailSent = true;
-      } catch (emailErr) {
-        console.error("[RESEND EMAIL BACKUP ERROR]", emailErr);
-      }
-    }
-
-    // Bildirim sonuc kontrolu: En az biri basarili olmali
     if (!tgSuccess && !emailSent) {
       return NextResponse.json(
         {

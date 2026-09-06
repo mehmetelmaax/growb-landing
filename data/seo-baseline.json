@@ -1,0 +1,2937 @@
+{
+  "capturedAt": "2026-09-06T07:30:00.720Z",
+  "routesCount": 25,
+  "routes": {
+    "/": {
+      "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+      "meta_description": "Dijitaldeki tüm işlerinizi yöneten büyüme ortağınız. Google &amp; Meta reklamları, yerel harita SEO, dikey video prodüksiyon, WhatsApp CRM otomasyonu ve satış odaklı kurumsal altyapılar.",
+      "canonical": "https://growbdijital.com",
+      "meta_robots": null,
+      "h1": ["Markanızı dijitalde büyütüyoruz."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Sistem kaç günde canlıya alınıyor ve telefonlar çalmaya başlıyor?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Web altyapısı ve reklam stratejiniz sözleşme onayından sonra ortalama 10-14 iş günü içinde tamamen canlıya alınır. Canlıya çıktığımız gün reklam motoru aktif edilir ve ilk müşteri aramaları telefonunuza düşmeye başlar."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Hazır şablon (WordPress vb.) sitelerden ve diğer ajanslardan farkınız nedir?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Biz hantal hazır temalar satmıyoruz. 1.2 saniyenin altında açılan, sıfır kod fazlalığına sahip modern altyapılar kodluyoruz. Ayrıca sadece 'site yapıp kaybolan' bir ekip değiliz; haritalar, reklamlar ve WhatsApp lead otomasyonu ile telefonunuzu her gün çaldıran bir sistem teslim ediyoruz."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Ödeme modeli nasıl işliyor? Param güvende mi?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Esnafımızın güvenini korumak için %50 / %50 modeliyle çalışıyoruz. Bütçenin ilk yarısı sözleşmeyle alınır, kalan %50'si ise ancak sistem canlıya geçip test çağrısı kendi cep telefonunuza başarıyla düştüğünde tahsil edilir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Google Haritalar'da ilk 3'e çıkmak ne kadar sürer?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "İşletmenizin mevcut durumuna göre 9 temel yerel SEO optimizasyonu ilk hafta tamamlanır. Bölgesel rekabete bağlı olarak 3 ila 6 hafta içinde aramalarda 'Yerel 3'lü Harita Paketi'nde belirgin sıralama artışı sağlanır."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Gelen müşteri talepleri telefonuma tam olarak nasıl ulaşıyor?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sitenizdeki teklif formu veya arama butonu tetiklendiği anda, sistem özel webhook motorumuz üzerinden 10 saniye içinde kurucunun ve satış ekibinizin Telegram / WhatsApp hattına müşterinin adı, telefonu ve seçtiği hizmet bilgisiyle anlık bildirim atar."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Resmi şirket misiniz, sözleşme yapıyor muyuz?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evet. GrowB Dijital; Türkiye geneli hizmet veren, resmi sözleşmeli ve garantili çalışan profesyonel bir büyüme ajansıdır. Her proje başlamadan önce yazılı maddelerle resmi sözleşmeye bağlanır ve %50 test onayından sonra teslim edilir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Aylık yönetim neleri kapsıyor, her ay ödeme yapmak zorunda mıyım?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Web sitesi kurulumundan sonra sitenizin mülkiyeti tamamen sizindir. Aylık yönetim; Google reklamlarınızı her hafta optimize edip boşa tıklamaları elemek, harita sıralamanızı zirvede tutmak ve sunucu güvenliğini sağlamak için isteğe bağlı olarak sunulan bir retainer modelidir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "İş bittikten sonra bir sorun çıkarsa muhatap bulabilecek miyim?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Kesinlikle evet. Aracı sekreter veya çağrı merkezi yoktur. Kurucumuz Mehmet Demir'in doğrudan cep telefonu (0541 484 24 26) tüm müşterilerimize açıktır ve 1 yıl boyunca kesintisiz yazılım desteği sunulmaktadır."
+              }
+            }
+          ]
+        }
+      ],
+      "schema_hash": "3e8ef052719ddc39d9c9a84ee2f079e75b8be7025c5aff55f617fad9ef63c8a4",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "836b022edcde8b97294dd8f5dc7df5c4416682f88fe4c6ff3a4e374e6aaf895c"
+    },
+    "/fiyatlar": {
+      "title": "Fiyatlandırma &amp; Paket Tarifesi | GrowB Dijital | GrowB Dijital",
+      "meta_description": "GrowB Dijital şeffaf ve net fiyatlandırma tarifesi. Anahtar teslim kuruluş kovanları, aylık büyüme yönetimi sözleşmeleri ve modüler tekil hizmet paketleri.",
+      "canonical": "https://growbdijital.com/fiyatlar",
+      "meta_robots": null,
+      "h1": ["Ölçülebilir Büyüme, Kuruşuna Kadar Net Fiyatlar."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "OfferCatalog",
+          "name": "GrowB Dijital Pazarlama ve Büyüme Paketleri",
+          "url": "https://growbdijital.com/fiyatlar",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "telephone": "+905414842426",
+            "url": "https://growbdijital.com"
+          },
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "position": 1,
+              "name": "TEMEL PETEK",
+              "description": "Dijitale güçlü bir giriş yapmak isteyen işletmeler için temel varlık paketi.",
+              "price": 39900,
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock",
+              "url": "https://growbdijital.com/fiyatlar"
+            },
+            {
+              "@type": "Offer",
+              "position": 2,
+              "name": "BÜYÜME KOVANI",
+              "description": "Sektöründe liderliğe oynayan, ciro ve müşteri akışını katlamak isteyen işletmeler için tam kovan.",
+              "price": 89900,
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock",
+              "url": "https://growbdijital.com/fiyatlar"
+            },
+            {
+              "@type": "Offer",
+              "position": 3,
+              "name": "ALTIN KOVAN",
+              "description": "E-ticaret, marka dominasyonu ve agresif ciro büyümesi için A'dan Z'ye kapalı devre ekosistem.",
+              "price": 169900,
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock",
+              "url": "https://growbdijital.com/fiyatlar"
+            },
+            {
+              "@type": "Offer",
+              "position": 4,
+              "name": "TEMEL",
+              "description": "Dijital varlığını düzenli ve profesyonel tutmak isteyen yerel işletmeler için.",
+              "price": 14900,
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock",
+              "url": "https://growbdijital.com/fiyatlar"
+            },
+            {
+              "@type": "Offer",
+              "position": 5,
+              "name": "BÜYÜME",
+              "description": "Ciro akışını her gün büyütmek ve düzenli sıcak müşteri kazanmak isteyen işletmeler için.",
+              "price": 32900,
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock",
+              "url": "https://growbdijital.com/fiyatlar"
+            },
+            {
+              "@type": "Offer",
+              "position": 6,
+              "name": "PRO",
+              "description": "Sektöründe mutlak hakimiyet kurmak isteyen ölçeklenmiş markalar için kapalı devre yönetim.",
+              "price": 59900,
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock",
+              "url": "https://growbdijital.com/fiyatlar"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "a7dee85eda7cc0a70cfd9ee8c131d6eb04f2b6636fc435bd0d0e0ea5492053d3",
+      "open_graph": {
+        "title": "Fiyatlandırma &amp; Paket Tarifesi | GrowB Dijital",
+        "description": "Ölçülebilir büyüme, kuruşuna kadar net fiyatlar. Gizli masraf yok.",
+        "url": "https://growbdijital.com/fiyatlar",
+        "locale": "tr_TR",
+        "type": "website"
+      },
+      "html_hash": "11b37d1c4c4f505df1e0e180c5e1dc1e5bc073f55408445a33cee2849bb8aa17"
+    },
+    "/hizmetler": {
+      "title": "Tüm Hizmetlerimiz (13 Uzmanlık Alanı) | GrowB Dijital Büyüme Kovanı | GrowB Dijital",
+      "meta_description": "Web yazılımından Google &amp; Meta satış reklamlarına, harita SEO liderliğinden video prodüksiyona ve WhatsApp CRM otomasyonuna kadar GrowB Dijital&#x27;in 13 uzmanlık alanını keşfedin.",
+      "canonical": "https://growbdijital.com/hizmetler",
+      "meta_robots": null,
+      "h1": ["13 Uzmanlık Alanı, Tek Bir Büyüme Ekosistemi."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "Tüm Hizmetlerimiz (13 Uzmanlık Alanı) | GrowB Dijital",
+        "description": "Web yazılımından reklam yönetimine ve otomasyona 13 modüler büyüme hizmeti.",
+        "url": "https://growbdijital.com/hizmetler",
+        "locale": "tr_TR",
+        "type": "website"
+      },
+      "html_hash": "cc4b46c1db0181ca6c60229eda099cff365875261b8a3b5897c19021e7a3f8c6"
+    },
+    "/kirsehir-dijital-pazarlama-ajansi": {
+      "title": "Kırşehir Dijital Pazarlama, Web Tasarım &amp; Yerel SEO Ajansı | GrowB | GrowB Dijital",
+      "meta_description": "Kırşehir ve çevre ilçelerdeki KOBİ&#x27;ler için Google Harita 1. sıra SEO, satış odaklı Next.js web tasarım ve niyet odaklı Google Ads yönetimi. Kırşehir Aybar Nakliyat canlı başarı vakası.",
+      "canonical": "https://growbdijital.com/kirsehir-dijital-pazarlama-ajansi",
+      "meta_robots": null,
+      "h1": ["Kırşehir&#x27;de Telefonunuzu Çaldıran Yerel SEO ve Web Altyapısı."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital — Kırşehir Dijital Pazarlama & Yerel SEO",
+          "url": "https://growbdijital.com/kirsehir-dijital-pazarlama-ajansi",
+          "telephone": "+905414842426",
+          "areaServed": {
+            "@type": "AdministrativeArea",
+            "name": "Kırşehir"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kırşehir",
+            "addressRegion": "İç Anadolu",
+            "addressCountry": "TR"
+          },
+          "priceRange": "₺₺₺"
+        }
+      ],
+      "schema_hash": "8d8d795f079be9ddbe73255a6b5d2bf0537cb4d8a81d3fb0010e3deb87a6927d",
+      "open_graph": {
+        "title": "Kırşehir Dijital Pazarlama, Web Tasarım &amp; Yerel SEO Ajansı | GrowB",
+        "description": "Kırşehir esnafı ve işletmeleri için telefon çaldıran büyüme sistemleri.",
+        "url": "https://growbdijital.com/kirsehir-dijital-pazarlama-ajansi",
+        "locale": "tr_TR",
+        "type": "website"
+      },
+      "html_hash": "c88de21cad118b15a862def3a0ea8c4a02b8f19e5dd1014f91d37eea5aeb091a"
+    },
+    "/nevsehir-dijital-pazarlama-ajansi": {
+      "title": "Nevşehir Dijital Pazarlama &amp; Web Tasarım Ajansı | GrowB | GrowB Dijital",
+      "meta_description": "Nevşehir merkezli kurumsal dijital pazarlama ajansı GrowB. Nevşehir ve Kapadokya işletmeleri için satış odaklı web yazılımı, Google Ads ve harita SEO yönetimi.",
+      "canonical": "https://growbdijital.com/nevsehir-dijital-pazarlama-ajansi",
+      "meta_robots": null,
+      "h1": ["Nevşehir&#x27;de Dijital İşlerinizi Üstlenen Yerel Büyüme Ortağınız."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "82ace3e8de5a62efd4d24a31df63712fc9facb1aec90eeabf58815e773df2811"
+    },
+    "/kapadokya-web-tasarim": {
+      "title": "Kapadokya Butik Otel Web Tasarım &amp; Turizm Pazarlaması | GrowB | GrowB Dijital",
+      "meta_description": "Kapadokya butik otelleri, balon turları ve turizm acenteleri için komisyonsuz doğrudan rezervasyon üreten çok dilli web tasarım ve uluslararası dijital reklam yönetimi.",
+      "canonical": "https://growbdijital.com/kapadokya-web-tasarim",
+      "meta_robots": null,
+      "h1": ["Komisyonculara Boğulmadan Doğrudan Rezervasyon Altyapısı."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "ff20e2d4d02696038d3ba203bff349183c2fccc79e972ccf5c15a969cf0e0f4d"
+    },
+    "/konya-dijital-pazarlama": {
+      "title": "Konya Dijital Pazarlama, Web Tasarım &amp; Harita SEO | GrowB | GrowB Dijital",
+      "meta_description": "Konya Selçuklu, Meram ve Karatay işletmeleri için Google yerel SEO, yüksek hızlı web altyapısı ve reklam yönetimi. Konya Lider Nakliyat canlı referans vakası.",
+      "canonical": "https://growbdijital.com/konya-dijital-pazarlama",
+      "meta_robots": null,
+      "h1": ["Konya Pazarında Liderliğe Oynayan Satış Altyapıları."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "113b927d23980f2edb8fccc380748065208eed0509cb75f46e954dc5888fcfee"
+    },
+    "/aksaray-dijital-pazarlama": {
+      "title": "Aksaray Dijital Pazarlama, Web Tasarım &amp; Harita SEO | GrowB | GrowB Dijital",
+      "meta_description": "Aksaray sanayi ve nakliyat işletmeleri için yüksek dönüşümlü web tasarım, Google Ads ve yerel SEO. Öz Aksaray Nakliyat canlı referans vakası.",
+      "canonical": "https://growbdijital.com/aksaray-dijital-pazarlama",
+      "meta_robots": null,
+      "h1": ["Aksaray&#x27;da Sıcak Müşteri Telefonu Çaldıran Satış Sistemleri."],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "b033998fa4d3bb682543dc8c8869d5109cb1100508448f84e3a780b89d133326"
+    },
+    "/hizmetler/web-tasarim-yazilim": {
+      "title": "Web Tasarım &amp; Yazılım | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "1.2 saniyede açılan, mobil kusursuz ve doğrudan sıcak müşteri aratan modern satış siteleri. Yavaş açılan hazır temaları ve boşa harcanan bütçeleri unutun. Next.js ve Cloudflare altyapısıyla sıfırdan kodlanan, Google Haritalar ile en...",
+      "canonical": "https://growbdijital.com/hizmetler/web-tasarim-yazilim",
+      "meta_robots": null,
+      "h1": ["Web Tasarım &amp; Yazılım"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Web Tasarım & Yazılım",
+          "description": "1.2 saniyede açılan, mobil kusursuz ve doğrudan sıcak müşteri aratan modern satış siteleri.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Web Tasarım & Yazılım Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Next.js 14 & React altyapısıyla 1.2s ultrasonik açılış hızı"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Mobil öncelikli, tek tıkla arama ve WhatsApp yönlendirmeli UX tasarımı"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Google PageSpeed & Core Web Vitals yeşil skor optimizasyonu"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "SSL, Cloudflare kurumsal CDN ve DDoS koruması"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Resmi sözleşmeyle 1 yıl kesintisiz teknik destek ve bakım"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "ec510493ad7f2859207fb6353f448d39f5f368b32ef4d3d7b0db34abc8e537a9",
+      "open_graph": {
+        "title": "Web Tasarım &amp; Yazılım | GrowB Dijital Pazarlama",
+        "description": "1.2 saniyede açılan, mobil kusursuz ve doğrudan sıcak müşteri aratan modern satış siteleri. Yavaş açılan hazır temaları ve boşa harcanan bütçeleri unutun. Next.js ve Cloudflare altyapısıyla sıfırdan kodlanan, Google Haritalar ile en...",
+        "url": "https://growbdijital.com/hizmetler/web-tasarim-yazilim",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "09ce9b1295f90a7a5083a6833d963bee80ae80c5cfa13a3fa9bf40cd6510a9f5"
+    },
+    "/hizmetler/google-harita-yerel-seo": {
+      "title": "Google Harita &amp; Yerel SEO | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Bölgenizdeki her aramada Google Haritalar&#x27;da 1. sıraya oturun, müşteriler doğrudan sizi arasın. Yerel işletmeler için en yüksek dönüşüm oranı Google Haritalar&#x27;dan gelir. Bölgenizde hizmetinizi arayan müşterilerin rakip dükkanlara değil,...",
+      "canonical": "https://growbdijital.com/hizmetler/google-harita-yerel-seo",
+      "meta_robots": null,
+      "h1": ["Google Harita &amp; Yerel SEO"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Google Harita & Yerel SEO",
+          "description": "Bölgenizdeki her aramada Google Haritalar'da 1. sıraya oturun, müşteriler doğrudan sizi arasın.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Google Harita & Yerel SEO Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Google Benim İşletmem (GBP) profilinin A'dan Z'ye profesyonel kurulumu"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Bölgesel anahtar kelimelerde harita 1. sıra konumlandırması"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "5.0 yıldızlı müşteri yorumu artırma ve itibar yönetim stratejisi"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "NAP (İsim, Adres, Telefon) tutarlılığı ile yerel dizin kayıtları"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Haftalık ve aylık harita arama/yol tarifi performans raporları"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "03d61666110a7890f0b79f5767813d9dd2dbb47ca63d55b59dff6891bb8d920b",
+      "open_graph": {
+        "title": "Google Harita &amp; Yerel SEO | GrowB Dijital Pazarlama",
+        "description": "Bölgenizdeki her aramada Google Haritalar&#x27;da 1. sıraya oturun, müşteriler doğrudan sizi arasın. Yerel işletmeler için en yüksek dönüşüm oranı Google Haritalar&#x27;dan gelir. Bölgenizde hizmetinizi arayan müşterilerin rakip dükkanlara değil,...",
+        "url": "https://growbdijital.com/hizmetler/google-harita-yerel-seo",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "34efba4d177fb62b62ef7e21e387a6222d53596f9e5ca00129e950c51082d1e1"
+    },
+    "/hizmetler/sosyal-medya-yonetimi": {
+      "title": "Sosyal Medya Yönetimi | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Marka prestijinizi zirveye taşıyan, güven veren ve düzenli içerik akışı. Sosyal medyada var olmak sadece resim paylaşmak değildir. Potansiyel müşterilerinizin güvenini kazanan, profilinizi ziyaret edeni anında müş...",
+      "canonical": "https://growbdijital.com/hizmetler/sosyal-medya-yonetimi",
+      "meta_robots": null,
+      "h1": ["Sosyal Medya Yönetimi"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Sosyal Medya Yönetimi",
+          "description": "Marka prestijinizi zirveye taşıyan, güven veren ve düzenli içerik akışı.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Sosyal Medya Yönetimi Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Aylık profesyonel içerik planı ve takvimi"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kurumsal renklerinizle uyumlu premium post ve hikaye tasarımları"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Etkileşim odaklı metin yazarlığı ve hashtag stratejisi"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Gelen DM ve yorumların hızlıca satışa yönlendirilmesi"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Aylık büyüme ve etkileşim analiz raporu"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "91e853e3ec16933a2e6a4f33d85cd2b1acbea9af5268db0db0d257051ec7a1ea",
+      "open_graph": {
+        "title": "Sosyal Medya Yönetimi | GrowB Dijital Pazarlama",
+        "description": "Marka prestijinizi zirveye taşıyan, güven veren ve düzenli içerik akışı. Sosyal medyada var olmak sadece resim paylaşmak değildir. Potansiyel müşterilerinizin güvenini kazanan, profilinizi ziyaret edeni anında müş...",
+        "url": "https://growbdijital.com/hizmetler/sosyal-medya-yonetimi",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "a990d523f5bde5f0f059e8874c06717f4350bac299ac1a4c1bd099c291bc3056"
+    },
+    "/hizmetler/grafik-tasarim-kurumsal-kimlik": {
+      "title": "Grafik Tasarım &amp; Kurumsal Kimlik | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Akılda kalıcı logo, güven veren renk paletleri ve kurumsal tasarım dili. İlk izlenim saniyeler içinde oluşur. İşletmenizi rakiplerinizden ayıran, kurumsal gücünüzü hissettiren ve müşterinizin zihninde silinmez iz ...",
+      "canonical": "https://growbdijital.com/hizmetler/grafik-tasarim-kurumsal-kimlik",
+      "meta_robots": null,
+      "h1": ["Grafik Tasarım &amp; Kurumsal Kimlik"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Grafik Tasarım & Kurumsal Kimlik",
+          "description": "Akılda kalıcı logo, güven veren renk paletleri ve kurumsal tasarım dili.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Grafik Tasarım & Kurumsal Kimlik Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Özgün, tescile uygun profesyonel logo tasarımı"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kurumsal renk paleti ve tipografi rehberi"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kartvizit, antetli kağıt, dosya ve kurumsal evrak tasarımları"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Sosyal medya profil ve kapak tasarımları"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Marka kimliği kullanım kılavuzu (Brandbook)"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "fa9bde8ed31cc18a2548a2cf92dca4becc95123bc9c55cd26ca8fb15b093abe4",
+      "open_graph": {
+        "title": "Grafik Tasarım &amp; Kurumsal Kimlik | GrowB Dijital Pazarlama",
+        "description": "Akılda kalıcı logo, güven veren renk paletleri ve kurumsal tasarım dili. İlk izlenim saniyeler içinde oluşur. İşletmenizi rakiplerinizden ayıran, kurumsal gücünüzü hissettiren ve müşterinizin zihninde silinmez iz ...",
+        "url": "https://growbdijital.com/hizmetler/grafik-tasarim-kurumsal-kimlik",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "4e8149c9f253a90fa7d6ec9719105e184d2a970ef61ec25147393b2ed4e0542e"
+    },
+    "/hizmetler/meta-reklam-yonetimi": {
+      "title": "Meta Reklam Yönetimi (Instagram &amp; Facebook) | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Boşa harcanan bütçelere son. Doğrudan WhatsApp ve arama getiren hedefli reklamlar. Instagram ve Facebook&#x27;ta &#x27;gönderiyi öne çıkar&#x27; butonuyla para yakmaktan vazgeçin. Satın alma potansiyeli en yüksek kitleyi hedefleyen, yükse...",
+      "canonical": "https://growbdijital.com/hizmetler/meta-reklam-yonetimi",
+      "meta_robots": null,
+      "h1": ["Meta Reklam Yönetimi (Instagram &amp; Facebook)"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Meta Reklam Yönetimi (Instagram & Facebook)",
+          "description": "Boşa harcanan bütçelere son. Doğrudan WhatsApp ve arama getiren hedefli reklamlar.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Meta Reklam Yönetimi (Instagram & Facebook) Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Meta Business Manager ve Dönüşüm API kurulumu"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Yüksek dönüşümlü görsel ve video reklam kreatifleri"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Yapay zeka destekli detaylı hedef kitle segmentasyonu"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Retargeting (yeniden pazarlama) ile kaçan müşterileri yakalama"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Günlük bütçe takibi ve haftalık şeffaf ROI raporlaması"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "9a67bc70961064d5ef8ff5b29ec01b0747a2638e56abde36a0ae61ca4c30ff49",
+      "open_graph": {
+        "title": "Meta Reklam Yönetimi (Instagram &amp; Facebook) | GrowB Dijital Pazarlama",
+        "description": "Boşa harcanan bütçelere son. Doğrudan WhatsApp ve arama getiren hedefli reklamlar. Instagram ve Facebook&#x27;ta &#x27;gönderiyi öne çıkar&#x27; butonuyla para yakmaktan vazgeçin. Satın alma potansiyeli en yüksek kitleyi hedefleyen, yükse...",
+        "url": "https://growbdijital.com/hizmetler/meta-reklam-yonetimi",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "8d51068c47203e033bb6f6372d047694d74a579b2cc25585042fa52fae2f3212"
+    },
+    "/hizmetler/google-ads-reklamlari": {
+      "title": "Google Ads Arama &amp; Harita Reklamları | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Müşteri tam satın alma anında arama yaptığında en tepede siz olun. İhtiyacı olan kişi Google&#x27;da arama yaptığı an karşısına çıkmak, dijitaldeki en sıcak satış fırsatıdır. Negatif anahtar kelimelerle korunan v...",
+      "canonical": "https://growbdijital.com/hizmetler/google-ads-reklamlari",
+      "meta_robots": null,
+      "h1": ["Google Ads Arama &amp; Harita Reklamları"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Google Ads Arama & Harita Reklamları",
+          "description": "Müşteri tam satın alma anında arama yaptığında en tepede siz olun.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Google Ads Arama & Harita Reklamları Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Google Arama Ağı ve Harita Reklamları kurulumu"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "500+ negatif anahtar kelime filtresiyle bütçe koruması"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Tıklama başına maliyetleri (CPC) düşüren kalite puanı optimizasyonu"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Doğrudan 'Telefon Et' uzantıları ve dönüşüm izleme"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Haftalık şeffaf harcama ve arama performansı raporları"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "45ca8c7f3b916569212bde7d5d099af4ee1d6106fec311f9a552ffb215a0dcf6",
+      "open_graph": {
+        "title": "Google Ads Arama &amp; Harita Reklamları | GrowB Dijital Pazarlama",
+        "description": "Müşteri tam satın alma anında arama yaptığında en tepede siz olun. İhtiyacı olan kişi Google&#x27;da arama yaptığı an karşısına çıkmak, dijitaldeki en sıcak satış fırsatıdır. Negatif anahtar kelimelerle korunan v...",
+        "url": "https://growbdijital.com/hizmetler/google-ads-reklamlari",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "3fcf441cc99a692fdb0d9734ba70ef9a424b7788163d0acddd8fba8dde21c243"
+    },
+    "/hizmetler/video-reels-ai-produksiyon": {
+      "title": "Video, Reels &amp; AI Prodüksiyon | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Algoritmaları fetheden, kaydırıp geçilmeyen dinamik dikey videolar. Günümüzde en hızlı müşteri kazandıran format dikey videodur. İşletmenizi modern gösteren, güven aşılayan ve izleyeni anında harekete geçiren...",
+      "canonical": "https://growbdijital.com/hizmetler/video-reels-ai-produksiyon",
+      "meta_robots": null,
+      "h1": ["Video, Reels &amp; AI Prodüksiyon"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Video, Reels & AI Prodüksiyon",
+          "description": "Algoritmaları fetheden, kaydırıp geçilmeyen dinamik dikey videolar.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Video, Reels & AI Prodüksiyon Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kanca (Hook) odaklı ilk 3 saniyeyi yakalayan senaryolar"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "4K dikey video kurgusu, altyazı ve ses miksajı"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Trend müzikler ve algoritmaya uygun tempo"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Yapay zeka destekli görsel efektler ve seslendirmeler"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Instagram, TikTok ve YouTube Shorts için optimize edilmiş formatlar"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "1513312bbfbc30943e50545826b11e00343b745bf5e0cd75d9fd35a82985772f",
+      "open_graph": {
+        "title": "Video, Reels &amp; AI Prodüksiyon | GrowB Dijital Pazarlama",
+        "description": "Algoritmaları fetheden, kaydırıp geçilmeyen dinamik dikey videolar. Günümüzde en hızlı müşteri kazandıran format dikey videodur. İşletmenizi modern gösteren, güven aşılayan ve izleyeni anında harekete geçiren...",
+        "url": "https://growbdijital.com/hizmetler/video-reels-ai-produksiyon",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "fe60ec7e5ad0f8efaad84ffca8210b0455d7f87e9067d19661c6179e1d55b1ec"
+    },
+    "/hizmetler/icerik-yazarligi-satis-metni": {
+      "title": "İçerik Yazarlığı &amp; Satış Metni (Copywriting) | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Ziyaretçiyi sayfada tutan ve tek tıkla satın almaya ikna eden kelimeler. Tasarım gözü çeker, kelimeler ise satış yaptırır. Ziyaretçilerinizin zihnindeki şüpheleri yok eden, güven inşa eden ve doğrudan harekete geç...",
+      "canonical": "https://growbdijital.com/hizmetler/icerik-yazarligi-satis-metni",
+      "meta_robots": null,
+      "h1": ["İçerik Yazarlığı &amp; Satış Metni (Copywriting)"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "İçerik Yazarlığı & Satış Metni (Copywriting)",
+          "description": "Ziyaretçiyi sayfada tutan ve tek tıkla satın almaya ikna eden kelimeler.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "İçerik Yazarlığı & Satış Metni (Copywriting) Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Dönüşüm odaklı web sitesi ana sayfa ve hizmet metinleri"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Reklam kampanyaları için yüksek dönüşümlü kreatif başlıklar"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "WhatsApp satış kapama şablonları"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Google SEO uyumlu, bilgi verici sektörel rehberler"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Müşteri itirazlarını peşinen çürüten SSS metinleri"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "a94dcf22da145105d359aece30ac80a5c820f7ae2f5aaa350338bbefba1e668b",
+      "open_graph": {
+        "title": "İçerik Yazarlığı &amp; Satış Metni (Copywriting) | GrowB Dijital Pazarlama",
+        "description": "Ziyaretçiyi sayfada tutan ve tek tıkla satın almaya ikna eden kelimeler. Tasarım gözü çeker, kelimeler ise satış yaptırır. Ziyaretçilerinizin zihnindeki şüpheleri yok eden, güven inşa eden ve doğrudan harekete geç...",
+        "url": "https://growbdijital.com/hizmetler/icerik-yazarligi-satis-metni",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "5d66d7e1ebc80cb36432250386384b2928df915f8bab734568d84d578bd317fe"
+    },
+    "/hizmetler/seo-organik-gorunurluk": {
+      "title": "SEO &amp; Organik Görünürlük | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Reklam vermeyi bıraktığınızda bile durmayan kesintisiz müşteri akışı. Reklamlar para harcadıkça çalışır, SEO ise kalıcı bir servettir. Google&#x27;ın ilk sayfasında doğal olarak üst sıralara yerleşerek her gün ücret...",
+      "canonical": "https://growbdijital.com/hizmetler/seo-organik-gorunurluk",
+      "meta_robots": null,
+      "h1": ["SEO &amp; Organik Görünürlük"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "SEO & Organik Görünürlük",
+          "description": "Reklam vermeyi bıraktığınızda bile durmayan kesintisiz müşteri akışı.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "SEO & Organik Görünürlük Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Site içi teknik SEO ve hız optimizasyonu"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Yüksek hacimli anahtar kelime haritası ve içerik stratejisi"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kaliteli geri bağlantı (Backlink) ve otorite inşası"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Mobil uyumluluk ve yapılandırılmış veri (Schema) kurulumu"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Aylık anahtar kelime sıralama ve organik trafik raporu"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "7f6561382ee09f45d1a78c3a1f835c99735a9a568d53079ab09aca412d10e065",
+      "open_graph": {
+        "title": "SEO &amp; Organik Görünürlük | GrowB Dijital Pazarlama",
+        "description": "Reklam vermeyi bıraktığınızda bile durmayan kesintisiz müşteri akışı. Reklamlar para harcadıkça çalışır, SEO ise kalıcı bir servettir. Google&#x27;ın ilk sayfasında doğal olarak üst sıralara yerleşerek her gün ücret...",
+        "url": "https://growbdijital.com/hizmetler/seo-organik-gorunurluk",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "e53cd30777b7d5dc2f12ed0f37afff1020ac0680e7531e8a01dc3dfa2444b01c"
+    },
+    "/hizmetler/e-ticaret-satis-sistemleri": {
+      "title": "E-Ticaret &amp; Satış Sistemleri | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "7/24 online sipariş toplayan, kargo ve sanal POS entegreli mağaza motoru. Ürünlerinizi sadece dükkanda değil, tüm Türkiye&#x27;ye satmak için hızlı, güvenli ve sepet terk etme oranını minimuma indiren modern e-ticaret a...",
+      "canonical": "https://growbdijital.com/hizmetler/e-ticaret-satis-sistemleri",
+      "meta_robots": null,
+      "h1": ["E-Ticaret &amp; Satış Sistemleri"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "E-Ticaret & Satış Sistemleri",
+          "description": "7/24 online sipariş toplayan, kargo ve sanal POS entegreli mağaza motoru.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "E-Ticaret & Satış Sistemleri Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Hızlı ödeme (Tek sayfa checkout) mimarisi"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "İyzico, PayTR vb. tüm sanal POS ve taksit entegrasyonları"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Yurtiçi, Aras, MNG vb. otomatik kargo barkod sistemi"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Mobil uyumlu dinamik ürün filtreleme ve sepet hatırlatma"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Stok ve sipariş yönetim paneli eğitimi"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "e861098444d606f85fdec2ca0022df844e9f917009e3cd1564cc4b7224c642b8",
+      "open_graph": {
+        "title": "E-Ticaret &amp; Satış Sistemleri | GrowB Dijital Pazarlama",
+        "description": "7/24 online sipariş toplayan, kargo ve sanal POS entegreli mağaza motoru. Ürünlerinizi sadece dükkanda değil, tüm Türkiye&#x27;ye satmak için hızlı, güvenli ve sepet terk etme oranını minimuma indiren modern e-ticaret a...",
+        "url": "https://growbdijital.com/hizmetler/e-ticaret-satis-sistemleri",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "d17e9f16f8e6da3add9c96790aaf4b0c2595a0f09966560206f7e65c42e2bd57"
+    },
+    "/hizmetler/crm-whatsapp-takip": {
+      "title": "CRM &amp; WhatsApp Satış Takip | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Gece gelen talepler dahil tek bir müşteriyi bile kaçırmayan akıllı satış hattı. Reklamla müşteri getirmek işin yarısıdır; asıl para satışın hızlı kapatılmasında kazanılır. Gelen her talebi 3 saniyede karşılayan, temsilci...",
+      "canonical": "https://growbdijital.com/hizmetler/crm-whatsapp-takip",
+      "meta_robots": null,
+      "h1": ["CRM &amp; WhatsApp Satış Takip"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "CRM & WhatsApp Satış Takip",
+          "description": "Gece gelen talepler dahil tek bir müşteriyi bile kaçırmayan akıllı satış hattı.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "CRM & WhatsApp Satış Takip Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Resmi WhatsApp Business API entegrasyonu"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "3 saniyede yanıt veren akıllı karşılama ve randevu botu"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Müşteri adaylarını takip eden basit ve güçlü CRM paneli"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Kaçan müşterileri geri kazandıran otomatik hatırlatma mesajları"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Satış temsilcisi performans takibi"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "a89994e3d7f94e1e4e67fa831ea55237dda7f0cae00c1960b9cea31ad8368c61",
+      "open_graph": {
+        "title": "CRM &amp; WhatsApp Satış Takip | GrowB Dijital Pazarlama",
+        "description": "Gece gelen talepler dahil tek bir müşteriyi bile kaçırmayan akıllı satış hattı. Reklamla müşteri getirmek işin yarısıdır; asıl para satışın hızlı kapatılmasında kazanılır. Gelen her talebi 3 saniyede karşılayan, temsilci...",
+        "url": "https://growbdijital.com/hizmetler/crm-whatsapp-takip",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "4fde8f0e297f355ecd71082a78e48c255d27b74698202b7b12bf5c78a9c70fda"
+    },
+    "/hizmetler/rakip-pazar-analizi": {
+      "title": "Pazar, Sektör &amp; Rakip Analizi | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Rakiplerinizin nerelerden müşteri aldığını ve açıklarını ortaya çıkaran strateji. Karanlıkta kurşun sıkmayın. Bölgenizdeki ve sektörünüzdeki rakiplerin hangi kelimelerden para kazandığını, ne kadar reklam harcadığını ve za...",
+      "canonical": "https://growbdijital.com/hizmetler/rakip-pazar-analizi",
+      "meta_robots": null,
+      "h1": ["Pazar, Sektör &amp; Rakip Analizi"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Pazar, Sektör & Rakip Analizi",
+          "description": "Rakiplerinizin nerelerden müşteri aldığını ve açıklarını ortaya çıkaran strateji.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Pazar, Sektör & Rakip Analizi Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Rakiplerin Google Ads anahtar kelime ve bütçe röntgeni"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Organik arama ve harita sıralama açıkları raporu"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Fiyat ve hizmet konumlandırma stratejisi"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Sektörünüzde hızla büyüyen yeni fırsat alanları dökümü"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Uygulanabilir 90 günlük agresif büyüme yol haritası"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "70d62c441a9db46c1d5106dc13cfa8ee6a340c017cec472db20e70ace82832d8",
+      "open_graph": {
+        "title": "Pazar, Sektör &amp; Rakip Analizi | GrowB Dijital Pazarlama",
+        "description": "Rakiplerinizin nerelerden müşteri aldığını ve açıklarını ortaya çıkaran strateji. Karanlıkta kurşun sıkmayın. Bölgenizdeki ve sektörünüzdeki rakiplerin hangi kelimelerden para kazandığını, ne kadar reklam harcadığını ve za...",
+        "url": "https://growbdijital.com/hizmetler/rakip-pazar-analizi",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "4b6fd8a203e5c35981c08ab37ec965ed5e880b09005d05bf5d50b68bdc3fbbf0"
+    },
+    "/hizmetler/aylik-buyume-danismanligi": {
+      "title": "Aylık Büyüme Danışmanlığı &amp; Raporlama | GrowB Dijital Pazarlama | GrowB Dijital",
+      "meta_description": "Kuruşuna kadar şeffaf, ölçülebilir ve patronla birebir ilerleyen ROI ortaklığı. Biz bir kez iş yapıp kaybolanlardan değiliz. Sloganımızda dediğimiz gibi: &#x27;Sadece ajans değil, büyüme ortağınız.&#x27; Her ay yapılan harcamaları...",
+      "canonical": "https://growbdijital.com/hizmetler/aylik-buyume-danismanligi",
+      "meta_robots": null,
+      "h1": ["Aylık Büyüme Danışmanlığı &amp; Raporlama"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Aylık Büyüme Danışmanlığı & Raporlama",
+          "description": "Kuruşuna kadar şeffaf, ölçülebilir ve patronla birebir ilerleyen ROI ortaklığı.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "GrowB Dijital Pazarlama Ajansı",
+            "url": "https://growbdijital.com",
+            "telephone": "+905414842426"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Aylık Büyüme Danışmanlığı & Raporlama Kapsamı ve Çıktıları",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Her ay kuruşu kuruşuna şeffaf ROI ve harcama tablosu"
+                },
+                "position": 1
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Patronla aylık birebir görüntülü strateji ve durum değerlendirme seansı"
+                },
+                "position": 2
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Telefon aramaları, WhatsApp formları ve satış metrikleri denetimi"
+                },
+                "position": 3
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Bir sonraki ayın büyüme hedeflerinin belirlenmesi"
+                },
+                "position": 4
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Acil durumlarda 7/24 doğrudan kurucu iletişim hattı"
+                },
+                "position": 5
+              }
+            ]
+          }
+        }
+      ],
+      "schema_hash": "1a40fe65390d552bb622b7331b709bda4086157f201a50c9e869c5479f61f4df",
+      "open_graph": {
+        "title": "Aylık Büyüme Danışmanlığı &amp; Raporlama | GrowB Dijital Pazarlama",
+        "description": "Kuruşuna kadar şeffaf, ölçülebilir ve patronla birebir ilerleyen ROI ortaklığı. Biz bir kez iş yapıp kaybolanlardan değiliz. Sloganımızda dediğimiz gibi: &#x27;Sadece ajans değil, büyüme ortağınız.&#x27; Her ay yapılan harcamaları...",
+        "url": "https://growbdijital.com/hizmetler/aylik-buyume-danismanligi",
+        "locale": "tr_TR",
+        "type": "article"
+      },
+      "html_hash": "d0c1820b37d012fde8fa285aa825e0f129fc8304208bb2e5e8c2ec0c1be96c1d"
+    },
+    "/kvkk-aydinlatma-metni": {
+      "title": "KVKK Aydınlatma Metni | GrowB Dijital | GrowB Dijital",
+      "meta_description": "GrowB Dijital Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca veri sorumlusu sıfatıyla aydınlatma metni, işleme amaçları ve haklarınız.",
+      "canonical": "https://growbdijital.com",
+      "meta_robots": "index, follow",
+      "h1": ["Kişisel Verilerin Korunması ve İşlenmesi Aydınlatma Metni"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "81b381ddf85cf2e59ac9288a109f753d83314cd92e30ec78216785f524c32895"
+    },
+    "/gizlilik-politikasi": {
+      "title": "Gizlilik Politikası | GrowB Dijital | GrowB Dijital",
+      "meta_description": "GrowB Dijital resmi gizlilik politikası. Kullanıcı verilerinin güvenliği, şifreleme standartları ve üçüncü taraf entegrasyonları.",
+      "canonical": "https://growbdijital.com",
+      "meta_robots": "index, follow",
+      "h1": ["Gizlilik Politikası"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "cb5da33bbf378e941efdc3b69d7f74d800042a8eaa0646743d2e15c4082ed05f"
+    },
+    "/cerez-politikasi": {
+      "title": "Çerez Politikası | GrowB Dijital | GrowB Dijital",
+      "meta_description": "GrowB Dijital çerez kullanım politikası, zorunlu ve analitik çerez türleri, çerez tercihlerinizi nasıl yöneteceğiniz.",
+      "canonical": "https://growbdijital.com",
+      "meta_robots": "index, follow",
+      "h1": ["Çerez (Cookie) Politikası"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "65f1b8093e6f62a9063549a29633b1fdc7cd59b6a70e497a120ad70025886c51"
+    },
+    "/mesafeli-hizmet-sozlesmesi": {
+      "title": "Mesafeli Hizmet Sözleşmesi | GrowB Dijital | GrowB Dijital",
+      "meta_description": "GrowB Dijital mesafeli hizmet sözleşmesi çerçeve şartları, hizmet kapsamı, ifa koşulları ve tüketici hakları bilgilendirmesi.",
+      "canonical": "https://growbdijital.com",
+      "meta_robots": "index, follow",
+      "h1": ["Mesafeli Hizmet Sözleşmesi"],
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "GrowB Dijital Pazarlama Ajansı",
+          "url": "https://growbdijital.com",
+          "logo": "https://growbdijital.com/growb-logo.jpg",
+          "image": "https://growbdijital.com/growb-logo.jpg",
+          "telephone": "+905414842426",
+          "priceRange": "₺₺₺",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nevşehir",
+            "addressRegion": "Kapadokya",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 38.6247,
+            "longitude": 34.7142
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Nevşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Kırşehir"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Konya"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Aksaray"
+            },
+            {
+              "@type": "Country",
+              "name": "Türkiye"
+            }
+          ]
+        }
+      ],
+      "schema_hash": "84f761294b566248790ebdf402ae8a79297b1b701403d363e1af95d52ff2e395",
+      "open_graph": {
+        "title": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "description": "Dijitaldeki tüm süreçlerinizi üstlenen, cironuzu katlayan pazarlama ortağınız.",
+        "url": "https://growbdijital.com",
+        "site_name": "GrowB Dijital",
+        "locale": "tr_TR",
+        "image:alt": "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+        "image:type": "image/png",
+        "image": "https://growbdijital.com/opengraph-image?0cfe633d0f8ebfd8",
+        "image:width": "1200",
+        "image:height": "630",
+        "type": "website"
+      },
+      "html_hash": "d9157f113797b45da3a354f3c81b5adbfb4508a22eb773e649acb4e95aef4da8"
+    }
+  }
+}
