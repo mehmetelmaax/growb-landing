@@ -32,7 +32,7 @@ export const FinalCtaSuccessCard: React.FC<FinalCtaSuccessCardProps> = ({
         Seçtiğiniz uzmanlık alanları inceleniyor. 15 dakika içinde telefon veya WhatsApp üzerinden
         büyüme planınızı paylaşacağız.
       </p>
-      <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <div className="mt-6 flex flex-col items-center justify-center gap-2.5 sm:flex-row sm:flex-wrap">
         <a
           href={getWaSuccessUrl()}
           target="_blank"
@@ -45,11 +45,19 @@ export const FinalCtaSuccessCard: React.FC<FinalCtaSuccessCardProps> = ({
         </a>
         <a
           href={SITE_CONFIG.getPhoneUrl()}
-          onClick={() => trackPhoneClick("final_cta_success_call")}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-white/20 sm:w-auto"
+          onClick={() => trackPhoneClick("final_cta_success_call_mehmet")}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-xs font-bold text-white transition-all hover:bg-white/20 sm:w-auto"
         >
-          <PhoneCall className="h-4 w-4 text-[#FFC300]" />
-          <span>{SITE_CONFIG.phone}</span>
+          <PhoneCall className="h-3.5 w-3.5 text-[#FFC300]" />
+          <span>Mehmet Elma ({SITE_CONFIG.phone})</span>
+        </a>
+        <a
+          href={SITE_CONFIG.getBilgePhoneUrl()}
+          onClick={() => trackPhoneClick("final_cta_success_call_bilge")}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-3 text-xs font-bold text-white transition-all hover:bg-white/20 sm:w-auto"
+        >
+          <PhoneCall className="h-3.5 w-3.5 text-[#FFC300]" />
+          <span>Bilge Taşyürek ({SITE_CONFIG.bilgePhone})</span>
         </a>
       </div>
     </div>

@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { CheckCircle2, MessageSquare, Phone } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
 import { trackWhatsAppClick, trackPhoneClick } from "@/lib/analytics";
@@ -38,14 +38,24 @@ export const ConsultationModalSuccess: React.FC<ConsultationModalSuccessProps> =
           <MessageSquare className="h-4 w-4" />
           <span>WhatsApp ile Hızlı Bağlan 💬</span>
         </a>
-        <a
-          href={SITE_CONFIG.getPhoneUrl()}
-          onClick={() => trackPhoneClick("hero_modal_success_call")}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 py-3 text-xs font-bold text-white transition-all hover:bg-white/15"
-        >
-          <Phone className="h-3.5 w-3.5 text-[#FFC300]" />
-          <span>Doğrudan Danışman Hattını Ara ({SITE_CONFIG.phone})</span>
-        </a>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <a
+            href={SITE_CONFIG.getPhoneUrl()}
+            onClick={() => trackPhoneClick("hero_modal_success_call_mehmet")}
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/10 py-2.5 text-xs font-bold text-white transition-all hover:bg-white/15"
+          >
+            <Phone className="h-3.5 w-3.5 text-[#FFC300]" />
+            <span>Mehmet Elma ({SITE_CONFIG.phone})</span>
+          </a>
+          <a
+            href={SITE_CONFIG.getBilgePhoneUrl()}
+            onClick={() => trackPhoneClick("hero_modal_success_call_bilge")}
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/10 py-2.5 text-xs font-bold text-white transition-all hover:bg-white/15"
+          >
+            <Phone className="h-3.5 w-3.5 text-[#FFC300]" />
+            <span>Bilge Taşyürek ({SITE_CONFIG.bilgePhone})</span>
+          </a>
+        </div>
       </div>
     </div>
   );

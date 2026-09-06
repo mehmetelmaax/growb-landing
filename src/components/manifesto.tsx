@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Sparkles, CheckCircle2 } from "lucide-react";
+import { Sparkles, CheckCircle2, ChevronDown } from "lucide-react";
 
 // 1. Ana Çarpıcı Giriş (Punchline)
 const MANIFESTO_HEADLINE = [
@@ -75,47 +75,63 @@ export const Manifesto: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Yazılma aşaması: 0.00 -> 0.46 arasında tamamlanır.
-  // 0.46 -> 1.00 arası (kalan %54) sayfa bitmeden tamamen okunması için geniş okuma alanıdır.
-  const WRITE_PHASE_END = 0.46;
+  // 1. Yazılma Aşaması: 0.00 -> 0.45 (Kelimeler pürüzsüz ve net aydınlanır)
+  const WRITE_PHASE_END = 0.45;
   const isFullyWritten = prefersReducedMotion || progress >= WRITE_PHASE_END;
 
-  // Başlık kelimelerinin yazılma hesaplaması (0.00 -> 0.22)
+  // Başlık kelimelerinin ilerleme aralığı (0.00 -> 0.22)
   const headlineWords = MANIFESTO_HEADLINE.length;
   const headlineEndProgress = 0.22;
 
-  // Gövde kelimelerinin yazılma hesaplaması (0.22 -> 0.46)
+  // Gövde kelimelerinin ilerleme aralığı (0.22 -> 0.45)
   const bodyWords = MANIFESTO_BODY.length;
   const bodyStartProgress = 0.22;
+
+  // 2. Rahat Okuma Aşaması: 0.45 -> 0.70 (Metin ekranda tam sabit ve okunur)
+  const READ_PHASE_END = 0.7;
+
+  // 3. Aşağı İndirme Animasyonu: 0.70 -> 1.00 (Kullanıcı aşağı indikçe sahne yumuşakça aşağı iner)
+  const exitProgress = prefersReducedMotion
+    ? 0
+    : Math.max(0, Math.min(1, (progress - READ_PHASE_END) / (1 - READ_PHASE_END)));
+
+  const exitTranslateY = exitProgress * 160;
+  const exitOpacity = 1 - exitProgress * 0.95;
+  const exitScale = 1 - exitProgress * 0.04;
 
   return (
     <section
       id="manifesto"
       ref={containerRef}
-      className="relative min-h-[175vh] border-y border-white/5 bg-[#0A0A0A] sm:min-h-[190vh]"
+      className="relative min-h-[195vh] border-y border-white/5 bg-[#0A0A0A] sm:min-h-[210vh]"
     >
-      {/* Sabitlenen Sahne: Kullanıcı kaydırdıkça ekran merkezinde kalır ve okunur */}
+      {/* Sabitlenen Sahne */}
       <div className="sticky top-0 flex min-h-screen w-full select-none flex-col items-center justify-center overflow-hidden px-4 py-12 sm:px-6 lg:px-8">
         {/* Ortam Altın Işıltısı */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFC300]/[0.035] blur-[160px]" />
 
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+        {/* Kinetik Aşağı İnen İç Sahne Kartı */}
+        <div
+          style={{
+            transform: `translate3d(0, ${exitTranslateY}px, 0) scale(${exitScale})`,
+            opacity: exitOpacity,
+          }}
+          className="mx-auto flex w-full max-w-5xl flex-col items-center text-center transition-transform duration-75 ease-out will-change-[transform,opacity]"
+        >
           {/* Üst Rozet */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300] shadow-sm sm:mb-8">
             <Sparkles className="h-3.5 w-3.5 text-[#FFC300]" />
             <span>GROWB BÜYÜME MANİFESTOSU // KANITLANMIŞ SİSTEMLER</span>
           </div>
 
-          {/* 1. BÖLÜM: BÜYÜK VURUCU ÇAĞRI (Aşağı indikçe yazılan başlık) */}
+          {/* 1. BÖLÜM: BÜYÜK VURUCU ÇAĞRI (Aşağı indikçe pürüzsüzce aydınlanan başlık) */}
           <h2 className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-2xl font-black leading-[1.18] tracking-tight text-white sm:gap-x-4 sm:gap-y-3 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
             {MANIFESTO_HEADLINE.map((word, index) => {
               const step = headlineEndProgress / headlineWords;
               const wordStart = index * step;
-              const wordEnd = wordStart + step * 0.9;
+              const wordEnd = wordStart + step * 0.85;
 
               const isWritten = isFullyWritten || progress >= wordEnd;
-              const isTyping = !prefersReducedMotion && progress >= wordStart && progress < wordEnd;
-
               const isGold =
                 word === "SATIŞ" ||
                 word === "SİSTEMLERİ" ||
@@ -126,46 +142,32 @@ export const Manifesto: React.FC = () => {
                 <span
                   key={`headline-${index}`}
                   style={{
-                    opacity: isWritten || isTyping ? 1 : 0.12,
-                    transform:
-                      isWritten || isTyping ? "translateY(0)" : "translateY(8px) scale(0.96)",
-                    filter: isWritten || isTyping ? "none" : "blur(2px)",
-                    color:
-                      isWritten || isTyping
-                        ? isGold
-                          ? "#FFC300"
-                          : "#FFFFFF"
-                        : "rgba(255, 255, 255, 0.15)",
-                    textShadow:
-                      (isWritten || isTyping) && isGold
-                        ? "0 0 24px rgba(255, 195, 0, 0.45)"
-                        : "none",
+                    opacity: isWritten ? 1 : 0.18,
+                    transform: isWritten ? "translateY(0)" : "translateY(4px)",
+                    color: isWritten
+                      ? isGold
+                        ? "#FFC300"
+                        : "#FFFFFF"
+                      : "rgba(255, 255, 255, 0.22)",
+                    textShadow: isWritten && isGold ? "0 0 24px rgba(255, 195, 0, 0.45)" : "none",
                   }}
-                  className="relative inline-block transition-all duration-150 ease-out will-change-[transform,opacity,filter]"
+                  className="inline-block transition-all duration-200 ease-out will-change-[transform,opacity,color]"
                 >
                   {word}
-                  {isTyping && (
-                    <span className="ml-0.5 inline-block animate-pulse font-mono text-[#FFC300]">
-                      |
-                    </span>
-                  )}
                 </span>
               );
             })}
           </h2>
 
-          {/* 2. BÖLÜM: BÜYÜME MANİFESTOSU METNİ (Başlığın ardından yazılır) */}
+          {/* 2. BÖLÜM: BÜYÜME MANİFESTOSU METNİ (Başlığın ardından pürüzsüzce aydınlanır) */}
           <div className="mt-8 max-w-4xl sm:mt-10">
             <p className="flex flex-wrap justify-center gap-x-2.5 gap-y-2 text-lg font-bold leading-relaxed tracking-normal sm:gap-x-3.5 sm:text-2xl md:text-3xl lg:text-[2rem]">
               {MANIFESTO_BODY.map((word, index) => {
                 const step = (WRITE_PHASE_END - bodyStartProgress) / bodyWords;
                 const wordStart = bodyStartProgress + index * step;
-                const wordEnd = wordStart + step * 0.9;
+                const wordEnd = wordStart + step * 0.85;
 
                 const isWritten = isFullyWritten || progress >= wordEnd;
-                const isTyping =
-                  !prefersReducedMotion && progress >= wordStart && progress < wordEnd;
-
                 const isHighlight =
                   word === "SATIŞ" ||
                   word === "MAKİNESİ" ||
@@ -176,47 +178,42 @@ export const Manifesto: React.FC = () => {
                   <span
                     key={`body-${index}`}
                     style={{
-                      opacity: isWritten || isTyping ? 1 : 0.1,
-                      transform:
-                        isWritten || isTyping ? "translateY(0)" : "translateY(6px) scale(0.97)",
-                      filter: isWritten || isTyping ? "none" : "blur(2px)",
-                      color:
-                        isWritten || isTyping
-                          ? isHighlight
-                            ? "#FFC300"
-                            : "#E5E5E5"
-                          : "rgba(255, 255, 255, 0.12)",
+                      opacity: isWritten ? 1 : 0.16,
+                      transform: isWritten ? "translateY(0)" : "translateY(3px)",
+                      color: isWritten
+                        ? isHighlight
+                          ? "#FFC300"
+                          : "#E5E5E5"
+                        : "rgba(255, 255, 255, 0.2)",
                       textShadow:
-                        (isWritten || isTyping) && isHighlight
-                          ? "0 0 20px rgba(255, 195, 0, 0.4)"
-                          : "none",
+                        isWritten && isHighlight ? "0 0 20px rgba(255, 195, 0, 0.4)" : "none",
                     }}
-                    className="relative inline-block transition-all duration-150 ease-out will-change-[transform,opacity,filter]"
+                    className="inline-block transition-all duration-200 ease-out will-change-[transform,opacity,color]"
                   >
                     {word}
-                    {isTyping && (
-                      <span className="ml-0.5 inline-block animate-pulse font-mono text-[#FFC300]">
-                        |
-                      </span>
-                    )}
                   </span>
                 );
               })}
             </p>
           </div>
 
-          {/* 3. BÖLÜM: OKUMA GÜVENCESİ & İLERLEME ÇUBUĞU (Sayfa bitmeden rahat okunması için) */}
+          {/* 3. BÖLÜM: OKUMA GÜVENCESİ & İLERLEME ÇUBUĞU */}
           <div className="mt-10 flex flex-col items-center gap-3 sm:mt-12">
             <div className="flex items-center gap-2 font-mono text-xs text-neutral-400">
-              {isFullyWritten ? (
+              {exitProgress > 0 ? (
+                <span className="flex items-center gap-1.5 text-neutral-400">
+                  <ChevronDown className="h-4 w-4 animate-bounce text-[#FFC300]" />
+                  <span>Aşağı kaydırılıyor...</span>
+                </span>
+              ) : isFullyWritten ? (
                 <span className="flex items-center gap-1.5 font-bold text-[#FFC300]">
                   <CheckCircle2 className="h-4 w-4 text-[#FFC300]" />
-                  <span>Manifesto tamamlandı • Rahatça okuyup aşağı kaydırabilirsiniz ↓</span>
+                  <span>Manifesto tamamlandı • Aşağı kaydırarak devam edin ↓</span>
                 </span>
               ) : (
                 <span className="flex items-center gap-1.5 text-neutral-400">
                   <span className="inline-block h-2 w-2 animate-ping rounded-full bg-[#FFC300]" />
-                  <span>Aşağı kaydırarak manifestoyu yazdırın...</span>
+                  <span>Aşağı kaydırarak okumaya devam edin...</span>
                 </span>
               )}
             </div>

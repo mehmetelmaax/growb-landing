@@ -248,7 +248,7 @@ export const TESTIMONIALS_DATA: TestimonialItem[] = [
     id: "test-1",
     quote:
       "GrowB ile site kurulduktan 48 saat sonra Google Ads'i başlattık; ilk hafta 14 şehirler arası nakliyat işi aldık. Verdikleri garanti sözde değil, sözleşmede.",
-    author: "Mehmet Demir",
+    author: "Ahmet Yılmaz",
     role: "Şirket Sahibi",
     company: "Evim Güvende Lojistik",
     avatar: "https://picsum.photos/seed/user1/120/120",
@@ -333,13 +333,6 @@ export const FAQ_DATA: FaqItem[] = [
       "Sitenizdeki teklif formu veya arama butonu tetiklendiği anda, sistem özel webhook motorumuz üzerinden 10 saniye içinde kurucunun ve satış ekibinizin Telegram / WhatsApp hattına müşterinin adı, telefonu ve seçtiği hizmet bilgisiyle anlık bildirim atar.",
   },
   {
-    id: "faq-6",
-    question: "Resmi şirket misiniz, sözleşme yapıyor muyuz?",
-    // TODO_CONTENT: [Garanti kapsamı iş sahibi kararıyla netleştirilecek - 've garantili' kaldırıldı]
-    answer:
-      "Evet. GrowB Dijital; Türkiye geneli hizmet veren, resmi sözleşmeli çalışan profesyonel bir büyüme ajansıdır. Her proje başlamadan önce yazılı maddelerle resmi sözleşmeye bağlanır ve %50 test onayından sonra teslim edilir.",
-  },
-  {
     id: "faq-7",
     question: "Aylık yönetim neleri kapsıyor, her ay ödeme yapmak zorunda mıyım?",
     answer:
@@ -348,7 +341,7 @@ export const FAQ_DATA: FaqItem[] = [
   {
     id: "faq-8",
     question: "İş bittikten sonra bir sorun çıkarsa muhatap bulabilecek miyim?",
-    answer: `Kesinlikle evet. Aracı sekreter veya çağrı merkezi yoktur. Kurucumuz ${SITE_CONFIG.founder}'in doğrudan cep telefonu (${SITE_CONFIG.phone}) tüm müşterilerimize açıktır ve 1 yıl boyunca kesintisiz yazılım desteği sunulmaktadır.`,
+    answer: `Kesinlikle evet. Aracı sekreter veya çağrı merkezi yoktur. Kurucularımız Mehmet Elma (${SITE_CONFIG.phone}) ve Bilge Taşyürek'in (${SITE_CONFIG.bilgePhone}) doğrudan cep telefonları tüm müşterilerimize açıktır ve 1 yıl boyunca kesintisiz yazılım desteği sunulmaktadır.`,
   },
 ];
 

@@ -43,7 +43,7 @@ export const FinalCtaInputFields: React.FC<FinalCtaInputFieldsProps> = ({
             onFocus={() => onFieldFocus("name")}
             onBlur={() => onFieldBlur("name")}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Örn: Mehmet Demir"
+            placeholder="Örn: Mehmet Elma"
             className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-neutral-500 focus:border-[#FFC300] focus:outline-none"
           />
         </div>

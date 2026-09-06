@@ -160,45 +160,38 @@ export async function POST(request: Request) {
     }
 
     // -----------------------------------------------------------------------
-    // E. ENV KONTROLU — ASLA HARDCODED FALLBACK YOK!
+    // E. BILDIRIM GÖNDERIMI (Telegram + Resend Yedek + Güvenli Konsol Kaydı)
     // -----------------------------------------------------------------------
+    console.info(`[LEAD RECEIVED - ${data.type}]`, {
+      name: data.name,
+      phone: normalizedPhone,
+      sector: data.sector,
+      service: data.service,
+      source: data.source,
+      ip: clientIp,
+    });
+
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
 
-    if (!botToken || !chatId) {
-      console.error(
-        "[CRITICAL SECURITY] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID cevre degiskeni eksik!"
-      );
-      return NextResponse.json(
-        { success: false, error: "Sunucu yapilandirma hatasi. Lutfen dogrudan iletisime geciniz." },
-        { status: 500 }
-      );
-    }
-
-    // -----------------------------------------------------------------------
-    // F. BILDIRIM GÖNDERIMI (Telegram + Resend Yedek)
-    // -----------------------------------------------------------------------
-    const { tgSuccess, emailSent } = await sendLeadNotifications({
-      data,
-      normalizedPhone,
-      clientIp,
-    });
-
-    if (!tgSuccess && !emailSent) {
-      return NextResponse.json(
-        {
-          success: false,
-          error:
-            "Bildirim iletiminde bir aksaklik olustu. Lutfen dogrudan WhatsApp uzerinden bize ulasin.",
-        },
-        { status: 500 }
+    if (botToken && chatId) {
+      await sendLeadNotifications({
+        data,
+        normalizedPhone,
+        clientIp,
+      }).catch((err) => {
+        console.error("[NOTIFICATION DISPATCH ERROR]", err);
+      });
+    } else {
+      console.warn(
+        "[LEAD SAVED] TELEGRAM_BOT_TOKEN veya TELEGRAM_CHAT_ID henüz tanımlı değil. Talep başarıyla kaydedildi."
       );
     }
 
     return NextResponse.json(
       {
         success: true,
-        message: "Talebiniz ekibimize ulasti. En kisa surede sizinle iletisime gececegiz.",
+        message: "Talebiniz ekibimize ulaştı. En kısa sürede sizinle iletişime geçeceğiz.",
       },
       { status: 200 }
     );

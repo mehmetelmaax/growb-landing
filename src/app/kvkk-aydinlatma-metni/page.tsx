@@ -60,9 +60,9 @@ export default function KvkkAydinlatmaPage() {
           </h2>
           <p>
             6698 sayılı Kişisel Verilerin Korunması Kanunu (&quot;KVKK&quot;) uyarınca kişisel
-            verileriniz; veri sorumlusu olarak <strong>GrowB Dijital</strong> (Nevşehir Vergi
-            Dairesi No: 381 049 2910, Kapadokya / Nevşehir) tarafından aşağıda açıklanan kapsamda
-            hukuka ve dürüstlük kurallarına uygun olarak işlenmektedir.
+            verileriniz; veri sorumlusu olarak <strong>GrowB Dijital</strong> (Kapadokya / Nevşehir)
+            tarafından aşağıda açıklanan kapsamda hukuka ve dürüstlük kurallarına uygun olarak
+            işlenmektedir.
           </p>
         </div>
 

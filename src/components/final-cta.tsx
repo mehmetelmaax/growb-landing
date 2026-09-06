@@ -91,6 +91,8 @@ export const FinalCta: React.FC = () => {
     <section id="iletisim" className="relative overflow-hidden bg-[#0A0A0A] py-12 sm:py-16">
       <div id="randevu-al" className="pointer-events-none absolute -top-24 left-0" />
       <div id="randevu" className="pointer-events-none absolute -top-24 left-0" />
+      <div id="gorusme-planla" className="pointer-events-none absolute -top-24 left-0" />
+      <div id="gorusme" className="pointer-events-none absolute -top-24 left-0" />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute bottom-0 left-1/2 h-[450px] w-[700px] -translate-x-1/2 rounded-full bg-[#FFC300]/[0.06] blur-[160px]" />
       </div>
@@ -183,6 +185,12 @@ export const FinalCta: React.FC = () => {
                       veriyorum. *
                     </label>
                   </div>
+
+                  {phone.trim().length > 3 && !kvkkConsent && (
+                    <p className="rounded-xl border border-[#FFC300]/30 bg-[#FFC300]/10 px-4 py-2.5 text-center font-mono text-xs text-[#FFC300]">
+                      ⚡ Görüşme planlamak için lütfen yukarıdaki KVKK onay kutusunu işaretleyiniz.
+                    </p>
+                  )}
 
                   <button
                     type="submit"

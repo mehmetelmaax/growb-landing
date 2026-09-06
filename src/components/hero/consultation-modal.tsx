@@ -237,6 +237,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
                 </label>
               </div>
 
+              {formData.phone.trim().length > 3 && !kvkkConsent && (
+                <p className="rounded-lg border border-[#FFC300]/20 bg-[#FFC300]/5 px-3 py-2 text-center font-mono text-xs text-[#FFC300]">
+                  ⚡ Lütfen yukarıdaki KVKK onay kutusunu işaretleyiniz.
+                </p>
+              )}
+
               <button
                 type="submit"
                 disabled={isSubmittingLead || !kvkkConsent}
