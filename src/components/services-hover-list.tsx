@@ -46,13 +46,14 @@ export const ServicesHoverList: React.FC = () => {
 
   const { skipAllServices, unlockPage } = useServicesWheelLock({
     totalServices,
+    currentIndex,
     onNext: handleNext,
     onPrev: handlePrev,
     sectionRef,
   });
 
   useEffect(() => {
-    if (currentIndex === totalServices - 1) {
+    if (currentIndex >= totalServices - 1) {
       unlockPage();
     }
   }, [currentIndex, totalServices, unlockPage]);

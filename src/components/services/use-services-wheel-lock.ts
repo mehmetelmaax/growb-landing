@@ -17,6 +17,7 @@ import { useEffect, useRef, useCallback } from "react";
 
 interface UseServicesWheelLockProps {
   totalServices: number;
+  currentIndex: number;
   onNext: () => void;
   onPrev: () => void;
   sectionRef: React.RefObject<HTMLElement>;
@@ -24,6 +25,7 @@ interface UseServicesWheelLockProps {
 
 export function useServicesWheelLock({
   totalServices,
+  currentIndex,
   onNext,
   onPrev,
   sectionRef,
@@ -31,6 +33,7 @@ export function useServicesWheelLock({
   const isLockedRef = useRef(false);
   const lastStepTimeRef = useRef(0);
   const isCompletedServicesRef = useRef(false);
+  const currentIndexRef = useRef(currentIndex);
 
   const unlockPage = useCallback(() => {
     if (typeof document !== "undefined") {
@@ -47,6 +50,15 @@ export function useServicesWheelLock({
     }
     isLockedRef.current = true;
   }, []);
+
+  // Son karta gelindiğinde kilit bayrağını ve sayfa overflow'unu otomatik temizle
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+    if (currentIndex >= totalServices - 1) {
+      isCompletedServicesRef.current = true;
+      unlockPage();
+    }
+  }, [currentIndex, totalServices, unlockPage]);
 
   const skipAllServices = useCallback(() => {
     isCompletedServicesRef.current = true;
@@ -80,7 +92,10 @@ export function useServicesWheelLock({
     }
 
     const handleScrollCheck = () => {
-      if (isCompletedServicesRef.current) return;
+      // Hizmetler tamamlandıysa veya son karttaysak sayfayı asla kilitleme
+      if (isCompletedServicesRef.current || currentIndexRef.current >= totalServices - 1) {
+        return;
+      }
       const rect = sectionEl.getBoundingClientRect();
       if (rect.top <= 60 && rect.bottom >= window.innerHeight * 0.4) {
         if (!isLockedRef.current) {
@@ -94,7 +109,21 @@ export function useServicesWheelLock({
 
     // Masaüstü fare tekerleği adımlaması
     const handleWheel = (e: WheelEvent) => {
-      if (isCompletedServicesRef.current) return;
+      const current = currentIndexRef.current;
+      const isAtEnd = current >= totalServices - 1;
+
+      // 1. Hizmetler tamamlandıysa veya son karttayken aşağı kaydırılıyorsa kilidi tamamen aç ve engelleme
+      if (isCompletedServicesRef.current || (isAtEnd && e.deltaY > 0)) {
+        isCompletedServicesRef.current = true;
+        unlockPage();
+        return; // Doğal sayfa kaydırması devam eder
+      }
+
+      // 2. İlk karttayken yukarı kaydırma serbest olmalı
+      if (current === 0 && e.deltaY < 0) {
+        unlockPage();
+        return;
+      }
 
       const rect = sectionEl.getBoundingClientRect();
       const isInSection = rect.top <= 80 && rect.bottom >= window.innerHeight * 0.4;
@@ -104,7 +133,7 @@ export function useServicesWheelLock({
       e.stopPropagation();
 
       const now = Date.now();
-      if (now - lastStepTimeRef.current < 260) return;
+      if (now - lastStepTimeRef.current < 240) return;
 
       if (e.deltaY > 0) {
         lastStepTimeRef.current = now;
