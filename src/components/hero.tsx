@@ -154,7 +154,10 @@ export const Hero: React.FC = () => {
             </a>
           </div>
 
-          <h1 className="mb-5 font-sans text-3xl font-black leading-[1.08] tracking-[-0.035em] text-white sm:mb-6 sm:text-5xl lg:text-[4rem]">
+          <h1
+            data-testid="hero-headline"
+            className="mb-5 font-sans text-3xl font-black leading-[1.08] tracking-[-0.035em] text-white sm:mb-6 sm:text-5xl lg:text-[4rem]"
+          >
             {copy.headline.split(" ").slice(0, 2).join(" ")}{" "}
             <span className="text-[#FFC300] underline decoration-[#FFC300]/40 decoration-4">
               {copy.headline.split(" ").slice(2).join(" ")}
@@ -168,6 +171,7 @@ export const Hero: React.FC = () => {
           <div className="mb-8 flex w-full flex-wrap items-center gap-3.5 sm:mb-10 sm:w-auto sm:gap-5">
             <button
               type="button"
+              data-testid="hero-cta-primary"
               onClick={() => setIsAnalysisModalOpen(true)}
               className="group inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] px-6 py-3.5 text-sm font-black tracking-tight text-[#0A0A0A] shadow-[0_10px_35px_rgba(255,195,0,0.35)] transition-all hover:scale-105 hover:bg-[#FFA000] active:scale-95 sm:px-7 sm:py-4 sm:text-base"
             >

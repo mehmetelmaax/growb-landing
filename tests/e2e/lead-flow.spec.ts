@@ -1,17 +1,59 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("GrowB Landing — E2E Test Suite", () => {
+  test.beforeEach(async ({ context, baseURL }) => {
+    // Deterministik test koşusu için varsayılan olarak "control" varyant çerezini sabitle
+    await context.addCookies([
+      {
+        name: "growb_ab_hero_headline_v1",
+        value: "control",
+        url: baseURL || "http://localhost:3001",
+      },
+    ]);
+  });
+
   test("Ana sayfa sorunsuz yüklenmeli ve Hero bölümü görüntülenmeli", async ({ page }) => {
     await page.goto("/");
 
     // Başlık ve Temel Marka Öğeleri
     await expect(page).toHaveTitle(/GrowB Dijital/);
-    const heroHeading = page.locator("h1");
-    await expect(heroHeading).toContainText("Markanızı dijitalde");
+    const heroHeading = page.getByTestId("hero-headline");
+    await expect(heroHeading).toBeVisible();
+    await expect(heroHeading).not.toBeEmpty();
 
-    // Hero CTA Butonu Görünür Olmalı
-    const ctaButton = page.locator("button", { hasText: "Ücretsiz Analiz İsteyin" }).first();
+    // Hero CTA Butonu Görünür ve Aktif Olmalı
+    const ctaButton = page.getByTestId("hero-cta-primary");
     await expect(ctaButton).toBeVisible();
+    await expect(ctaButton).toBeEnabled();
+  });
+
+  test("A/B Testi: Control ve Conversion varyant metinleri çerez bazlı deterministik yüklenmeli", async ({
+    page,
+    context,
+    baseURL,
+  }) => {
+    // 1. Control varyantı metin doğrulaması
+    await page.goto("/");
+    const heroHeading = page.getByTestId("hero-headline");
+    const ctaButton = page.getByTestId("hero-cta-primary");
+
+    await expect(heroHeading).toContainText("DİJİTALDEKİ TÜM İŞLERİNİZİ YÖNETEN BÜYÜME ORTAĞINIZ");
+    await expect(ctaButton).toContainText("Ücretsiz Büyüme Analizi Al");
+
+    // 2. Conversion varyantına açıkça geçiş
+    await context.addCookies([
+      {
+        name: "growb_ab_hero_headline_v1",
+        value: "conversion",
+        url: baseURL || "http://localhost:3001",
+      },
+    ]);
+    await page.goto("/");
+
+    await expect(heroHeading).toContainText(
+      "CİRONUZU VE MÜŞTERİLERİNİZİ KATLAYAN DİJİTAL BÜYÜME EKİBİ"
+    );
+    await expect(ctaButton).toContainText("Hemen Teklif & Yol Haritası Al");
   });
 
   test("İletişim lead formunda KVKK onayı olmadan form gönderimi engellenmeli", async ({
@@ -20,12 +62,17 @@ test.describe("GrowB Landing — E2E Test Suite", () => {
     await page.goto("/");
     await page.waitForLoadState("domcontentloaded");
 
-    // Hero kovan kilidini açarak sayfa akışını serbest bırak
-    const unlockBtn = page.locator("button", { hasText: "Kovanı Doldur" });
-    if (await unlockBtn.isVisible()) {
-      await unlockBtn.dispatchEvent("click");
-      await page.waitForTimeout(300);
+    // Hero kovan kilidini açarak sayfa akışını serbest bırak (WCAG 2.1.1 klavye / buton)
+    const unlockBtn = page.getByTestId("hero-unlock-hive");
+    if (await unlockBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await unlockBtn.click();
+    } else {
+      await page.keyboard.press("PageDown");
     }
+
+    // Hizmetler tekerlek kilidini klavye navigasyonuyla serbest bırak
+    await page.keyboard.press("PageDown");
+    await page.waitForTimeout(100);
 
     const section = page.locator("#iletisim");
     await section.scrollIntoViewIfNeeded();

@@ -115,13 +115,14 @@ export function useServicesWheelLock({
       }
     };
 
-    // WCAG 2: Klavye navigasyonunda tekerlek kilidini derhal serbest bırak
+    // WCAG 2: Klavye navigasyonunda tekerlek kilidini derhal ve kalıcı olarak serbest bırak
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
         ["Tab", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", "Space"].includes(
           e.key
         )
       ) {
+        isCompletedServicesRef.current = true;
         unlockPage();
       }
     };

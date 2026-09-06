@@ -47,6 +47,7 @@ export const HeroHoneycomb: React.FC<HeroHoneycombProps> = ({
         {!isCompleted && completeInstantly && (
           <button
             type="button"
+            data-testid="hero-unlock-hive"
             onClick={completeInstantly}
             className="flex cursor-pointer items-center gap-1 text-[11px] font-bold text-[#FFC300] transition-colors hover:underline"
             title="Kovanı anında tamamla ve kilidi aç"
