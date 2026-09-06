@@ -52,7 +52,11 @@ export default function KirsehirLandingPage() {
       />
       <Navbar />
 
-      <main className="relative mx-auto max-w-6xl px-4 pb-24 pt-32 sm:px-6 lg:px-12">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="relative mx-auto max-w-6xl px-4 pb-24 pt-32 sm:px-6 lg:px-12"
+      >
         {/* Back Link */}
         <div className="mb-8">
           <Link

@@ -112,6 +112,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] antialiased selection:bg-[#FFC300] selection:text-[#0A0A0A]`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[99999] focus:rounded-xl focus:bg-[#FFC300] focus:px-5 focus:py-2.5 focus:font-sans focus:text-sm focus:font-black focus:text-[#0A0A0A] focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-black"
+        >
+          Ana İçeriğe Atla
+        </a>
         {children}
         <CookieBanner />
         <FloatingContactPill />

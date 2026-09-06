@@ -22,7 +22,14 @@ async function capture() {
   await desktopPage.screenshot({ path: desktopPath, fullPage: false });
   console.log('Saved desktop screenshot:', desktopPath);
 
-  // 2. Mobile Screenshot (390x844 - iPhone 14)
+  // 2. Skip link focus capture
+  await desktopPage.keyboard.press('Tab');
+  await desktopPage.waitForTimeout(300);
+  const skipLinkPath = path.join(outDir, 'desktop-skip-link.png');
+  await desktopPage.screenshot({ path: skipLinkPath, fullPage: false });
+  console.log('Saved skip link screenshot:', skipLinkPath);
+
+  // 3. Mobile Screenshot (390x844 - iPhone 14)
   const mobileContext = await browser.newContext({
     viewport: { width: 390, height: 844 },
     isMobile: true,
@@ -35,7 +42,7 @@ async function capture() {
   await mobilePage.screenshot({ path: mobilePath, fullPage: false });
   console.log('Saved mobile screenshot:', mobilePath);
 
-  // 3. Hizmetler Desktop Screenshot
+  // 4. Hizmetler Desktop Screenshot
   const servicesPage = await desktopContext.newPage();
   await servicesPage.goto('http://127.0.0.1:3001/hizmetler', { waitUntil: 'networkidle' });
   await servicesPage.waitForTimeout(1000);

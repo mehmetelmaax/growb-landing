@@ -59,7 +59,11 @@ export default function ServicesIndexPage() {
         <Navbar />
       </div>
 
-      <main className="relative z-10 mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 sm:pt-32 lg:px-12">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="relative z-10 mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 sm:pt-32 lg:px-12"
+      >
         {/* Geri Dönüş Linki */}
         <div className="mb-8">
           <Link

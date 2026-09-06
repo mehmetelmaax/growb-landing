@@ -55,7 +55,11 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="relative min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans"
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

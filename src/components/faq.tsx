@@ -37,10 +37,12 @@ export const Faq: React.FC = () => {
                 className="overflow-hidden rounded-2xl border border-white/10 bg-surface transition-colors hover:border-accent/40"
               >
                 <button
+                  id={`faq-btn-${item.id}`}
                   type="button"
                   onClick={() => toggleFaq(item.id)}
-                  className="flex w-full select-none items-center justify-between p-5 text-left text-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:p-6"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${item.id}`}
+                  className="flex w-full select-none items-center justify-between p-5 text-left text-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:p-6"
                 >
                   <span className="pr-4 text-base font-bold tracking-tight sm:text-lg">
                     {item.question}
@@ -57,6 +59,9 @@ export const Faq: React.FC = () => {
                 </button>
 
                 <div
+                  id={`faq-answer-${item.id}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${item.id}`}
                   className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
                     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}

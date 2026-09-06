@@ -94,7 +94,11 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       />
       <Navbar />
 
-      <main className="mx-auto max-w-5xl px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="mx-auto max-w-5xl px-4 pb-24 pt-32 sm:px-6 lg:px-8"
+      >
         <div className="mb-8">
           <Link
             href="/#hizmetler"

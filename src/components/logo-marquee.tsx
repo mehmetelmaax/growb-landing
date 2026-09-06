@@ -23,14 +23,11 @@ export const LogoMarquee: React.FC = () => {
       <div className="flex overflow-hidden whitespace-nowrap">
         <div className="animate-marquee flex shrink-0 items-center gap-12 pr-12 hover:[animation-play-state:paused] sm:gap-16">
           {MARQUEE_CLIENTS.map((client, idx) => (
-            <div
-              key={idx}
-              className="flex shrink-0 items-center gap-3 opacity-60 transition-opacity hover:opacity-100"
-            >
-              <div className="relative h-10 w-28 grayscale transition-all hover:grayscale-0">
+            <div key={idx} className="flex shrink-0 items-center gap-3 transition-opacity">
+              <div className="relative h-10 w-28 opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0">
                 <Image src={client.logo} alt={client.name} fill className="object-contain" />
               </div>
-              <span className="font-mono text-xs text-neutral-400">• {client.city}</span>
+              <span className="font-mono text-xs text-neutral-300">• {client.city}</span>
             </div>
           ))}
         </div>
@@ -39,14 +36,11 @@ export const LogoMarquee: React.FC = () => {
           aria-hidden="true"
         >
           {MARQUEE_CLIENTS.map((client, idx) => (
-            <div
-              key={idx}
-              className="flex shrink-0 items-center gap-3 opacity-60 transition-opacity hover:opacity-100"
-            >
-              <div className="relative h-10 w-28 grayscale transition-all hover:grayscale-0">
+            <div key={idx} className="flex shrink-0 items-center gap-3 transition-opacity">
+              <div className="relative h-10 w-28 opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0">
                 <Image src={client.logo} alt={client.name} fill className="object-contain" />
               </div>
-              <span className="font-mono text-xs text-neutral-400">• {client.city}</span>
+              <span className="font-mono text-xs text-neutral-300">• {client.city}</span>
             </div>
           ))}
         </div>

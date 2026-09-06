@@ -25,11 +25,8 @@ export const Hero: React.FC = () => {
 
   useEffect(() => {
     revealedCountRef.current = revealedCount;
-  }, [revealedCount]);
-
-  useEffect(() => {
     isCompletedRef.current = isCompleted;
-  }, [isCompleted]);
+  }, [revealedCount, isCompleted]);
 
   // HERO KİLİT MEKANİZMASI: 13 Polen Dolana Kadar Sayfa Kilitlidir
   useEffect(() => {
@@ -56,11 +53,8 @@ export const Hero: React.FC = () => {
       document.body.style.height = "";
     };
 
-    if (!isCompleted) {
-      lock();
-    } else {
-      unlock();
-    }
+    if (!isCompleted) lock();
+    else unlock();
 
     const handleWheel = (e: WheelEvent) => {
       if (isCompletedRef.current) return;

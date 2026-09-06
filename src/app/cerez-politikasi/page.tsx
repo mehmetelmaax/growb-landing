@@ -12,86 +12,109 @@ export const metadata: Metadata = {
 
 export default function CerezPolitikasiPage() {
   return (
-    <main className="min-h-screen bg-[#0A0A0A] text-white selection:bg-[#FFC300] selection:text-black font-sans">
-      <header className="border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen bg-[#0A0A0A] font-sans text-white selection:bg-[#FFC300] selection:text-black"
+    >
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-[#FFC300] transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-[#FFC300]"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="h-4 w-4" />
             <span>Ana Sayfaya Dön</span>
           </Link>
-          <span className="text-xs font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300">
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-neutral-300">
             ÇEREZ YÖNETİMİ
           </span>
         </div>
       </header>
 
-      <section className="py-12 sm:py-16 border-b border-white/10 bg-gradient-to-b from-[#141414] to-[#0A0A0A]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#FFC300] uppercase mb-4 tracking-wider">
-            <Cookie className="w-4 h-4" />
+      <section className="border-b border-white/10 bg-gradient-to-b from-[#141414] to-[#0A0A0A] py-12 sm:py-16">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="mb-4 inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300]">
+            <Cookie className="h-4 w-4" />
             Şeffaf Çerez Kullanım Kılavuzu
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight mb-4">
+          <h1 className="mb-4 text-3xl font-black tracking-tight sm:text-5xl">
             Çerez (Cookie) Politikası
           </h1>
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
-            GrowB Dijital olarak sitemizin kusursuz çalışması ve ziyaretçi deneyiminizin en üst düzeye çıkarılması için çerezlerden faydalanıyoruz.
+          <p className="text-sm leading-relaxed text-neutral-400 sm:text-base">
+            GrowB Dijital olarak sitemizin kusursuz çalışması ve ziyaretçi deneyiminizin en üst
+            düzeye çıkarılması için çerezlerden faydalanıyoruz.
           </p>
         </div>
       </section>
 
-      <section className="py-12 max-w-4xl mx-auto px-4 sm:px-6 space-y-10 text-neutral-300 text-sm sm:text-base leading-relaxed">
+      <section className="mx-auto max-w-4xl space-y-10 px-4 py-12 text-sm leading-relaxed text-neutral-300 sm:px-6 sm:text-base">
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-white">1. Çerez Nedir?</h2>
           <p>
-            Çerezler, bir web sitesini ziyaret ettiğinizde tarayıcınız aracılığıyla cihazınıza kaydedilen küçük metin dosyalarıdır. Çerezler web sitesinin düzgün çalışmasını, tercihlerin hatırlanmasını ve sitenin nasıl kullanıldığının anonim olarak analiz edilmesini sağlar.
+            Çerezler, bir web sitesini ziyaret ettiğinizde tarayıcınız aracılığıyla cihazınıza
+            kaydedilen küçük metin dosyalarıdır. Çerezler web sitesinin düzgün çalışmasını,
+            tercihlerin hatırlanmasını ve sitenin nasıl kullanıldığının anonim olarak analiz
+            edilmesini sağlar.
           </p>
         </div>
 
         <div className="space-y-6">
           <h2 className="text-xl font-bold text-white">2. Sitemizde Kullanılan Çerez Türleri</h2>
           <div className="space-y-4">
-            <div className="p-5 rounded-2xl bg-[#141414] border border-white/10 space-y-2">
+            <div className="space-y-2 rounded-2xl border border-white/10 bg-[#141414] p-5">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-white flex items-center gap-2">
-                  <Check className="w-4 h-4 text-[#FFC300]" />
+                <h3 className="flex items-center gap-2 font-bold text-white">
+                  <Check className="h-4 w-4 text-[#FFC300]" />
                   Zorunlu ve Güvenlik Çerezleri
                 </h3>
-                <span className="text-xs font-mono bg-white/10 px-2 py-0.5 rounded text-neutral-300">Her Zaman Aktif</span>
+                <span className="rounded bg-white/10 px-2 py-0.5 font-mono text-xs text-neutral-300">
+                  Her Zaman Aktif
+                </span>
               </div>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Web sitemizin temel fonksiyonlarını yerine getirebilmesi, form gönderimlerindeki rate limiting ve CSRF güvenlik denetimlerinin çalışabilmesi için zorunludur. Bu çerezler kapatılamaz.
+              <p className="text-xs leading-relaxed text-neutral-400">
+                Web sitemizin temel fonksiyonlarını yerine getirebilmesi, form gönderimlerindeki
+                rate limiting ve CSRF güvenlik denetimlerinin çalışabilmesi için zorunludur. Bu
+                çerezler kapatılamaz.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#141414] border border-white/10 space-y-2">
+            <div className="space-y-2 rounded-2xl border border-white/10 bg-[#141414] p-5">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-white flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#FFC300]" />
+                <h3 className="flex items-center gap-2 font-bold text-white">
+                  <Sliders className="h-4 w-4 text-[#FFC300]" />
                   Performans ve Analitik Çerezleri
                 </h3>
-                <span className="text-xs font-mono bg-[#FFC300]/20 text-[#FFC300] px-2 py-0.5 rounded border border-[#FFC300]/30">
+                <span className="rounded border border-[#FFC300]/30 bg-[#FFC300]/20 px-2 py-0.5 font-mono text-xs text-[#FFC300]">
                   Rızaya Bağlı
                 </span>
               </div>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Hangi sayfaların daha çok ziyaret edildiğini, ziyaret sürelerini ve tıklama haritalarını anonim olarak ölçümleyerek web sitemizin hızını ve içeriğini geliştirmemize yardımcı olur. Yalnızca çerez bildiriminde onay vermeniz halinde yüklenir.
+              <p className="text-xs leading-relaxed text-neutral-400">
+                Hangi sayfaların daha çok ziyaret edildiğini, ziyaret sürelerini ve tıklama
+                haritalarını anonim olarak ölçümleyerek web sitemizin hızını ve içeriğini
+                geliştirmemize yardımcı olur. Yalnızca çerez bildiriminde onay vermeniz halinde
+                yüklenir.
               </p>
             </div>
           </div>
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-white">3. Çerez Tercihlerini Nasıl Değiştirebilirsiniz?</h2>
+          <h2 className="text-xl font-bold text-white">
+            3. Çerez Tercihlerini Nasıl Değiştirebilirsiniz?
+          </h2>
           <p>
-            Web sitemizi ilk ziyaretinizde karşınıza çıkan çerez bildirim çubuğundan tercihlerinizi belirleyebilirsiniz. Ayrıca kullandığınız web tarayıcısının ayarlarından çerezleri dilediğiniz zaman silebilir veya engelleyebilirsiniz:
+            Web sitemizi ilk ziyaretinizde karşınıza çıkan çerez bildirim çubuğundan tercihlerinizi
+            belirleyebilirsiniz. Ayrıca kullandığınız web tarayıcısının ayarlarından çerezleri
+            dilediğiniz zaman silebilir veya engelleyebilirsiniz:
           </p>
-          <ul className="list-disc list-inside text-xs text-neutral-400 space-y-1">
-            <li>Google Chrome: Ayarlar &gt; Gizlilik ve Güvenlik &gt; Çerezler ve Diğer Site Verileri</li>
-            <li>Mozilla Firefox: Ayarlar &gt; Gizlilik ve Güvenlik &gt; Çerezler ve Site Verileri</li>
+          <ul className="list-inside list-disc space-y-1 text-xs text-neutral-400">
+            <li>
+              Google Chrome: Ayarlar &gt; Gizlilik ve Güvenlik &gt; Çerezler ve Diğer Site Verileri
+            </li>
+            <li>
+              Mozilla Firefox: Ayarlar &gt; Gizlilik ve Güvenlik &gt; Çerezler ve Site Verileri
+            </li>
             <li>Apple Safari: Tercihler &gt; Gizlilik &gt; Tüm Çerezleri Engelle</li>
           </ul>
         </div>

@@ -3,33 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { FINAL_CTA_DATA, SITE_CONFIG } from "@/data/content";
-import { Send, CheckCircle2, ShieldCheck, Sparkles, PhoneCall, Check } from "lucide-react";
-
-// =========================================================================
-// 1. KULLANICI TALEBİ: Formda kalem kalem detay yazma, sadece 3-4 net seçenek koy
-// =========================================================================
-const SERVICE_OPTIONS = [
-  {
-    id: "web-tasarim",
-    title: "🌐 Satış Odaklı Web Sitesi & Yazılım",
-    desc: "1.1 sn ultra hızlı açılış, mobil öncelikli arayüz ve e-ticaret altyapısı",
-  },
-  {
-    id: "reklam-harita",
-    title: "🚀 Google & Meta Reklamları + Harita SEO",
-    desc: "Doğrudan telefon çaldıran satış reklamları ve Google Haritalar'da 1. sıra",
-  },
-  {
-    id: "video-sosyal",
-    title: "🎬 4K Dikey Reels Video & Sosyal Medya",
-    desc: "Algoritmayı fetheden dikey videolar, kurumsal kimlik ve marka prestiji",
-  },
-  {
-    id: "crm-danismanlik",
-    title: "📈 Büyüme Danışmanlığı & WhatsApp CRM",
-    desc: "7/24 müşteri kaçırmayan satış hattı ve kurucuyla birebir aylık ciro ortaklığı",
-  },
-];
+import { Send, CheckCircle2, ShieldCheck, Sparkles, PhoneCall } from "lucide-react";
+import { FinalCtaServiceSelector } from "./final-cta/final-cta-service-selector";
 
 export const FinalCta: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -43,6 +18,7 @@ export const FinalCta: React.FC = () => {
   const [notes, setNotes] = useState("");
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const toggleService = (title: string) => {
     if (selectedServices.includes(title)) {
@@ -58,6 +34,7 @@ export const FinalCta: React.FC = () => {
     e.preventDefault();
     if (!phone || !kvkkConsent) return;
     setIsSubmitting(true);
+    setErrorMessage(null);
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
@@ -77,11 +54,11 @@ export const FinalCta: React.FC = () => {
       if (res.ok && data.success) {
         setFormSubmitted(true);
       } else {
-        alert(data.error || "Form gönderilemedi. Lütfen bilgilerinizi kontrol ediniz.");
+        setErrorMessage(data.error || "Form gönderilemedi. Lütfen bilgilerinizi kontrol ediniz.");
       }
     } catch (err) {
       console.error("Lead submission error:", err);
-      alert("Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.");
+      setErrorMessage("Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.");
     } finally {
       setIsSubmitting(false);
     }
@@ -92,7 +69,6 @@ export const FinalCta: React.FC = () => {
       <div id="randevu-al" className="pointer-events-none absolute -top-24 left-0" />
       <div id="randevu" className="pointer-events-none absolute -top-24 left-0" />
 
-      {/* Arka Plan Glow */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute bottom-0 left-1/2 h-[450px] w-[700px] -translate-x-1/2 rounded-full bg-[#FFC300]/[0.06] blur-[160px]" />
       </div>
@@ -100,27 +76,26 @@ export const FinalCta: React.FC = () => {
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6">
         <div className="relative overflow-hidden rounded-3xl border border-[#FFC300]/30 bg-[#121212] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.8)] sm:p-10 md:p-12">
           <div className="relative z-10 flex flex-col items-center text-center">
-            {/* Rozet */}
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FFC300]/30 bg-[#FFC300]/15 px-4 py-1.5 font-mono text-xs font-bold tracking-wider text-[#FFC300]">
               <Sparkles className="h-3.5 w-3.5" />
               <span>{FINAL_CTA_DATA.scarcityBadge}</span>
             </div>
 
-            {/* Başlık */}
             <h2 className="max-w-3xl font-sans text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
               {FINAL_CTA_DATA.title}
             </h2>
 
-            {/* Açıklama */}
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-300 sm:text-base">
               İhtiyacınız olan alanları seçin, kurucumuzla 15 dakikalık büyüme stratejinizi
               başlatalım.
             </p>
 
-            {/* Form Alanı */}
             <div className="mt-8 w-full max-w-2xl sm:mt-10">
               {formSubmitted ? (
-                <div className="rounded-2xl border border-[#FFC300]/40 bg-[#FFC300]/10 p-8 text-center">
+                <div
+                  role="alert"
+                  className="rounded-2xl border border-[#FFC300]/40 bg-[#FFC300]/10 p-8 text-center"
+                >
                   <CheckCircle2 className="mx-auto mb-3 h-12 w-12 text-[#FFC300]" />
                   <h3 className="text-xl font-bold text-white">
                     Talebiniz 10 Saniye İçinde Alındı!
@@ -131,68 +106,42 @@ export const FinalCta: React.FC = () => {
                   </p>
                   <a
                     href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFC300] px-7 py-3 text-sm font-bold text-[#0A0A0A] shadow-lg transition-all hover:scale-105"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFC300] px-7 py-3 text-sm font-bold text-[#0A0A0A] shadow-lg transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <PhoneCall className="h-4 w-4" />
                     <span>Hemen Şimdi Arayın: {SITE_CONFIG.phone}</span>
                   </a>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-left">
-                  {/* SADE VE NET 4 SEÇENEK */}
-                  <div>
-                    <label className="mb-3 block font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300]">
-                      1. İHTİYACINIZ OLAN HİZMET ALANLARINI SEÇİN (ÇOKLU SEÇEBİLİRSİNİZ):
-                    </label>
+                <form
+                  onSubmit={handleSubmit}
+                  aria-busy={isSubmitting}
+                  className="flex flex-col gap-6 text-left"
+                >
+                  <FinalCtaServiceSelector
+                    selectedServices={selectedServices}
+                    onToggleService={toggleService}
+                  />
 
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {SERVICE_OPTIONS.map((opt) => {
-                        const isSelected = selectedServices.includes(opt.title);
-                        return (
-                          <button
-                            type="button"
-                            key={opt.id}
-                            onClick={() => toggleService(opt.title)}
-                            className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 text-left transition-all duration-200 ${
-                              isSelected
-                                ? "border-[#FFC300] bg-[#FFC300]/15 shadow-[0_0_20px_rgba(255,195,0,0.15)]"
-                                : "border-white/10 bg-white/[0.03] text-neutral-300 hover:border-white/20 hover:bg-white/[0.05]"
-                            }`}
-                          >
-                            <div
-                              className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${
-                                isSelected
-                                  ? "border-[#FFC300] bg-[#FFC300] text-black"
-                                  : "border-white/30 bg-white/5"
-                              }`}
-                            >
-                              {isSelected && <Check className="h-3.5 w-3.5 stroke-[3]" />}
-                            </div>
-                            <div className="flex-1">
-                              <span
-                                className={`block text-xs font-bold leading-snug sm:text-sm ${
-                                  isSelected ? "text-[#FFC300]" : "text-white"
-                                }`}
-                              >
-                                {opt.title}
-                              </span>
-                              <span className="mt-1 block font-sans text-[11px] leading-normal text-neutral-400">
-                                {opt.desc}
-                              </span>
-                            </div>
-                          </button>
-                        );
-                      })}
+                  {errorMessage && (
+                    <div
+                      role="alert"
+                      className="rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-300"
+                    >
+                      {errorMessage}
                     </div>
-                  </div>
+                  )}
 
-                  {/* 2. İletişim Bilgileri */}
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400">
+                      <label
+                        htmlFor="final-name"
+                        className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
+                      >
                         Yetkili Adı Soyadı
                       </label>
                       <input
+                        id="final-name"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -202,10 +151,14 @@ export const FinalCta: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="mb-1.5 block font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300]">
+                      <label
+                        htmlFor="final-phone"
+                        className="mb-1.5 block font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300]"
+                      >
                         Telefon Numarası *
                       </label>
                       <input
+                        id="final-phone"
                         type="tel"
                         required
                         value={phone}
@@ -217,10 +170,14 @@ export const FinalCta: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400">
+                    <label
+                      htmlFor="final-sector"
+                      className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
+                    >
                       Sektörünüz / İşletmeniz
                     </label>
                     <input
+                      id="final-sector"
                       type="text"
                       value={sector}
                       onChange={(e) => setSector(e.target.value)}
@@ -230,10 +187,14 @@ export const FinalCta: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400">
+                    <label
+                      htmlFor="final-notes"
+                      className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-neutral-400"
+                    >
                       Eklemek İstediğiniz Not (Opsiyonel)
                     </label>
                     <textarea
+                      id="final-notes"
                       rows={2}
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
@@ -242,7 +203,6 @@ export const FinalCta: React.FC = () => {
                     />
                   </div>
 
-                  {/* KVKK Onay Kutusu */}
                   <div className="flex select-none items-start gap-2.5 text-xs text-neutral-400">
                     <input
                       id="kvkk-consent-final"
@@ -265,11 +225,10 @@ export const FinalCta: React.FC = () => {
                     </label>
                   </div>
 
-                  {/* Gönder Butonu */}
                   <button
                     type="submit"
                     disabled={isSubmitting || !kvkkConsent}
-                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] py-4 text-sm font-extrabold tracking-tight text-[#0A0A0A] shadow-[0_10px_25px_rgba(255,195,0,0.35)] transition-all hover:scale-[1.01] hover:bg-[#FFA000] disabled:opacity-50 sm:text-base"
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#FFC300] py-4 text-sm font-extrabold tracking-tight text-[#0A0A0A] shadow-[0_10px_25px_rgba(255,195,0,0.35)] transition-all hover:scale-[1.01] hover:bg-[#FFA000] focus-visible:ring-2 focus-visible:ring-white disabled:opacity-50 sm:text-base"
                   >
                     {isSubmitting ? (
                       <span>Gönderiliyor...</span>
