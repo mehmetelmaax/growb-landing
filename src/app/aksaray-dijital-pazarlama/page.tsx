@@ -5,18 +5,61 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MapPin, ArrowLeft, ExternalLink } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export const metadata: Metadata = {
-  title: "Aksaray Dijital Pazarlama, Web Tasarım & Harita SEO | GrowB",
+  title: "Aksaray Dijital Pazarlama, Web Tasarım & Harita SEO",
   description:
     "Aksaray sanayi ve nakliyat işletmeleri için yüksek dönüşümlü web tasarım, Google Ads ve yerel SEO. Öz Aksaray Nakliyat canlı referans vakası.",
   alternates: {
     canonical: "/aksaray-dijital-pazarlama",
   },
+  openGraph: {
+    title: "Aksaray Dijital Pazarlama, Web Tasarım & Harita SEO",
+    description:
+      "Aksaray sanayi ve nakliyat işletmeleri için yüksek dönüşümlü web tasarım ve Google Ads.",
+    url: `${siteUrl}/aksaray-dijital-pazarlama`,
+    type: "website",
+    locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Aksaray Dijital Pazarlama - GrowB Dijital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aksaray Dijital Pazarlama, Web Tasarım & Harita SEO",
+    description:
+      "Aksaray sanayi ve nakliyat işletmeleri için yüksek dönüşümlü dijital büyüme sistemleri.",
+    images: [`${siteUrl}/opengraph-image`],
+  },
 };
 
 export default function AksarayLandingPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Aksaray Dijital Pazarlama",
+        item: `${siteUrl}/aksaray-dijital-pazarlama`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
 
       <main

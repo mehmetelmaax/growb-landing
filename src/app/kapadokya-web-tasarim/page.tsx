@@ -5,18 +5,61 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MapPin, ArrowLeft } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export const metadata: Metadata = {
-  title: "Kapadokya Butik Otel Web Tasarım & Turizm Pazarlaması | GrowB",
+  title: "Kapadokya Butik Otel Web Tasarım & Turizm Pazarlaması",
   description:
     "Kapadokya butik otelleri, balon turları ve turizm acenteleri için komisyonsuz doğrudan rezervasyon üreten çok dilli web tasarım ve uluslararası dijital reklam yönetimi.",
   alternates: {
     canonical: "/kapadokya-web-tasarim",
   },
+  openGraph: {
+    title: "Kapadokya Butik Otel Web Tasarım & Turizm Pazarlaması",
+    description:
+      "Kapadokya butik otelleri ve acenteleri için doğrudan rezervasyon üreten web sistemleri.",
+    url: `${siteUrl}/kapadokya-web-tasarim`,
+    type: "website",
+    locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Kapadokya Web Tasarım - GrowB Dijital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kapadokya Butik Otel Web Tasarım & Turizm Pazarlaması",
+    description:
+      "Kapadokya butik otelleri için doğrudan rezervasyon sağlayan web tasarım ve reklam.",
+    images: [`${siteUrl}/opengraph-image`],
+  },
 };
 
 export default function KapadokyaLandingPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Kapadokya Web Tasarım",
+        item: `${siteUrl}/kapadokya-web-tasarim`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
 
       <main

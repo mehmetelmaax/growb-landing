@@ -88,7 +88,7 @@ describe("Penetrasyon & Siber Güvenlik Test Paketi", () => {
     });
   });
 
-  describe("3. Server-Side Request Forgery (SSRF) Savunması (/api/audit)", () => {
+  describe("3. Server-Side Request Forgery (SSRF) Savunması (/api/pagespeed & normalizeUrl)", () => {
     const dangerousSsrfTargets = [
       "http://127.0.0.1:3000",
       "http://127.0.0.1/admin",

@@ -4,7 +4,7 @@ import { ArrowLeft, Cookie, Check, Sliders } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Çerez Politikası | GrowB Dijital",
+  title: "Çerez Politikası",
   description:
     "GrowB Dijital çerez kullanım politikası, zorunlu ve analitik çerez türleri, çerez tercihlerinizi nasıl yöneteceğiniz.",
   robots: { index: true, follow: true },

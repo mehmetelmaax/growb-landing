@@ -5,18 +5,60 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MapPin, ArrowLeft, ExternalLink } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export const metadata: Metadata = {
-  title: "Konya Dijital Pazarlama, Web Tasarım & Harita SEO | GrowB",
+  title: "Konya Dijital Pazarlama, Web Tasarım & Harita SEO",
   description:
     "Konya Selçuklu, Meram ve Karatay işletmeleri için Google yerel SEO, yüksek hızlı web altyapısı ve reklam yönetimi. Konya Lider Nakliyat canlı referans vakası.",
   alternates: {
     canonical: "/konya-dijital-pazarlama",
   },
+  openGraph: {
+    title: "Konya Dijital Pazarlama, Web Tasarım & Harita SEO",
+    description:
+      "Konya Selçuklu, Meram ve Karatay işletmeleri için yerel SEO ve yüksek dönüşümlü web sistemleri.",
+    url: `${siteUrl}/konya-dijital-pazarlama`,
+    type: "website",
+    locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Konya Dijital Pazarlama - GrowB Dijital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Konya Dijital Pazarlama, Web Tasarım & Harita SEO",
+    description: "Konya sanayi ve ticaret firmaları için dijital pazarlama ve yerel SEO.",
+    images: [`${siteUrl}/opengraph-image`],
+  },
 };
 
 export default function KonyaLandingPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Konya Dijital Pazarlama",
+        item: `${siteUrl}/konya-dijital-pazarlama`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
 
       <main

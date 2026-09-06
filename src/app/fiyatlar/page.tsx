@@ -11,27 +11,45 @@ import { Sparkles, ShieldCheck, ArrowLeft, Phone, Percent } from "lucide-react";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
 export const metadata: Metadata = {
-  title: "Fiyatlandırma & Paket Tarifesi | GrowB Dijital",
+  title: "Fiyatlandırma & Paket Tarifesi",
   description:
     "GrowB Dijital şeffaf ve net fiyatlandırma tarifesi. Anahtar teslim kuruluş kovanları, aylık büyüme yönetimi sözleşmeleri ve modüler tekil hizmet paketleri.",
   alternates: {
     canonical: "/fiyatlar",
   },
   openGraph: {
-    title: "Fiyatlandırma & Paket Tarifesi | GrowB Dijital",
+    title: "Fiyatlandırma & Paket Tarifesi",
     description: "Ölçülebilir büyüme, kuruşuna kadar net fiyatlar. Gizli masraf yok.",
     url: `${siteUrl}/fiyatlar`,
     type: "website",
     locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Fiyatlandırma & Paket Tarifesi - GrowB Dijital",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fiyatlandırma & Paket Tarifesi | GrowB Dijital",
+    title: "Fiyatlandırma & Paket Tarifesi",
     description: "Şeffaf paket tarifeleri ve sözleşmeli fiyat garantisi.",
+    images: [`${siteUrl}/opengraph-image`],
   },
 };
 
 export default function PricingPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Fiyatlandırma", item: `${siteUrl}/fiyatlar` },
+    ],
+  };
+
   const offerCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
@@ -72,6 +90,10 @@ export default function PricingPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(offerCatalogSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <Navbar />
 

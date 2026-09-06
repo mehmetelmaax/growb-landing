@@ -5,18 +5,60 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { MapPin, ArrowLeft } from "lucide-react";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
+
 export const metadata: Metadata = {
-  title: "Nevşehir Dijital Pazarlama & Web Tasarım Ajansı | GrowB",
+  title: "Nevşehir Dijital Pazarlama & Web Tasarım Ajansı",
   description:
     "Nevşehir merkezli kurumsal dijital pazarlama ajansı GrowB. Nevşehir ve Kapadokya işletmeleri için satış odaklı web yazılımı, Google Ads ve harita SEO yönetimi.",
   alternates: {
     canonical: "/nevsehir-dijital-pazarlama-ajansi",
   },
+  openGraph: {
+    title: "Nevşehir Dijital Pazarlama & Web Tasarım Ajansı",
+    description:
+      "Nevşehir ve Kapadokya işletmeleri için satış odaklı web yazılımı, Google Ads ve harita SEO.",
+    url: `${siteUrl}/nevsehir-dijital-pazarlama-ajansi`,
+    type: "website",
+    locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Nevşehir Dijital Pazarlama - GrowB Dijital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nevşehir Dijital Pazarlama & Web Tasarım Ajansı",
+    description: "Nevşehir işletmeleri için telefon çaldıran dijital pazarlama ve yerel SEO.",
+    images: [`${siteUrl}/opengraph-image`],
+  },
 };
 
 export default function NevsehirLandingPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Nevşehir Dijital Pazarlama",
+        item: `${siteUrl}/nevsehir-dijital-pazarlama-ajansi`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Navbar />
 
       <main

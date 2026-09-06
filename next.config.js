@@ -5,11 +5,11 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' data: blob: https://picsum.photos https://images.unsplash.com https://growbdijital.com;
+  img-src 'self' data: blob: https://images.unsplash.com https://growbdijital.com https://www.facebook.com;
   font-src 'self' data:;
-  connect-src 'self' https://api.telegram.org https://api.resend.com https://www.googleapis.com;
+  connect-src 'self' https://api.telegram.org https://api.resend.com https://www.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://www.facebook.com;
   frame-ancestors 'self';
   base-uri 'self';
   form-action 'self';
@@ -20,6 +20,7 @@ const ContentSecurityPolicy = `
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   reactStrictMode: true,
   compress: true,
   swcMinify: true,
@@ -28,10 +29,6 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-      },
       {
         protocol: "https",
         hostname: "images.unsplash.com",

@@ -2,40 +2,59 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import { Navbar } from "@/components/navbar";
+import { HoneycombHive } from "@/components/honeycomb-hive";
+import { Footer } from "@/components/footer";
 import { Phone, ArrowLeft, ShieldCheck, CheckCircle2 } from "lucide-react";
-
-const HoneycombHive = dynamic(
-  () => import("@/components/honeycomb-hive").then((mod) => mod.HoneycombHive),
-  { ssr: false }
-);
-
-const Footer = dynamic(() => import("@/components/footer").then((mod) => mod.Footer), {
-  ssr: false,
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
 export const metadata: Metadata = {
-  title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı) | GrowB Dijital Büyüme Kovanı",
+  title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı)",
   description:
     "Web yazılımından Google & Meta satış reklamlarına, harita SEO liderliğinden video prodüksiyona ve WhatsApp CRM otomasyonuna kadar GrowB Dijital'in 13 uzmanlık alanını keşfedin.",
   alternates: {
     canonical: "/hizmetler",
   },
   openGraph: {
-    title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı) | GrowB Dijital Büyüme Kovanı",
+    title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı)",
     description: "KOBİ'ler için telefon çaldıran ve ciro akıtan 13 uzmanlık alanı.",
     url: `${siteUrl}/hizmetler`,
     type: "website",
     locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Tüm Hizmetlerimiz - GrowB Dijital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tüm Hizmetlerimiz (13 Uzmanlık Alanı)",
+    description: "KOBİ'ler için telefon çaldıran ve ciro akıtan 13 uzmanlık alanı.",
+    images: [`${siteUrl}/opengraph-image`],
   },
 };
 
 export default function ServicesIndexPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Hizmetlerimiz", item: `${siteUrl}/hizmetler` },
+    ],
+  };
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#0A0A0A] text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* ========================================================= */}
       {/* 1. KULLANICI TALEBİ: ARKA PLANA ÖZEL GÖRSEL & KOVAN ATMOSFERİ */}
       {/* ========================================================= */}

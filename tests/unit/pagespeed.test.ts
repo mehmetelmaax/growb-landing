@@ -1,11 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { POST } from "@/app/api/pagespeed/route";
+import { pagespeedInMemoryRateLimiter } from "@/lib/rate-limiter";
 
 describe("PageSpeed API Uç Noktası (POST /api/pagespeed)", () => {
   const originalFetch = global.fetch;
 
   beforeEach(() => {
     vi.restoreAllMocks();
+    pagespeedInMemoryRateLimiter.reset();
   });
 
   afterEach(() => {
@@ -126,5 +128,44 @@ describe("PageSpeed API Uç Noktası (POST /api/pagespeed)", () => {
     expect(json2.success).toBe(true);
     expect(json2.performanceScore).toBe(74);
     expect(callCount).toBe(1);
+  });
+
+  it("Aynı IP'den 10 dakikada 3'ten fazla istek geldiğinde 4. istekte HTTP 429 döner", async () => {
+    global.fetch = vi.fn().mockImplementation(async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        lighthouseResult: {
+          categories: {
+            performance: { score: 0.8 },
+            seo: { score: 0.8 },
+            "best-practices": { score: 0.8 },
+          },
+          audits: {},
+        },
+      }),
+    })) as unknown as typeof fetch;
+
+    const testIp = "192.168.10.99";
+    for (let i = 1; i <= 3; i++) {
+      const req = new Request("http://localhost:3000/api/pagespeed", {
+        method: "POST",
+        headers: { "x-forwarded-for": testIp },
+        body: JSON.stringify({ url: `https://rate-limit-test-${i}.com` }),
+      });
+      const res = await POST(req);
+      expect(res.status).toBe(200);
+    }
+
+    const req4 = new Request("http://localhost:3000/api/pagespeed", {
+      method: "POST",
+      headers: { "x-forwarded-for": testIp },
+      body: JSON.stringify({ url: "https://rate-limit-test-4.com" }),
+    });
+    const res4 = await POST(req4);
+    expect(res4.status).toBe(429);
+    const json4 = await res4.json();
+    expect(json4.success).toBe(false);
+    expect(json4.error).toContain("Çok fazla analiz isteği gönderdiniz");
   });
 });

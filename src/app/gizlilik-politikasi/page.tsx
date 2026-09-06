@@ -4,7 +4,7 @@ import { ArrowLeft, ShieldCheck, Lock, Eye, Server } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Gizlilik Politikası | GrowB Dijital",
+  title: "Gizlilik Politikası",
   description:
     "GrowB Dijital resmi gizlilik politikası. Kullanıcı verilerinin güvenliği, şifreleme standartları ve üçüncü taraf entegrasyonları.",
   robots: { index: true, follow: true },

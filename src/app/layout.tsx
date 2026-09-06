@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import dynamic from "next/dynamic";
 import { CookieBanner } from "@/components/cookie-banner";
-
-const AnalyticsProvider = dynamic(
-  () => import("@/components/analytics/analytics-provider").then((mod) => mod.AnalyticsProvider),
-  { ssr: false }
-);
+import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 
 const inter = localFont({
   src: [
@@ -59,11 +54,20 @@ export const metadata: Metadata = {
     siteName: "GrowB Dijital",
     type: "website",
     locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "GrowB Dijital — Tam Kapsamlı Dijital Pazarlama Ajansı",
     description: "Dijitaldeki tüm süreçlerinizi üstlenen büyüme ortağınız.",
+    images: [`${siteUrl}/opengraph-image`],
   },
   icons: {
     icon: [

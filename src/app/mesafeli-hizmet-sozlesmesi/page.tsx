@@ -4,7 +4,7 @@ import { ArrowLeft, FileCheck, Scale, AlertCircle } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mesafeli Hizmet Sözleşmesi | GrowB Dijital",
+  title: "Mesafeli Hizmet Sözleşmesi",
   description:
     "GrowB Dijital mesafeli hizmet sözleşmesi çerçeve şartları, hizmet kapsamı, ifa koşulları ve tüketici hakları bilgilendirmesi.",
   robots: { index: true, follow: true },

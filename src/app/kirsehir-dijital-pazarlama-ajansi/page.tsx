@@ -9,22 +9,50 @@ import { AybarNakliyatCaseStudy } from "@/components/kirsehir/aybar-nakliyat-cas
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://growbdijital.com";
 
 export const metadata: Metadata = {
-  title: "Kırşehir Dijital Pazarlama, Web Tasarım & Yerel SEO Ajansı | GrowB",
+  title: "Kırşehir Dijital Pazarlama, Web Tasarım & Yerel SEO Ajansı",
   description:
     "Kırşehir ve çevre ilçelerdeki KOBİ'ler için Google Harita 1. sıra SEO, satış odaklı Next.js web tasarım ve niyet odaklı Google Ads yönetimi. Kırşehir Aybar Nakliyat canlı başarı vakası.",
   alternates: {
     canonical: "/kirsehir-dijital-pazarlama-ajansi",
   },
   openGraph: {
-    title: "Kırşehir Dijital Pazarlama, Web Tasarım & Yerel SEO Ajansı | GrowB",
+    title: "Kırşehir Dijital Pazarlama, Web Tasarım & Yerel SEO Ajansı",
     description: "Kırşehir esnafı ve işletmeleri için telefon çaldıran büyüme sistemleri.",
     url: `${siteUrl}/kirsehir-dijital-pazarlama-ajansi`,
     type: "website",
     locale: "tr_TR",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Kırşehir Dijital Pazarlama - GrowB Dijital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kırşehir Dijital Pazarlama, Web Tasarım & Yerel SEO Ajansı",
+    description: "Kırşehir KOBİ'leri için doğrudan telefon çaldıran dijital pazarlama.",
+    images: [`${siteUrl}/opengraph-image`],
   },
 };
 
 export default function KirsehirLandingPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Kırşehir Dijital Pazarlama",
+        item: `${siteUrl}/kirsehir-dijital-pazarlama-ajansi`,
+      },
+    ],
+  };
+
   const kirsehirSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -46,6 +74,10 @@ export default function KirsehirLandingPage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] font-sans text-[#FFFDF5] selection:bg-[#FFC300] selection:text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(kirsehirSchema) }}

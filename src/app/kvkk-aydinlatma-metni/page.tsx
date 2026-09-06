@@ -4,7 +4,7 @@ import { ArrowLeft, Shield, CheckCircle2, Lock, FileText, Mail } from "lucide-re
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "KVKK Aydınlatma Metni | GrowB Dijital",
+  title: "KVKK Aydınlatma Metni",
   description:
     "GrowB Dijital Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca veri sorumlusu sıfatıyla aydınlatma metni, işleme amaçları ve haklarınız.",
   robots: { index: true, follow: true },

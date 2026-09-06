@@ -31,7 +31,7 @@ export async function generateMetadata({
     return { title: "Hizmet Bulunamadı | GrowB Dijital" };
   }
 
-  const title = `${service.title} | GrowB Dijital Pazarlama`;
+  const title = service.title;
   const description = `${service.tagline} ${service.heroDesc.slice(0, 140)}...`;
 
   return {
@@ -44,11 +44,20 @@ export async function generateMetadata({
       url: `${siteUrl}/hizmetler/${service.slug}`,
       type: "article",
       locale: "tr_TR",
+      images: [
+        {
+          url: `${siteUrl}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${service.title} - GrowB Dijital`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`${siteUrl}/opengraph-image`],
     },
   };
 }
@@ -68,13 +77,10 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       url: siteUrl,
       telephone: "+905414842426",
     },
-    areaServed: [
-      { "@type": "AdministrativeArea", name: "Nevşehir" },
-      { "@type": "AdministrativeArea", name: "Kırşehir" },
-      { "@type": "AdministrativeArea", name: "Konya" },
-      { "@type": "AdministrativeArea", name: "Aksaray" },
-      { "@type": "Country", name: "Türkiye" },
-    ],
+    areaServed: ["Nevşehir", "Kırşehir", "Konya", "Aksaray", "Türkiye"].map((name) => ({
+      "@type": name === "Türkiye" ? "Country" : "AdministrativeArea",
+      name,
+    })),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: `${service.title} Kapsamı ve Çıktıları`,
@@ -86,11 +92,30 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
     },
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Hizmetlerimiz", item: `${siteUrl}/hizmetler` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: service.title,
+        item: `${siteUrl}/hizmetler/${service.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A] text-cream">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <Navbar />
 

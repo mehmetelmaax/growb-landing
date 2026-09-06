@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
 import { ArrowRight, Sparkles, Phone } from "lucide-react";
 import { SITE_CONFIG } from "@/data/content";
 import type { HivePollen } from "@/data/hero-pollens-data";
@@ -13,15 +12,8 @@ import {
 } from "@/lib/ab-testing";
 import { trackPhoneClick } from "@/lib/analytics";
 
-const HeroHoneycomb = dynamic(
-  () => import("@/components/hero/hero-honeycomb").then((mod) => mod.HeroHoneycomb),
-  { ssr: false }
-);
-
-const ConsultationModal = dynamic(
-  () => import("@/components/hero/consultation-modal").then((mod) => mod.ConsultationModal),
-  { ssr: false }
-);
+import { HeroHoneycomb } from "@/components/hero/hero-honeycomb";
+import { ConsultationModal } from "@/components/hero/consultation-modal";
 
 export const Hero: React.FC = () => {
   const [variant, setVariant] = useState<HeroVariantKey>("control");
