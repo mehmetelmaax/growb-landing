@@ -1,210 +1,119 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Sparkles, CheckCircle2 } from "lucide-react";
 
-// 1. Ana Çarpıcı Giriş (Punchline)
-const MANIFESTO_HEADLINE = [
-  "CİRONUZU",
-  "ARTIRAN",
-  "SATIŞ",
-  "SİSTEMLERİ",
-  "TESADÜFEN",
-  "OLMAZ.",
-  "BİZ",
-  "İŞİMİZİ",
-  "ASLA",
-  "ŞANSA",
-  "BIRAKMIYORUZ.",
-];
-
-// 2. Temel Büyüme Manifestosu (Core Manifesto)
-const MANIFESTO_BODY = [
-  "BİZ",
-  "MASRAF",
-  "DEĞİL;",
-  "TELEFONUNUZU",
-  "VE",
-  "SATIŞLARINIZI",
-  "DÜZENLİ",
-  "ÇALDIRAN",
-  "BİR",
-  "SATIŞ",
-  "MAKİNESİ",
-  "KURUYORUZ.",
-  "SADECE",
-  "AJANS",
-  "DEĞİL,",
-  "BÜYÜME",
-  "ORTAĞINIZIZ.",
-];
-
 export const Manifesto: React.FC = () => {
-  const containerRef = useRef<HTMLElement>(null);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [revealedCount, setRevealedCount] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  const totalWords = MANIFESTO_HEADLINE.length + MANIFESTO_BODY.length;
+  const ref = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      setPrefersReducedMotion(true);
-      setRevealedCount(totalWords);
-      setIsComplete(true);
+    const el = ref.current;
+    if (!el) {
+      setIsVisible(true);
       return;
     }
-
-    // Doğrudan #manifesto hash bağlantısı ile gelinmişse hemen başlat
-    if (window.location.hash === "#manifesto") {
-      setHasStarted(true);
-      return;
-    }
-
-    const el = containerRef.current;
-    if (!el) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        // Bölüm ekranda görünmeye başladığı an (%20+ görünürlük) hızlı daktilo başlar
-        if (entry && (entry.isIntersecting || entry.intersectionRatio >= 0.2)) {
-          setHasStarted(true);
+        if (entry && entry.isIntersecting) {
+          setIsVisible(true);
           observer.disconnect();
         }
       },
-      { threshold: [0.1, 0.2, 0.35] }
+      { threshold: 0.05, rootMargin: "50px" }
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [totalWords]);
 
-  useEffect(() => {
-    if (!hasStarted || prefersReducedMotion) return;
+    // Emniyet: Her halükarda 800ms sonra görünür yap (sıfır boş ekran riski)
+    const fallback = setTimeout(() => setIsVisible(true), 800);
 
-    let current = 0;
-    // Her kelime 32ms aralıkla seri dökülür (~900ms'de tüm metin açılır)
-    const timer = setInterval(() => {
-      current += 1;
-      setRevealedCount(current);
-      if (current >= totalWords) {
-        clearInterval(timer);
-        setIsComplete(true);
-      }
-    }, 32);
-
-    return () => clearInterval(timer);
-  }, [hasStarted, prefersReducedMotion, totalWords]);
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
+  }, []);
 
   return (
     <section
       id="manifesto"
-      ref={containerRef}
-      className="relative flex min-h-[85vh] w-full items-center justify-center border-y border-white/5 bg-[#0A0A0A] px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
+      ref={ref}
+      className="relative w-full overflow-hidden border-y border-white/10 bg-[#0A0A0A] px-4 pb-4 pt-10 sm:px-6 sm:pb-6 sm:pt-12 lg:px-8"
     >
-      {/* Ortam Altın Işıltısı */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFC300]/[0.035] blur-[160px]" />
+      {/* Ortam Altın Aura & Spot Efekti */}
+      <div
+        className={`pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[360px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFC300]/[0.045] blur-[120px] transition-opacity duration-1000 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
+      />
 
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
-        {/* Üst Rozet */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300] shadow-sm sm:mb-8">
-          <Sparkles className="h-3.5 w-3.5 text-[#FFC300]" />
+        {/* Üst Rozet: Shimmer Pill */}
+        <div
+          className={`mb-4 inline-flex items-center gap-2 rounded-full border border-[#FFC300]/25 bg-gradient-to-r from-white/[0.07] to-white/[0.02] px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-[#FFC300] shadow-[0_0_20px_rgba(255,195,0,0.12)] backdrop-blur-md transition-all duration-700 sm:mb-6 ${
+            isVisible ? "translate-y-0 scale-100 opacity-100" : "-translate-y-4 scale-95 opacity-0"
+          }`}
+        >
+          <Sparkles className="h-3.5 w-3.5 animate-pulse text-[#FFC300]" />
           <span>GROWB BÜYÜME MANİFESTOSU // KANITLANMIŞ SİSTEMLER</span>
         </div>
 
-        {/* 1. BÖLÜM: BÜYÜK VURUCU BAŞLIK */}
-        <h2 className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-2xl font-black leading-[1.18] tracking-tight text-white sm:gap-x-4 sm:gap-y-3 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
-          {MANIFESTO_HEADLINE.map((word, index) => {
-            const isWritten = isComplete || revealedCount > index;
-            const isCurrent = revealedCount === index + 1;
-            const isGold =
-              word === "SATIŞ" ||
-              word === "SİSTEMLERİ" ||
-              word === "ŞANSA" ||
-              word === "BIRAKMIYORUZ.";
-
-            return (
-              <span
-                key={`headline-${index}`}
-                style={{
-                  opacity: isWritten ? 1 : 0.18,
-                  transform: isWritten
-                    ? isCurrent
-                      ? "translateY(-1px) scale(1.03)"
-                      : "translateY(0)"
-                    : "translateY(3px)",
-                  color: isWritten ? (isGold ? "#FFC300" : "#FFFFFF") : "rgba(255, 255, 255, 0.22)",
-                  textShadow:
-                    isWritten && (isGold || isCurrent) ? "0 0 24px rgba(255, 195, 0, 0.5)" : "none",
-                }}
-                className="inline-block transition-all duration-150 ease-out will-change-[transform,opacity,color]"
-              >
-                {word}
-              </span>
-            );
-          })}
+        {/* 1. BÖLÜM: BÜYÜK VURUCU BAŞLIK (3D Perspective Blur-Up) */}
+        <h2
+          style={{ perspective: "1000px" }}
+          className={`max-w-4xl text-2xl font-black leading-[1.2] tracking-tight text-white transition-all delay-100 duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-4xl md:text-5xl lg:text-[3.1rem] ${
+            isVisible
+              ? "rotate-x-0 translate-y-0 opacity-100 blur-none"
+              : "translate-y-7 opacity-0 blur-sm [transform:rotateX(12deg)]"
+          }`}
+        >
+          CİRONUZU ARTIRAN{" "}
+          <span className="relative inline-block bg-gradient-to-r from-[#FFC300] via-[#FFF3B0] to-[#FFC300] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(255,195,0,0.45)]">
+            SATIŞ SİSTEMLERİ
+          </span>{" "}
+          TESADÜFEN OLMAZ.
+          <br className="hidden sm:inline" /> BİZ İŞİMİZİ ASLA{" "}
+          <span className="relative inline-block bg-gradient-to-r from-[#FFC300] via-[#FFF3B0] to-[#FFC300] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(255,195,0,0.45)]">
+            ŞANSA BIRAKMIYORUZ.
+          </span>
         </h2>
 
-        {/* 2. BÖLÜM: BÜYÜME MANİFESTOSU GÖVDE METNİ */}
-        <div className="mt-8 max-w-4xl sm:mt-10">
-          <p className="flex flex-wrap justify-center gap-x-2.5 gap-y-2 text-lg font-bold leading-relaxed tracking-normal sm:gap-x-3.5 sm:text-2xl md:text-3xl lg:text-[2rem]">
-            {MANIFESTO_BODY.map((word, index) => {
-              const wordAbsIndex = MANIFESTO_HEADLINE.length + index;
-              const isWritten = isComplete || revealedCount > wordAbsIndex;
-              const isCurrent = revealedCount === wordAbsIndex + 1;
-              const isHighlight =
-                word === "SATIŞ" ||
-                word === "MAKİNESİ" ||
-                word === "BÜYÜME" ||
-                word === "ORTAĞINIZIZ.";
+        {/* Luminous Gold Ayırıcı Işın Çizgisi (Expanding Laser Beam) */}
+        <div
+          className={`my-5 h-[2px] rounded-full bg-gradient-to-r from-transparent via-[#FFC300] to-transparent shadow-[0_0_12px_#FFC300] transition-all delay-200 duration-1000 ease-out sm:my-6 ${
+            isVisible ? "w-28 opacity-100 sm:w-40" : "w-0 opacity-0"
+          }`}
+        />
 
-              return (
-                <span
-                  key={`body-${index}`}
-                  style={{
-                    opacity: isWritten ? 1 : 0.16,
-                    transform: isWritten
-                      ? isCurrent
-                        ? "translateY(-1px) scale(1.02)"
-                        : "translateY(0)"
-                      : "translateY(2px)",
-                    color: isWritten
-                      ? isHighlight
-                        ? "#FFC300"
-                        : "#E5E5E5"
-                      : "rgba(255, 255, 255, 0.2)",
-                    textShadow:
-                      isWritten && (isHighlight || isCurrent)
-                        ? "0 0 20px rgba(255, 195, 0, 0.45)"
-                        : "none",
-                  }}
-                  className="inline-block transition-all duration-150 ease-out will-change-[transform,opacity,color]"
-                >
-                  {word}
-                </span>
-              );
-            })}
+        {/* 2. BÖLÜM: BÜYÜME MANİFESTOSU GÖVDE METNİ (Koyu Cam Panel & Altın Vurgular) */}
+        <div
+          className={`max-w-3xl rounded-2xl border border-white/10 bg-white/[0.02] p-5 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] backdrop-blur-sm transition-all delay-300 duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-7 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
+          <p className="text-base font-bold leading-relaxed text-neutral-300 sm:text-xl md:text-2xl lg:text-[1.55rem]">
+            BİZ MASRAF DEĞİL; TELEFONUNUZU VE SATIŞLARINIZI DÜZENLİ ÇALDIRAN BİR{" "}
+            <span className="font-extrabold text-[#FFC300] underline decoration-[#FFC300]/40 underline-offset-4 drop-shadow-[0_0_16px_rgba(255,195,0,0.3)]">
+              SATIŞ MAKİNESİ
+            </span>{" "}
+            KURUYORUZ. SADECE AJANS DEĞİL,{" "}
+            <span className="text-white drop-shadow-[0_0_16px_rgba(255,255,255,0.25)]">
+              BÜYÜME ORTAĞINIZIZ.
+            </span>
           </p>
         </div>
 
         {/* 3. BÖLÜM: GÜVEN VURGUSU & ONAY ROZETİ */}
-        <div className="mt-10 flex items-center justify-center sm:mt-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-neutral-400 backdrop-blur-sm sm:text-sm">
-            <CheckCircle2
-              className={`h-4 w-4 transition-colors duration-300 ${
-                isComplete ? "text-[#FFC300]" : "text-neutral-500"
-              }`}
-            />
-            <span
-              className={`transition-colors duration-300 ${
-                isComplete ? "font-medium text-neutral-200" : "text-neutral-400"
-              }`}
-            >
+        <div
+          className={`delay-400 mt-4 flex items-center justify-center transition-all duration-700 sm:mt-5 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-semibold text-neutral-300 backdrop-blur-sm transition-colors hover:border-[#FFC300]/40 sm:text-sm">
+            <CheckCircle2 className="h-4 w-4 text-[#FFC300]" />
+            <span className="font-medium text-neutral-200">
               Ölçülebilir Satış Sistemleri & Kanıtlanmış Büyüme Modeli
             </span>
           </div>
