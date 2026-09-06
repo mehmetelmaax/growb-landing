@@ -16,6 +16,7 @@
     "test:e2e": "playwright test",
     "analyze": "cross-env ANALYZE=true next build",
     "check:links": "node scripts/check-links.mjs",
+    "check:env": "node scripts/verify-env.mjs",
     "seo:baseline": "node scripts/seo-drift-baseline.mjs",
     "seo:drift": "node scripts/seo-drift-check.mjs",
     "prepare": "husky"
